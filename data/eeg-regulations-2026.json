@@ -138,6 +138,6 @@
       "localGridTariffSavingsWeight": 0.20,
       "localSubsidyAndRegulatoryBonusWeight": 0.15
     },
-    "formulaExplanation": "Der SOLARMETRIK-Effizienzscore (SME-2026) bewertet die reale Wirtschaftlichkeit einer 10-kWp-Referenzanlage mit 10-kWh-Speicher für jeden Standort in Deutschland anhand von vier gewichteten Faktoren: (1) Spezifischer Solarertrag in kWh/kWp laut DWD/PVGIS (40 %), (2) regionales Montage-Preisniveau in €/kWp (25 %), (3) lokaler Haushaltsstrompreis des Grundversorgers in ct/kWh als Hebel der Eigenverbrauchs-Ersparnis (20 %) sowie (4) verfügbare kommunale/Landes-Förderprogramme und Solarpflicht-Synergien 2026 (15 %)."
+    "formulaExplanation": "Der SOLARMETRIK-Effizienzscore (SME-2026) ist ein redaktioneller Standort-Vergleichsindex (eigenes gewichtetes Berechnungsmodell von SOLARMETRIK, keine amtliche Messgröße). Er vergleicht die modellierte Wirtschaftlichkeit einer 10-kWp-Referenzanlage mit 10-kWh-Speicher anhand von vier gewichteten Faktoren: (1) Spezifischer Solarertrag in kWh/kWp laut DWD/PVGIS (40 %), (2) regionales Montage-Preisniveau in €/kWp (25 %), (3) lokaler Haushaltsstrompreis des Grundversorgers in ct/kWh als Hebel der Eigenverbrauchs-Ersparnis (20 %) sowie (4) verfügbare kommunale/Landes-Förderprogramme und Solarpflicht-Rahmenbedingungen 2026 (15 %)."
   }
 }

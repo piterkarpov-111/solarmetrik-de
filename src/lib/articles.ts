@@ -43,7 +43,7 @@ export const articles: ArticleData[] = [
       '/images/photovoltaik-kosten-2026-solarmetrik.webp',
     heroAlt: 'Photovoltaikanlage auf Einfamilienhausdach in Deutschland 2026',
     blufSummary:
-      'Im November 2026 kostet eine schlüsselfertige 10-kWp-Photovoltaikanlage ohne Speicher in Deutschland durchschnittlich 12.900 € (1.290 €/kWp). Inklusive eines 10-kWh-Lithium-Eisenphosphat-Speichers (LFP), Hybrid-Wechselrichters, Energiemanagementsystems (HEMS) und kompletter Dachmontage liegt der Komplettpreis im Bundesschnitt bei 18.600 € (17.650 € bis 19.350 € je nach Bundesland). Dank § 12 Abs. 3 UStG fällt 0 % Mehrwertsteuer an; die Amortisationszeit beträgt 7,8 bis 8,8 Jahre.',
+      'Im November 2026 kostet eine schlüsselfertige 10-kWp-Photovoltaikanlage ohne Speicher in Deutschland durchschnittlich 12.900 € (1.290 €/kWp). Inklusive eines 10-kWh-Lithium-Eisenphosphat-Speichers (LFP), Hybrid-Wechselrichters, Energiemanagementsystems (HEMS) und kompletter Dachmontage liegt der Komplettpreis im Bundesschnitt bei 18.600 € (17.400 € in Sachsen-Anhalt bis 19.200 € in Hamburg auf Bundeslandebene bzw. bis 19.350 € in München auf Stadtebene). Dank § 12 Abs. 3 UStG fällt 0 % Mehrwertsteuer an; die modellierte Amortisationszeit beträgt 7,8 bis 9,5 Jahre.',
     svgDiagramTitle: 'Kostenstruktur einer schlüsselfertigen 10-kWp-Anlage mit 10-kWh-Speicher (18.600 €)',
     svgDiagramCaption:
       'Abb. 1: Prozentuale Aufteilung der Investitionskosten im deutschen Fachhandwerk (Q4/2026, inkl. 0 % MwSt. nach § 12 Abs. 3 UStG).',

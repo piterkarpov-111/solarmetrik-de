@@ -285,9 +285,9 @@
     "twentyYearNetProfitEur": 25600,
     "solarmetrikScore": 91,
     "solarpflicht": {
-      "neubauWohngebaeude": true,
+      "neubauWohngebaeude": false,
       "dachsanierungBestand": false,
-      "effectiveRule2026": "Landessolargesetz RLP: Für neue Wohngebäude und größere Dachsanierungen gelten 'PV-ready'-Pflichten (Vorbereitung von Leerrohren/Zählerplatz), für Gewerbe und Parkplätze volle Installationspflicht."
+      "effectiveRule2026": "Landessolargesetz RLP (LSolarG): Verbindliche PV-Installationspflicht gilt für neue Gewerbebauten ab 100 m² Nutzfläche, neue öffentliche Gebäude sowie neue Parkplätze ab 50 Stellplätzen; für private Wohngebäude besteht keine landesweite Installationspflicht."
     },
     "landesfoerderung": {
       "programName": "KIPKI-Kommunalprogramme (Kommunales Investitionsprogramm Klimaschutz) + ISB",

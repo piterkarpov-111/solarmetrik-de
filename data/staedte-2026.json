@@ -157,8 +157,8 @@
     "localGridOperator": "Stuttgarter Netze Betrieb GmbH",
     "kommunaleFoerderung2026": {
       "programName": "Stuttgarter Solaroffensive / Energiesparprogramm (ESP)",
-      "status": "Reformiert Mai 2026 (Jahresbudget 2026 ausgeschöpft – Registrierung für 2027 + L-Bank aktiv)",
-      "details": "Stuttgart hat das ESP im Mai 2026 auf Dach-PV-Zusatzarbeiten und Speicher fokussiert. Da der städtische Topf 2026 im Sommer ausgeschöpft wurde, sichern sich Bauherren jetzt die 20-jährige EEG-Vergütung 2026 + L-Bank-Förderkredit."
+      "status": "Reformiert Mai 2026 (Jahresbudget 2026 ausgeschöpft – L-Bank-Förderkredite & Bundesrahmen aktiv)",
+      "details": "Stuttgart hat das ESP im Mai 2026 auf Dach-PV-Zusatzarbeiten und Speicher fokussiert. Nach Ausschöpfung des kommunalen Jahrestopfes 2026 im Sommer greifen für Neuanlagen die bundesweite EEG-Einspeisevergütung, 0 % MwSt. (§ 12 Abs. 3 UStG) sowie L-Bank-Förderkredite."
     }
   },
   {
@@ -373,8 +373,8 @@
     "localGridOperator": "RheinNetz GmbH (RNG / RheinEnergie)",
     "kommunaleFoerderung2026": {
       "programName": "Photovoltaik – klimafreundliches Wohnen in Köln",
-      "status": "WICHTIG HERBST 2026: 8-Mio.-€-Stadttopf ausgeschöpft (Antragsstopp) – 0 % MwSt & EEG 2026 aktiv",
-      "details": "Das Kölner 8-Millionen-Euro-Budget für 2026 ist wegen Rekordnachfrage vorzeitig ausgeschöpft. Kölner Hausbesitzer sichern sich jetzt vor dem 31.12.2026 die 20-jährige EEG-Vergütung und 0 % MwSt."
+      "status": "Stand Herbst 2026: 8-Mio.-€-Stadttopf ausgeschöpft (Antragsstopp) – 0 % MwSt & EEG-Vergütung aktiv",
+      "details": "Das Kölner 8-Millionen-Euro-Förderbudget für 2026 wurde aufgrund hoher Antragszahlen vorzeitig ausgeschöpft. Für Neuinstallationen in Köln gelten weiterhin die bundesweiten Rahmenbedingungen (20-jährige EEG-Einspeisevergütung und 0 % MwSt. nach § 12 Abs. 3 UStG)."
     }
   },
   {
