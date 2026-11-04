@@ -1,0 +1,62 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import EeatVerifyBar from '../../components/EeatVerifyBar.astro';
+import { getAllArticles } from '../../lib/articles';
+
+const allArticles = getAllArticles();
+---
+
+<BaseLayout
+  title="Photovoltaik Ratgeber & Studien 2026/2027: Kosten, EEG, Speicher & Recht | SOLARMETRIK"
+  description="Unabhängige Ingenieur-Leitfäden zu Photovoltaik-Kosten 2026, EEG-Reform 2027, HTW Berlin Stromspeicher-Test, § 14a EnWG Wärmepumpe, Balkonkraftwerk 2000W & Solarpflicht."
+  canonicalPath="/ratgeber"
+  activeSection="ratgeber"
+>
+  <section class="ax-section" style="padding-top: 44px;">
+    <div class="container">
+      <Breadcrumbs
+        items={[
+          { label: 'Startseite', href: '/' },
+          { label: 'Fachratgeber & Ingenieur-Studien 2026/2027' }
+        ]}
+      />
+
+      <div style="max-width: 820px; margin-bottom: 32px;">
+        <span class="ax-eyebrow">SOLARMETRIK Fachredaktion · Alle 10 Kernstudien 2026/2027</span>
+        <h1 class="ax-h1">PHOTOVOLTAIK-RATGEBER, EEG-REFORM 2027 & INGENIEUR-STUDIEN</h1>
+        <p class="ax-sub">
+          Herstellerneutrale Fachbeiträge und Wirtschaftlichkeitsanalysen — verfasst von unserer
+          Energieökonomie-Redaktion und technisch geprüft durch Diplom-Ingenieure für
+          Photovoltaik-Systemtechnik.
+        </p>
+      </div>
+
+      <EeatVerifyBar updatedDate="04. November 2026" />
+
+      <div class="ax-cards-3" style="margin-top: 40px;">
+        {allArticles.map((art, idx) => (
+          <a href={`/ratgeber/${art.slug}`} class="ax-photo-card">
+            <div class="ax-photo-card__img-wrap">
+              <img
+                src={art.heroImage}
+                alt={art.heroAlt}
+                width="800"
+                height="600"
+                loading={idx < 3 ? 'eager' : 'lazy'}
+              />
+            </div>
+            <div class="ax-photo-card__meta">
+              {art.category} · {art.readingTimeMin} Min. Lesezeit
+            </div>
+            <div class="ax-photo-card__title">{art.title}</div>
+            <p class="ax-photo-card__desc">
+              {art.blufSummary.slice(0, 155)}…
+            </p>
+            <span class="ax-photo-card__caption">Vollständigen Leitfaden lesen →</span>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+</BaseLayout>

@@ -1,0 +1,181 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import EeatVerifyBar from '../components/EeatVerifyBar.astro';
+import { getAllBundeslaender, getAllStaedte, formatEur } from '../lib/data';
+
+const allStates = getAllBundeslaender();
+const allCities = getAllStaedte();
+---
+
+<BaseLayout
+  title="Photovoltaik Förderung 2026 & Solarpflicht-Check nach PLZ / Stadt | SOLARMETRIK"
+  description="Prüfen Sie alle aktiven Photovoltaik-Förderprogramme 2026, kommunale Zuschüsse, Stadtwerke-Vorgaben und die gesetzliche Solarpflicht für 51 deutsche Städte & 16 Bundesländer."
+  canonicalPath="/foerderung-check"
+  activeSection="rechner"
+>
+  <section class="ax-section" style="padding-top: 44px;">
+    <div class="container">
+      <Breadcrumbs
+        items={[
+          { label: 'Startseite', href: '/' },
+          { label: 'Förderung, Solarpflicht & Stadtwerke-Check 2026' }
+        ]}
+      />
+
+      <div style="max-width: 840px; margin-bottom: 32px;">
+        <span class="ax-eyebrow">Förderdatenbank Deutschland · Stand Herbst 2026</span>
+        <h1 class="ax-h1">PHOTOVOLTAIK-FÖRDERUNG, SOLARPFICHT & STADTWERKE-CHECK 2026</h1>
+        <p class="ax-sub">
+          Geben Sie Ihre Stadt oder Postleitzahl (PLZ) ein, um sofort den aktuellen Status
+          kommunaler Zuschüsse (Herbst 2026), den zuständigen Verteilnetzbetreiber (Stadtwerke)
+          sowie die geltende Solarpflicht bei Neubau und Dachsanierung zu prüfen.
+        </p>
+      </div>
+
+      <EeatVerifyBar updatedDate="04. November 2026" />
+
+      <!-- LIVE PLZ / CITY FILTER -->
+      <div class="calc-card-light" style="margin: 28px 0 40px;">
+        <label
+          for="foerder-filter-input"
+          style="display: block; font-size: 14px; font-weight: 600; margin-bottom: 10px;"
+        >
+          Schnellfilter nach Stadtname, Postleitzahl (PLZ) oder Bundesland:
+        </label>
+        <input
+          type="search"
+          id="foerder-filter-input"
+          class="form-input"
+          placeholder="z.B. München, 80331, Frankfurt, Düsseldorf, NRW, Berlin..."
+          style="font-size: 16px; padding: 14px 18px;"
+        />
+      </div>
+
+      <h2 class="ax-h2" style="margin-bottom: 20px;">
+        KOMMUNALE FÖRDERPROGRAMME & STADTWERKE DER 51 GRÖSSTEN DEUTSCHEN STÄDTE
+      </h2>
+
+      <div class="clean-table-wrap">
+        <table class="clean-table" id="foerder-cities-table">
+          <thead>
+            <tr>
+              <th>Stadt & PLZ</th>
+              <th>Bundesland</th>
+              <th>Kommunales Förderprogramm (Stand Herbst 2026)</th>
+              <th>Zuständiger Netzbetreiber (Stadtwerke)</th>
+              <th>Detailanalyse</th>
+            </tr>
+          </thead>
+          <tbody>
+            {allCities.map((c) => (
+              <tr
+                data-search={`${c.name} ${c.plzRange} ${c.bundeslandName} ${c.localGridOperator} ${c.kommunaleFoerderung2026.programName}`.toLowerCase()}
+              >
+                <td>
+                  <strong>{c.name}</strong>
+                  <div style="font-size: 12px; color: var(--text-muted);">PLZ {c.plzRange}</div>
+                </td>
+                <td>
+                  <a href={`/solaratlas/${c.bundeslandSlug}`} style="color: var(--accent-blue);">
+                    {c.bundeslandName}
+                  </a>
+                </td>
+                <td>
+                  <strong>{c.kommunaleFoerderung2026.programName}</strong>
+                  <div style="font-size: 13px; color: var(--text-secondary); margin-top: 2px;">
+                    {c.kommunaleFoerderung2026.status}
+                  </div>
+                </td>
+                <td style="font-size: 13.5px;">{c.localGridOperator}</td>
+                <td>
+                  <a
+                    href={`/solaratlas/${c.bundeslandSlug}/${c.slug}`}
+                    style="font-weight: 600; color: var(--accent-blue); white-space: nowrap;"
+                  >
+                    Stadtanalyse →
+                  </a>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+
+      <h2 class="ax-h2" style="margin: 56px 0 20px;">
+        SOLARPFICHT & LANDESFÖRDERUNG 2026 IN ALLEN 16 BUNDESLÄNDERN
+      </h2>
+
+      <div class="clean-table-wrap">
+        <table class="clean-table">
+          <thead>
+            <tr>
+              <th>Bundesland</th>
+              <th>Solarpflicht Neubau</th>
+              <th>Solarpflicht Dachsanierung</th>
+              <th>Landesförderung 2026</th>
+              <th>Ø 10 kWp + Speicher</th>
+            </tr>
+          </thead>
+          <tbody>
+            {allStates.map((s) => (
+              <tr>
+                <td>
+                  <a href={`/solaratlas/${s.slug}`} style="font-weight: 600; color: var(--accent-blue);">
+                    {s.name} ({s.code}) →
+                  </a>
+                </td>
+                <td>
+                  {s.solarpflicht.neubauWohngebaeude ? (
+                    <span class="badge badge--green">Ja (Pflicht)</span>
+                  ) : (
+                    <span class="badge badge--amber">Keine Wohn-Pflicht</span>
+                  )}
+                </td>
+                <td>
+                  {s.solarpflicht.dachsanierungBestand ? (
+                    <span class="badge badge--green">Ja (Bestandspflicht)</span>
+                  ) : (
+                    <span class="badge badge--amber">Freiwillig</span>
+                  )}
+                </td>
+                <td>
+                  <strong>{s.landesfoerderung.programName}</strong>
+                  <div style="font-size: 12.5px; color: var(--text-secondary);">
+                    {s.landesfoerderung.status2026}
+                  </div>
+                </td>
+                <td><strong>{formatEur(s.avgTurnkey10kWpWithStorageEur)}</strong></td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <script is:inline>
+    (() => {
+      const input = document.getElementById('foerder-filter-input');
+      const rows = document.querySelectorAll('#foerder-cities-table tbody tr');
+      if (!input || !rows.length) return;
+
+      const params = new URLSearchParams(window.location.search);
+      const qParam = params.get('q');
+      if (qParam) {
+        input.value = qParam;
+      }
+
+      function filterRows() {
+        const q = (input.value || '').trim().toLowerCase();
+        rows.forEach((r) => {
+          const hay = r.getAttribute('data-search') || '';
+          r.style.display = !q || hay.includes(q) ? '' : 'none';
+        });
+      }
+
+      input.addEventListener('input', filterRows);
+      filterRows();
+    })();
+  </script>
+</BaseLayout>

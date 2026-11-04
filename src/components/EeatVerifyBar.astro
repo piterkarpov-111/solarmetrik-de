@@ -1,0 +1,26 @@
+---
+interface Props {
+  updatedDate?: string;
+  readingTimeMin?: number;
+}
+
+const { updatedDate = '04. November 2026', readingTimeMin } = Astro.props;
+---
+
+<div class="editorial-meta">
+  <span>
+    Autor: <a href="/ueber-uns" style="text-decoration: underline;">Lukas Hartmann</a> (Energieökonom M.Sc.)
+  </span>
+  <span>·</span>
+  <span>
+    Fachprüfung: <a href="/ueber-uns" style="text-decoration: underline;">Dipl.-Ing. Markus Weber</a> (PV-Systemtechnik)
+  </span>
+  <span>·</span>
+  <span>Stand: <strong>{updatedDate}</strong></span>
+  {readingTimeMin && (
+    <>
+      <span>·</span>
+      <span>Lesezeit: {readingTimeMin} Min.</span>
+    </>
+  )}
+</div>

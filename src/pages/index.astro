@@ -1,0 +1,534 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import GermanyMapAtlas from '../components/GermanyMapAtlas.astro';
+import {
+  eegRegulations,
+  getAllBundeslaender,
+  getAllStaedte,
+  formatEur,
+  formatNumber
+} from '../lib/data';
+
+const topCities = getAllStaedte().slice(0, 12);
+const monthlyDist = eegRegulations.roofOrientationTiltMatrix.monthlyYieldDistributionPercent;
+
+const priceRows = [
+  {
+    kwp: '5 kWp',
+    modules: '11–12 Module (~22 m²)',
+    costPerKwp: eegRegulations.marketCostBenchmarks2026.pvCostPerKwpWithoutStorageEur['5kWp'],
+    storageRec: '5 kWh',
+    turnkeyWithStorage: 11000,
+    yieldYear: '4.800 – 5.550 kWh',
+    payback: '8,9 – 9,6 Jahre'
+  },
+  {
+    kwp: '8 kWp',
+    modules: '18–19 Module (~35 m²)',
+    costPerKwp: eegRegulations.marketCostBenchmarks2026.pvCostPerKwpWithoutStorageEur['8kWp'],
+    storageRec: '8 kWh',
+    turnkeyWithStorage: 15900,
+    yieldYear: '7.600 – 8.880 kWh',
+    payback: '8,4 – 9,1 Jahre'
+  },
+  {
+    kwp: '10 kWp (Referenz)',
+    modules: '22–23 Module (~44 m²)',
+    costPerKwp: eegRegulations.marketCostBenchmarks2026.pvCostPerKwpWithoutStorageEur['10kWp'],
+    storageRec: '10 kWh',
+    turnkeyWithStorage: 18600,
+    yieldYear: '9.500 – 11.100 kWh',
+    payback: '8,1 – 8,8 Jahre'
+  },
+  {
+    kwp: '12 kWp',
+    modules: '27–28 Module (~53 m²)',
+    costPerKwp: eegRegulations.marketCostBenchmarks2026.pvCostPerKwpWithoutStorageEur['12kWp'],
+    storageRec: '10 kWh',
+    turnkeyWithStorage: 20450,
+    yieldYear: '11.400 – 13.320 kWh',
+    payback: '7,9 – 8,6 Jahre'
+  },
+  {
+    kwp: '15 kWp (inkl. WP/E-Auto)',
+    modules: '34–35 Module (~66 m²)',
+    costPerKwp: eegRegulations.marketCostBenchmarks2026.pvCostPerKwpWithoutStorageEur['15kWp'],
+    storageRec: '15 kWh',
+    turnkeyWithStorage: 25500,
+    yieldYear: '14.250 – 16.650 kWh',
+    payback: '7,6 – 8,3 Jahre'
+  },
+  {
+    kwp: '20 kWp (Vollausbau)',
+    modules: '44–46 Module (~88 m²)',
+    costPerKwp: eegRegulations.marketCostBenchmarks2026.pvCostPerKwpWithoutStorageEur['20kWp'],
+    storageRec: '15 kWh',
+    turnkeyWithStorage: 30150,
+    yieldYear: '19.000 – 22.200 kWh',
+    payback: '7,4 – 8,1 Jahre'
+  }
+];
+
+const homeFaqs = [
+  {
+    q: 'Lohnt sich eine Photovoltaikanlage im Herbst/Winter 2026 noch vor der EEG-Reform 2027?',
+    a: 'Ja, das Zeitfenster bis zum 31. Dezember 2026 ist wirtschaftlich besonders vorteilhaft: Die Modul- und Speicherpreise liegen rund 40 % unter den Höchstständen von 2022/2023, der Nullsteuersatz (0 % MwSt. nach § 12 Abs. 3 UStG) gilt unbefristet, und Anlagen mit Inbetriebnahme bis zum 31.12.2026 sichern sich noch den vollen 20-jährigen EEG-Bestandsschutz (7,70 ct/kWh Teileinspeisung bis 10 kWp), bevor ab 2027 für Neuanlagen unter 25 kWp das klassische Festvergütungsmodell ausläuft.'
+  },
+  {
+    q: 'Was kostet eine schlüsselfertige 10-kWp-Solaranlage mit Speicher im Jahr 2026?',
+    a: 'Im bundesweiten Durchschnitt (Stand November 2026) kostet eine schlüsselfertige 10-kWp-Dachanlage ohne Speicher rund 12.900 € (1.290 €/kWp netto = brutto dank 0 % MwSt.). Inklusive eines 10-kWh-Lithium-Eisenphosphat-Speichers (LFP), Hybrid-Wechselrichters, Energiemanagementsystems (HEMS) und kompletter Montage liegen die Gesamtkosten je nach Bundesland zwischen 17.650 € (Sachsen-Anhalt) und 19.350 € (München), im Bundesschnitt bei ca. 18.600 €.'
+  },
+  {
+    q: 'Welche Einspeisevergütung gilt ab August 2026 bis Januar 2027?',
+    a: 'Gemäß Veröffentlichung der Bundesnetzagentur gelten für Inbetriebnahmen vom 01.08.2026 bis 31.01.2027 bei Überschusseinspeisung (Teileinspeisung) 7,70 ct/kWh für den Anlagenteil bis 10 kWp und 6,66 ct/kWh für 10 bis 40 kWp. Bei reiner Volleinspeisung werden 12,22 ct/kWh (bis 10 kWp) bzw. 10,24 ct/kWh (10–40 kWp) gezahlt.'
+  },
+  {
+    q: 'Was bedeutet das Solarspitzengesetz (§ 51 EEG) für neue Solaranlagen?',
+    a: 'Nach § 51 EEG wird für Neuanlagen in Stunden mit negativen Börsenstrompreisen an der EPEX SPOT keine Einspeisevergütung ausgezahlt; zudem gilt bis zum Einbau eines intelligenten Messsystems (Smart Meter + Steuerbox) eine 60-%-Einspeisebegrenzung. Ein gesteuerter Heimspeicher fängt diese Mittagsspitzen automatisch für den eigenen Abendverbrauch ab, während die abgeregelten Stunden an das Ende des 20-jährigen Förderzeitraums angehängt werden.'
+  },
+  {
+    q: 'Wie wird der SOLARMETRIK-Effizienzscore (SME-2026) berechnet?',
+    a: 'Der SME-2026-Index (0 bis 100 Punkte) bewertet jeden Standort in Deutschland anhand von vier nachprüfbaren Ingenieur-Parametern: (1) Spezifischer Solarertrag in kWh/kWp nach DWD/PVGIS (40 % Gewicht), (2) regionales Handwerker- und Montagepreisniveau in €/kWp (25 %), (3) lokaler Haushaltsstrompreis des Grundversorgers als Eigenverbrauchshebel (20 %) und (4) aktive Landes-/Kommunalförderung sowie Solarpflicht-Synergien (15 %).'
+  },
+  {
+    q: 'In welchen Bundesländern gilt 2026 eine Solarpflicht für private Wohnhäuser?',
+    a: 'Im Jahr 2026 gilt eine gesetzliche Photovoltaik-Pflicht bei Neubau und/oder umfassender Dachsanierung privater Wohngebäude unter anderem in Baden-Württemberg, Berlin, Bremen, Hamburg, Niedersachsen, Nordrhein-Westfalen (Dachsanierungspflicht seit 01.01.2026 in Kraft) und Schleswig-Holstein. Alle Details je Bundesland finden Sie im interaktiven Solar-Atlas.'
+  }
+];
+
+const homeSchema = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'WebSite',
+    name: 'SOLARMETRIK Deutschland',
+    url: 'https://solarmetrik.de',
+    potentialAction: {
+      '@type': 'SearchAction',
+      target: 'https://solarmetrik.de/foerderung-check?q={search_term_string}',
+      'query-input': 'required name=search_term_string'
+    }
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: homeFaqs.map((f) => ({
+      '@type': 'Question',
+      name: f.q,
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: f.a
+      }
+    }))
+  }
+];
+---
+
+<BaseLayout
+  title="SOLARMETRIK — Deutscher Photovoltaik-Atlas, Ertragsrechner & EEG-Daten 2026/2027"
+  description="Unabhängiges deutsches Fachportal für Photovoltaik: Regionale DWD-Strahlungsdaten für alle 16 Bundesländer & 51 Städte, 360°-Ertragsrechner, EEG 2026/2027 & Förderungen."
+  canonicalPath="/"
+  isHero={true}
+  activeSection="home"
+  schema={homeSchema}
+>
+  <!-- 1. AXOPAR FULL-BLEED SUNLIT HERO -->
+  <section class="ax-hero">
+    <div class="ax-hero__media">
+      <img
+        src="/images/hero-solaranlage-deutschland-2026.webp"
+        alt="Moderne Photovoltaikanlage bei Sonnenschein in Deutschland"
+        width="1600"
+        height="900"
+        fetchpriority="high"
+      />
+    </div>
+    <div class="ax-hero__scrim"></div>
+
+    <div class="ax-hero__inner">
+      <div class="ax-hero__content">
+        <span class="ax-hero__eyebrow">
+          Deutsches Photovoltaik-Dateninstitut · Stand November 2026
+        </span>
+        <h1 class="ax-hero__title">
+          SOLARENERGIE NEU BERECHNET
+        </h1>
+        <p class="ax-hero__lead">
+          Solarenergie bedeutet Unabhängigkeit — die Freiheit, eigenen Strom zu erzeugen,
+          Energiekosten dauerhaft zu senken und den Wert Ihres Hauses zu steigern. Bei
+          SOLARMETRIK vereinen wir präzise DWD-Strahlungsdaten aller 16 Bundesländer mit
+          klarer Ingenieur-Analytik.
+        </p>
+        <div class="ax-hero__actions">
+          <a href="/rechner" class="ax-btn">
+            Ertragsrechner starten →
+          </a>
+          <a href="#deutschland-atlas" class="ax-btn" style="border-color: rgba(255,255,255,0.45);">
+            Solar-Atlas (16 Länder) ↓
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2. AXOPAR BORDERLESS ROUNDED PHOTO CARDS (3 CORE PILLARS WITH H2 HEADING) -->
+  <section class="ax-section">
+    <div class="container">
+      <div class="ax-section__head">
+        <span class="ax-eyebrow">Unabhängiges Fachportal & Dateninstitut · Überblick</span>
+        <h2 class="ax-h2">DIE DREI KERNBEREICHE FÜR IHRE PHOTOVOLTAIK-PLANUNG 2026</h2>
+        <p class="ax-sub">
+          Von der präzisen 360°-Ertragssimulation für Ihr Hausdach über den regionalen
+          Förder- und Strahlungsatlas aller 16 Bundesländer bis zur rechtssicheren Einordnung
+          des EEG-Systemwechsels 2027.
+        </p>
+      </div>
+
+      <div class="ax-cards-3">
+        <a href="/rechner" class="ax-photo-card">
+          <div class="ax-photo-card__img-wrap">
+            <img
+              src="/images/solarspitzengesetz-smart-meter-2026.webp"
+              alt="Photovoltaik Dachneigung und Ertragsrechner 2026"
+              width="800"
+              height="600"
+              fetchpriority="high"
+            />
+          </div>
+          <div class="ax-photo-card__meta">Ingenieur-Tool · PVGIS & DWD</div>
+          <div class="ax-photo-card__title">360°-Ertrags- & Wirtschaftlichkeitsrechner</div>
+          <p class="ax-photo-card__desc">
+            Simulieren Sie Dachneigung (15°–60°), Himmelsrichtung, Speichergröße und den
+            20-Jahre-Cashflow mit lokalen Stromtarifen Ihrer Stadt.
+          </p>
+          <span class="ax-photo-card__caption">
+            Perfekte Anlagengröße für Ihr Dach berechnen →
+          </span>
+        </a>
+
+        <a href="/solaratlas" class="ax-photo-card">
+          <div class="ax-photo-card__img-wrap">
+            <img
+              src="/images/solarpflicht-deutschland-bundeslaender-2026.webp"
+              alt="Solar-Atlas Deutschland für alle 16 Bundesländer und 51 Städte"
+              width="800"
+              height="600"
+              loading="lazy"
+            />
+          </div>
+          <div class="ax-photo-card__meta">Regionaler Atlas · 16 Länder & 51 Städte</div>
+          <div class="ax-photo-card__title">Deutscher Solar-Atlas & Förderstatus 2026</div>
+          <p class="ax-photo-card__desc">
+            Verifizierte Globalstrahlung (kWh/m²), Solarpflicht-Gesetze bei Dachsanierung,
+            Stadtwerke-Vorgaben und kommunale Zuschüsse nach Postleitzahl.
+          </p>
+          <span class="ax-photo-card__caption">
+            Solar-Atlas 2026: Alle 16 Bundesländer im Vergleich →
+          </span>
+        </a>
+
+        <a href="/ratgeber/eeg-2026-vs-2027-einspeiseverguetung" class="ax-photo-card">
+          <div class="ax-photo-card__img-wrap">
+            <img
+              src="/images/eeg-2026-2027-einspeiseverguetung.webp"
+              alt="EEG-Reform 2027, Solarspitzengesetz und 0 Prozent MwSt Analyse"
+              width="800"
+              height="600"
+              loading="lazy"
+            />
+          </div>
+          <div class="ax-photo-card__meta">Regulierung & Recht · Stand 11/2026</div>
+          <div class="ax-photo-card__title">EEG-Reform 2027, § 51 EEG & 0 % MwSt.</div>
+          <p class="ax-photo-card__desc">
+            Warum der 31.12.2026 für Anlagen unter 25 kWp entscheidend ist und wie § 14a EnWG
+            Ihre Netzentgelte um bis zu 190 € pro Jahr reduziert.
+          </p>
+          <span class="ax-photo-card__caption">
+            EEG-Reform 2027 & Bestandsschutz-Leitfaden lesen →
+          </span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3. REGULATORY & FINANCIAL BENCHMARKS 2026/2027 -->
+  <section class="ax-section ax-section--soft">
+    <div class="container">
+      <div class="ax-section__head">
+        <span class="ax-eyebrow">Gesetzliche Rahmenbedingungen · Bundesnetzagentur & BMF</span>
+        <h2 class="ax-h2">DIE VIER ECKPFEILER DER PHOTOVOLTAIK-RENDITE 2026</h2>
+        <p class="ax-sub">
+          Das Jahr 2026 vereint historisch niedrige Modul- und Batteriepreise mit steuerlicher
+          Komplettbefreiung. Gleichzeitig markiert der Jahreswechsel 2026/2027 eine Zäsur in der
+          deutschen Solarförderung.
+        </p>
+      </div>
+
+      <div class="ax-cards-4">
+        <div class="kpi-card">
+          <div class="kpi-card__label">EEG-Vergütung (08/2026 – 01/2027)</div>
+          <div class="kpi-card__value">7,70 / 12,22 ct</div>
+          <div class="kpi-card__note">
+            Pro kWh bis 10 kWp (Teileinspeisung 7,70 ct/kWh · Volleinspeisung 12,22 ct/kWh),
+            gesetzlich garantiert für 20 Jahre zuzüglich Inbetriebnahmejahr.
+          </div>
+        </div>
+
+        <div class="kpi-card">
+          <div class="kpi-card__label">Nullsteuersatz & Einkommensteuer</div>
+          <div class="kpi-card__value">0 % MwSt.</div>
+          <div class="kpi-card__note">
+            Nach § 12 Abs. 3 UStG entfallen 19 % Umsatzsteuer auf Module, Speicher und Montage.
+            Zudem 0 % Einkommensteuer bis 30 kWp gemäß § 3 Nr. 72 EStG.
+          </div>
+        </div>
+
+        <div class="kpi-card">
+          <div class="kpi-card__label">Netzentgelt-Bonus (§ 14a EnWG)</div>
+          <div class="kpi-card__value">− 110 bis 190 €</div>
+          <div class="kpi-card__note">
+            Jährliche Gutschrift (Modul 1) oder 60 % Arbeitspreis-Rabatt (Modul 2) sowie
+            zeitvariable Netzentgelte (Modul 3) für steuerbare Speicher, Wärmepumpen & Wallboxen.
+          </div>
+        </div>
+
+        <div class="kpi-card">
+          <div class="kpi-card__label">EEG-Bestandsschutz Frist</div>
+          <div class="kpi-card__value">31.12.2026</div>
+          <div class="kpi-card__note">
+            Letzter Stichtag zur Sicherung der klassischen 20-jährigen Festvergütung vor dem
+            geplanten Systemwechsel im EEG 2027 für Dachanlagen unter 25 kWp.
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. INTERACTIVE 16-STATE GEOGRAPHICAL MAP OF GERMANY -->
+  <section class="ax-section" id="deutschland-atlas">
+    <div class="container">
+      <div class="ax-section__head">
+        <span class="ax-eyebrow">Interaktive Deutschlandkarte · DWD & PVGIS Referenz</span>
+        <h2 class="ax-h2">REGIONALER SOLAR-ATLAS FÜR ALLE 16 BUNDESLÄNDER</h2>
+        <p class="ax-sub">
+          Zwischen Norddeutschland (ca. 945 kWh/kWp) und dem Alpenvorland (über 1.110 kWh/kWp)
+          variiert der jährliche Solarertrag um bis zu 18 %. Wählen Sie ein Bundesland auf der
+          Karte, um Strahlungswerte, Montagepreise, Solarpflicht-Regeln und Städte-Analysen
+          abzurufen.
+        </p>
+      </div>
+
+      <GermanyMapAtlas />
+
+      <div style="margin-top: 44px; padding-top: 32px; border-top: 1px solid var(--border-hairline);">
+        <div style="font-size: 13px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-muted); margin-bottom: 14px;">
+          Direktzugriff auf die 12 meistgeprüften Städte Deutschlands (inkl. Stadtwerke & Förderstatus Herbst 2026):
+        </div>
+        <div class="city-pill-list">
+          {topCities.map((c) => (
+            <a href={`/solaratlas/${c.bundeslandSlug}/${c.slug}`} class="city-pill">
+              {c.name} ({c.plzRange.split('–')[0]}) · {c.specificYieldKwhKwp} kWh/kWp →
+            </a>
+          ))}
+          <a href="/solaratlas" class="city-pill" style="background: var(--accent-blue-light); color: var(--accent-blue); border-color: var(--accent-blue);">
+            Alle 51 deutschen Städte anzeigen →
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5. 2026 PRICE MATRIX (5-20 kWp) & SEASONAL GENERATION CHART -->
+  <section class="ax-section ax-section--soft">
+    <div class="container">
+      <div class="ax-section__head">
+        <span class="ax-eyebrow">Marktpreis-Monitoring · Q4 2026 (inkl. 0 % MwSt.)</span>
+        <h2 class="ax-h2">WAS KOSTET EINE SOLARANLAGE 2026? PREISTABELLE & JAHRESVERLAUF</h2>
+        <p class="ax-sub">
+          Je größer die Dachanlage dimensioniert wird, desto stärker sinkt der spezifische Preis
+          pro Kilowatt-Peak (€/kWp), da Gerüstbau, Netzanschluss und Zählerschrank-Modernisierung
+          (ca. 2.450 € Fixkostenanteil) nur einmal anfallen.
+        </p>
+      </div>
+
+      <div class="clean-table-wrap" style="background: #ffffff; padding: 8px 24px; border-radius: var(--radius-photo); border: 1px solid var(--border-hairline);">
+        <table class="clean-table">
+          <thead>
+            <tr>
+              <th>Anlagengröße</th>
+              <th>Modulanzahl & Fläche</th>
+              <th>Ø Preis pro kWp (ohne Speicher)</th>
+              <th>Empf. Speicher</th>
+              <th>Komplettpreis inkl. Speicher (0% MwSt)</th>
+              <th>Jahresertrag (DE)</th>
+              <th>Ø Amortisation</th>
+            </tr>
+          </thead>
+          <tbody>
+            {priceRows.map((r) => (
+              <tr>
+                <td><strong>{r.kwp}</strong></td>
+                <td>{r.modules}</td>
+                <td>{formatEur(r.costPerKwp)} / kWp</td>
+                <td>{r.storageRec}</td>
+                <td><strong>ca. {formatEur(r.turnkeyWithStorage)}</strong></td>
+                <td>{r.yieldYear}</td>
+                <td style="color: var(--accent-green); font-weight: 600;">{r.payback}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+
+      <div class="ax-cards-2" style="margin-top: 40px;">
+        <div class="kpi-card">
+          <h3 class="ax-h3">Saisonaler Ertragsverlauf in Deutschland (Januar – Dezember)</h3>
+          <p style="font-size: 14px; color: var(--text-secondary); margin-bottom: 16px;">
+            Rund 76 % des gesamten Jahresertrags entstehen zwischen April und September. In den
+            Wintermonaten (Nov–Feb) sichert die Kombination aus Ost/West- oder Süddach und
+            hocheffizientem Speicher (HTW-Effizienzklasse A) die Grundlast.
+          </p>
+          <div class="monthly-bars" role="img" aria-label="Monatliche Verteilung des Solarertrags in Prozent von Januar bis Dezember">
+            {monthlyDist.map((m) => (
+              <div class="monthly-bar-col">
+                <span class="monthly-bar-val">{m.sharePercent.toLocaleString('de-DE')}%</span>
+                <div
+                  class="monthly-bar-fill"
+                  style={`height: ${Math.round((m.sharePercent / 15) * 100)}%;`}
+                ></div>
+                <span class="monthly-bar-label">{m.month}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div class="kpi-card">
+          <h3 class="ax-h3">Finanztip-Faustregel vs. Reale Marktpreise 2026</h3>
+          <p style="font-size: 14.5px; color: var(--text-secondary); margin-bottom: 16px;">
+            Verbraucherschützer und Finanztip nennen für 2026 als wirtschaftliche Obergrenze
+            maximal <strong>1.600 € pro kWp</strong> für die PV-Anlage und maximal
+            <strong>600 € pro kWh</strong> für den Batteriespeicher. Unsere Auswertung der
+            regionalen Fachbetriebs-Angebote zeigt:
+          </p>
+          <ul class="editorial-list" style="margin-bottom: 20px;">
+            <li>
+              <strong>10-kWp-Referenzanlage (2026):</strong> Mit Ø <strong>1.290 €/kWp</strong>
+              liegen aktuelle Fachhandwerkspreise fast 20 % unter der kritischen Obergrenze.
+            </li>
+            <li>
+              <strong>10-kWh-LFP-Heimspeicher:</strong> Mit Ø <strong>570 €/kWh</strong> inklusive
+              Hybrid-Wechselrichter-Anbindung ist der Speicher auch ohne Landesförderung hochrentabel.
+            </li>
+          </ul>
+          <a href="/ratgeber/photovoltaik-kosten-2026" class="ax-btn ax-btn--light">
+            Vollständige Preisstudie 2026 lesen →
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6. EDITORIAL SHOWCASE (/RATGEBER/) -->
+  <section class="ax-section">
+    <div class="container">
+      <div
+        style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 20px; margin-bottom: 48px;"
+      >
+        <div style="max-width: 680px;">
+          <span class="ax-eyebrow">SOLARMETRIK Fachredaktion · Geprüft durch Dipl.-Ing.</span>
+          <h2 class="ax-h2">AKTUELLE INGENIEUR-LEITFÄDEN & STUDIEN 2026/2027</h2>
+          <p class="ax-sub">
+            Fundierte Analysen zu Stromspeicher-Wirkungsgraden (HTW Berlin), Sektorenkopplung
+            mit Wärmepumpe (§ 14a EnWG), Steckersolargeräten (DIN VDE V 0126-95) und dem
+            Miet-vs.-Kauf-Vergleich.
+          </p>
+        </div>
+        <a href="/ratgeber" class="ax-btn ax-btn--light">
+          Alle 10 Fachartikel im Ratgeber →
+        </a>
+      </div>
+
+      <div class="ax-cards-3">
+        <a href="/ratgeber/stromspeicher-test-dimensionierung-2026" class="ax-photo-card">
+          <div class="ax-photo-card__img-wrap">
+            <img
+              src="/images/stromspeicher-test-htw-berlin-2026.webp"
+              alt="HTW Berlin Stromspeicher-Inspektion 2026 und System Performance Index"
+              width="800"
+              height="600"
+              loading="lazy"
+            />
+          </div>
+          <div class="ax-photo-card__meta">HTW Berlin Analyse · SPI & Effizienzklasse A</div>
+          <div class="ax-photo-card__title">Stromspeicher-Test & Dimensionierung 2026</div>
+          <p class="ax-photo-card__desc">
+            Warum ineffiziente Speicher bis zu 180 € pro Jahr durch Umwandlungsverluste kosten
+            und welche 5-kW- und 10-kW-Systeme in der Stromspeicher-Inspektion führen.
+          </p>
+          <span class="ax-photo-card__caption">Studie & Dimensionierungs-Leitfaden →</span>
+        </a>
+
+        <a href="/ratgeber/photovoltaik-waermepumpe-kombinieren-14a-enwg" class="ax-photo-card">
+          <div class="ax-photo-card__img-wrap">
+            <img
+              src="/images/photovoltaik-waermepumpe-14a-enwg-2026.webp"
+              alt="Photovoltaik mit Wärmepumpe und Wallbox kombinieren nach § 14a EnWG"
+              width="800"
+              height="600"
+              loading="lazy"
+            />
+          </div>
+          <div class="ax-photo-card__meta">Sektorenkopplung · § 14a EnWG Modul 1–3</div>
+          <div class="ax-photo-card__title">Photovoltaik mit Wärmepumpe & Wallbox kombinieren</div>
+          <p class="ax-photo-card__desc">
+            So steigern Sie den Eigenverbrauch über SG-Ready auf bis zu 82 % und wählen das
+            optimale Netzentgelt-Modul nach § 14a EnWG.
+          </p>
+          <span class="ax-photo-card__caption">Sektorenkopplung & § 14a EnWG berechnen →</span>
+        </a>
+
+        <a href="/ratgeber/solaranlage-kaufen-oder-mieten-2026" class="ax-photo-card">
+          <div class="ax-photo-card__img-wrap">
+            <img
+              src="/images/solaranlage-kaufen-oder-mieten-2026.webp"
+              alt="Solaranlage kaufen oder mieten 2026 im 20-Jahre-TCO-Vergleich"
+              width="800"
+              height="600"
+              loading="lazy"
+            />
+          </div>
+          <div class="ax-photo-card__meta">Finanzanalyse · 20-Jahre-Vollkostenrechnung</div>
+          <div class="ax-photo-card__title">Solaranlage kaufen vs. mieten 2026</div>
+          <p class="ax-photo-card__desc">
+            Der ungeschönte Vergleich: 18.600 € Direktkauf (bzw. KfW-270-Kredit) gegen 39.600 €
+            Gesamtkosten bei 20-jährigen Mietverträgen.
+          </p>
+          <span class="ax-photo-card__caption">Kauf-vs.-Miete-Rechnung ansehen →</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 7. EXPERT FAQ ACCORDION -->
+  <section class="ax-section ax-section--soft">
+    <div class="container--editorial">
+      <div style="margin-bottom: 36px;">
+        <span class="ax-eyebrow">Häufig gestellte Fragen · Verifizierte Antworten 2026</span>
+        <h2 class="ax-h2">WICHTIGE FRAGEN ZU KOSTEN, EEG 2027 & FÖRDERUNG</h2>
+      </div>
+
+      <div class="faq-list">
+        {homeFaqs.map((item, idx) => (
+          <details class="faq-item" open={idx === 0}>
+            <summary class="faq-question">
+              <span>{item.q}</span>
+              <span style="color: var(--accent-blue); font-size: 18px; margin-left: 12px;">+</span>
+            </summary>
+            <div class="faq-answer">
+              <p>{item.a}</p>
+            </div>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+</BaseLayout>

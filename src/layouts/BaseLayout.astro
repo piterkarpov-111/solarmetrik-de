@@ -1,0 +1,124 @@
+---
+import '../styles/global.css';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+
+interface Props {
+  title: string;
+  description: string;
+  canonicalPath?: string;
+  isHero?: boolean;
+  activeSection?: 'atlas' | 'rechner' | 'ratgeber' | 'methodik' | 'home';
+  ogImage?: string;
+  schema?: Record<string, any> | Record<string, any>[];
+}
+
+const {
+  title,
+  description,
+  canonicalPath = Astro.url.pathname,
+  isHero = false,
+  activeSection = 'home',
+  ogImage = 'https://solarmetrik.de/images/hero-solaranlage-deutschland-2026.webp',
+  schema
+} = Astro.props;
+
+const siteUrl = 'https://solarmetrik.de';
+const canonicalUrl = `${siteUrl}${canonicalPath === '/' ? '' : canonicalPath.replace(/\/$/, '')}`;
+
+const baseOrgSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  '@id': `${siteUrl}/#organization`,
+  name: 'SOLARMETRIK — Deutsches Photovoltaik-Dateninstitut',
+  url: siteUrl,
+  logo: `${siteUrl}/favicon.svg`,
+  description:
+    'Unabhängiges deutsches Fachportal und Ingenieur-Dateninstitut für Photovoltaik-Wirtschaftlichkeit, regionale DWD-Strahlungsdaten und EEG-Regulierung 2026/2027.',
+  sameAs: [`${siteUrl}/methodik`, `${siteUrl}/api/solaratlas-2026.json`]
+};
+
+const schemas = Array.isArray(schema)
+  ? [baseOrgSchema, ...schema]
+  : schema
+    ? [baseOrgSchema, schema]
+    : [baseOrgSchema];
+---
+
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="192x192" href="/favicon-192x192.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <link rel="canonical" href={canonicalUrl} />
+    <link rel="sitemap" type="application/xml" href="https://solarmetrik.de/sitemap-index.xml" />
+    <link rel="alternate" type="text/plain" title="LLMs Reference" href="https://solarmetrik.de/llms.txt" />
+
+    <!-- Non-blocking Typography Preconnect & Stylesheet -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=Inter:wght@300;400;500;600&display=swap"
+    />
+
+    <!-- Google Discover & Search 2026 Directives -->
+    <meta
+      name="robots"
+      content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"
+    />
+
+    <!-- OpenGraph / Discover Preview -->
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="de_DE" />
+    <meta property="og:site_name" content="SOLARMETRIK Deutschland" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1600" />
+    <meta property="og:image:height" content="900" />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <!-- Speculation Rules API for 0ms Page Transitions (Chrome/Edge 2026) -->
+    <script type="speculationrules" is:inline>
+      {
+        "prerender": [
+          {
+            "where": {
+              "and": [
+                { "href_matches": "/*" },
+                { "not": { "href_matches": "/api/*" } }
+              ]
+            },
+            "eagerness": "moderate"
+          }
+        ],
+        "prefetch": [
+          {
+            "where": { "href_matches": "/*" },
+            "eagerness": "conservative"
+          }
+        ]
+      }
+    </script>
+
+    {schemas.map((s) => (
+      <script type="application/ld+json" set:html={JSON.stringify(s)} />
+    ))}
+  </head>
+  <body>
+    <Header isHero={isHero} activeSection={activeSection} />
+    <main>
+      <slot />
+    </main>
+    <Footer />
+  </body>
+</html>

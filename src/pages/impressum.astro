@@ -1,0 +1,52 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+---
+
+<BaseLayout
+  title="Impressum (§ 5 DDG & § 18 MStV) | SOLARMETRIK Deutschland"
+  description="Rechtliches Impressum und Anbieterkennzeichnung gemäß § 5 Digitale-Dienste-Gesetz (DDG) und § 18 Abs. 2 Medienstaatsvertrag (MStV) für solarmetrik.de."
+  canonicalPath="/impressum"
+>
+  <article class="ax-section" style="padding-top: 44px;">
+    <div class="container--editorial">
+      <Breadcrumbs
+        items={[
+          { label: 'Startseite', href: '/' },
+          { label: 'Impressum (§ 5 DDG)' }
+        ]}
+      />
+
+      <h1 class="editorial-h1">IMPRESSUM (ANGABEN GEMÄSS § 5 DDG)</h1>
+
+      <h2 class="editorial-h2">ANBIETERKENNZEICHNUNG</h2>
+      <p class="editorial-p">
+        <strong>SOLARMETRIK Institut für Solare Datenanalyse & Fachpublikationen</strong><br />
+        Maximilianstraße 35a<br />
+        80539 München<br />
+        Bundesrepublik Deutschland
+      </p>
+
+      <h2 class="editorial-h2">KONTAKT</h2>
+      <p class="editorial-p">
+        Telefon: +49 (0) 89 / 2154 8920<br />
+        E-Mail: redaktion@solarmetrik.de<br />
+        Internet: https://solarmetrik.de
+      </p>
+
+      <h2 class="editorial-h2">REDAKTIONELL VERANTWORTLICH GEMÄSS § 18 ABS. 2 MSTV</h2>
+      <p class="editorial-p">
+        Lukas Hartmann (M.Sc.) & Dipl.-Ing. Markus Weber<br />
+        Anschrift wie oben (Maximilianstraße 35a, 80539 München)
+      </p>
+
+      <h2 class="editorial-h2">HAFTUNGSHINWEIS ZU BERECHNUNGEN & FÖRDERANGABEN</h2>
+      <p class="editorial-p">
+        Alle Berechnungen, Ertragssimulationen und Förderübersichten auf <code>solarmetrik.de</code>
+        dienen der unverbindlichen technischen und wirtschaftlichen Erstorientierung auf Basis
+        offizieller Referenzdaten (DWD, PVGIS, Bundesnetzagentur). Sie ersetzen keine individuelle
+        statische Prüfung vor Ort und keine steuerliche oder rechtsverbindliche Beratung.
+      </p>
+    </div>
+  </article>
+</BaseLayout>

@@ -1,0 +1,241 @@
+---
+import {
+  bundeslaender,
+  germanyGeoPaths,
+  getStaedteByBundesland,
+  formatEur,
+  formatNumber
+} from '../lib/data';
+
+const defaultState = bundeslaender.find((b) => b.slug === 'bayern') || bundeslaender[0];
+const defaultCities = getStaedteByBundesland(defaultState.slug);
+
+const statePayload = Object.fromEntries(
+  bundeslaender.map((b) => [
+    b.slug,
+    {
+      ...b,
+      cities: getStaedteByBundesland(b.slug).map((c) => ({
+        name: c.name,
+        slug: c.slug,
+        bundeslandSlug: c.bundeslandSlug,
+        yield: c.specificYieldKwhKwp,
+        score: c.solarmetrikScore
+      }))
+    }
+  ])
+);
+---
+
+<div class="map-layout">
+  <div class="map-canvas">
+    <div
+      style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 18px; font-size: 12.5px; color: var(--text-muted);"
+    >
+      <span>GEOGRAFISCHER SOLAR-ATLAS · 16 BUNDESLÄNDER</span>
+      <span>Klick auf Bundesland für Detailwerte</span>
+    </div>
+
+    <svg
+      viewBox="0 0 480 650"
+      class="germany-real-svg"
+      role="img"
+      aria-label="Interaktive Landkarte der 16 deutschen Bundesländer nach Photovoltaik-Ertrag 2026"
+    >
+      <title>Deutscher Photovoltaik-Atlas 2026 nach Bundesländern</title>
+      {germanyGeoPaths.map((p) => (
+        <path
+          id={`de-map-${p.slug}`}
+          data-slug={p.slug}
+          class:list={['de-state-path', { active: p.slug === defaultState.slug }]}
+          d={p.d}
+          tabindex="0"
+          role="button"
+          aria-label={`${p.name} auswählen`}
+        >
+          <title>{p.name}</title>
+        </path>
+      ))}
+    </svg>
+
+    <div
+      style="display: flex; justify-content: space-between; align-items: center; margin-top: 18px; padding-top: 14px; border-top: 1px solid var(--border-hairline); font-size: 12px; color: var(--text-muted);"
+    >
+      <span>Quelle: DWD Globalstrahlungs-Referenz / PVGIS 2026</span>
+      <a href="/solaratlas" style="color: var(--accent-blue); font-weight: 500;">
+        Tabellenansicht aller 16 Länder →
+      </a>
+    </div>
+  </div>
+
+  <div class="map-info-card" id="map-telemetry-panel" aria-live="polite">
+    <div style="display: flex; justify-content: space-between; align-items: baseline; gap: 16px;">
+      <span
+        id="map-state-eyebrow"
+        style="font-size: 12.5px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.06em;"
+      >
+        Bundesland ({defaultState.code}) · Hauptstadt: {defaultState.capital}
+      </span>
+      <span class="badge badge--blue" id="map-state-score">
+        SME-2026 Score: {defaultState.solarmetrikScore}/100
+      </span>
+    </div>
+
+    <h3
+      id="map-state-name"
+      style="font-family: var(--font-condensed); font-size: 40px; font-weight: 700; text-transform: uppercase; margin: 6px 0 8px; line-height: 1.05;"
+    >
+      {defaultState.name}
+    </h3>
+
+    <p id="map-state-foerderung" style="color: var(--text-secondary); font-size: 14.5px;">
+      <strong>Förderstatus 2026:</strong> {defaultState.landesfoerderung.programName} ({defaultState.landesfoerderung.status2026})
+    </p>
+
+    <div class="map-metrics-row">
+      <div>
+        <div class="map-metric__val" id="map-state-yield">
+          {formatNumber(defaultState.specificYieldKwhKwp)} kWh
+        </div>
+        <div class="map-metric__label">Ertrag pro kWp / Jahr</div>
+      </div>
+      <div>
+        <div class="map-metric__val" id="map-state-radiation">
+          {formatNumber(defaultState.globalRadiationKwhM2)} kWh/m²
+        </div>
+        <div class="map-metric__label">Globalstrahlung (DWD)</div>
+      </div>
+      <div>
+        <div class="map-metric__val" id="map-state-sunhours">
+          {formatNumber(defaultState.sunHoursPerYear)} Std.
+        </div>
+        <div class="map-metric__label">Sonnenstunden / Jahr</div>
+      </div>
+      <div>
+        <div class="map-metric__val" id="map-state-cost">
+          {formatEur(defaultState.avgCostPerKwpEur)}
+        </div>
+        <div class="map-metric__label">Ø Preis pro kWp (0% MwSt)</div>
+      </div>
+      <div>
+        <div class="map-metric__val" id="map-state-payback">
+          {formatNumber(defaultState.amortisationYears, 1)} Jahre
+        </div>
+        <div class="map-metric__label">Ø Amortisationszeit</div>
+      </div>
+      <div>
+        <div class="map-metric__val" id="map-state-profit" style="color: var(--accent-green);">
+          + {formatEur(defaultState.twentyYearNetProfitEur)}
+        </div>
+        <div class="map-metric__label">20-Jahre Nettovorteil</div>
+      </div>
+    </div>
+
+    <div style="margin-bottom: 20px; font-size: 14px; color: var(--text-secondary);">
+      <strong>Solarpflicht 2026:</strong>{' '}
+      <span id="map-state-pflicht">{defaultState.solarpflicht.effectiveRule2026}</span>
+    </div>
+
+    <div style="margin-bottom: 24px;">
+      <div style="font-size: 12.5px; color: var(--text-muted); margin-bottom: 8px;">
+        Geprüfte Städte & lokale Stadtwerke in diesem Bundesland:
+      </div>
+      <div class="city-pill-list" id="map-state-cities">
+        {defaultCities.map((c) => (
+          <a href={`/solaratlas/${c.bundeslandSlug}/${c.slug}`} class="city-pill">
+            {c.name} ({c.specificYieldKwhKwp} kWh/kWp) →
+          </a>
+        ))}
+      </div>
+    </div>
+
+    <div style="display: flex; flex-wrap: wrap; gap: 12px;">
+      <a
+        id="map-state-link"
+        href={`/solaratlas/${defaultState.slug}`}
+        class="ax-btn ax-btn--light"
+      >
+        Landesanalyse {defaultState.name} öffnen →
+      </a>
+      <a
+        id="map-state-calc-link"
+        href={`/rechner?state=${defaultState.slug}`}
+        class="ax-btn ax-btn--primary"
+      >
+        Im PV-Rechner mit {defaultState.name}-Daten starten →
+      </a>
+    </div>
+  </div>
+</div>
+
+<script is:inline define:vars={{ statePayload }}>
+  (() => {
+    const paths = document.querySelectorAll('.de-state-path');
+    if (!paths.length) return;
+
+    const elEyebrow = document.getElementById('map-state-eyebrow');
+    const elScore = document.getElementById('map-state-score');
+    const elName = document.getElementById('map-state-name');
+    const elFoerderung = document.getElementById('map-state-foerderung');
+    const elYield = document.getElementById('map-state-yield');
+    const elRadiation = document.getElementById('map-state-radiation');
+    const elSunhours = document.getElementById('map-state-sunhours');
+    const elCost = document.getElementById('map-state-cost');
+    const elPayback = document.getElementById('map-state-payback');
+    const elProfit = document.getElementById('map-state-profit');
+    const elPflicht = document.getElementById('map-state-pflicht');
+    const elCities = document.getElementById('map-state-cities');
+    const elLink = document.getElementById('map-state-link');
+    const elCalcLink = document.getElementById('map-state-calc-link');
+
+    function selectState(slug) {
+      const st = statePayload[slug];
+      if (!st) return;
+
+      paths.forEach((p) => {
+        p.classList.toggle('active', p.getAttribute('data-slug') === slug);
+      });
+
+      if (elEyebrow) elEyebrow.textContent = `Bundesland (${st.code}) · Hauptstadt: ${st.capital}`;
+      if (elScore) elScore.textContent = `SME-2026 Score: ${st.solarmetrikScore}/100`;
+      if (elName) elName.textContent = st.name;
+      if (elFoerderung) {
+        elFoerderung.innerHTML = `<strong>Förderstatus 2026:</strong> ${st.landesfoerderung.programName} (${st.landesfoerderung.status2026})`;
+      }
+      if (elYield) elYield.textContent = `${st.specificYieldKwhKwp.toLocaleString('de-DE')} kWh`;
+      if (elRadiation) elRadiation.textContent = `${st.globalRadiationKwhM2.toLocaleString('de-DE')} kWh/m²`;
+      if (elSunhours) elSunhours.textContent = `${st.sunHoursPerYear.toLocaleString('de-DE')} Std.`;
+      if (elCost) elCost.textContent = `${st.avgCostPerKwpEur.toLocaleString('de-DE')} €`;
+      if (elPayback) elPayback.textContent = `${st.amortisationYears.toLocaleString('de-DE', { minimumFractionDigits: 1 })} Jahre`;
+      if (elProfit) elProfit.textContent = `+ ${st.twentyYearNetProfitEur.toLocaleString('de-DE')} €`;
+      if (elPflicht) elPflicht.textContent = st.solarpflicht.effectiveRule2026;
+
+      if (elCities) {
+        elCities.innerHTML = st.cities
+          .map(
+            (c) =>
+              `<a href="/solaratlas/${c.bundeslandSlug}/${c.slug}" class="city-pill">${c.name} (${c.yield} kWh/kWp) →</a>`
+          )
+          .join('');
+      }
+      if (elLink) {
+        elLink.href = `/solaratlas/${st.slug}`;
+        elLink.textContent = `Landesanalyse ${st.name} öffnen →`;
+      }
+      if (elCalcLink) {
+        elCalcLink.href = `/rechner?state=${st.slug}`;
+        elCalcLink.textContent = `Im PV-Rechner mit ${st.name}-Daten starten →`;
+      }
+    }
+
+    paths.forEach((p) => {
+      p.addEventListener('click', () => selectState(p.getAttribute('data-slug')));
+      p.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          selectState(p.getAttribute('data-slug'));
+        }
+      });
+    });
+  })();
+</script>

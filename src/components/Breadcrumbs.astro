@@ -1,0 +1,41 @@
+---
+export interface BreadcrumbItem {
+  label: string;
+  href?: string;
+}
+
+interface Props {
+  items: BreadcrumbItem[];
+}
+
+const { items } = Astro.props;
+const siteUrl = 'https://solarmetrik.de';
+
+const breadcrumbSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: items.map((item, idx) => ({
+    '@type': 'ListItem',
+    position: idx + 1,
+    name: item.label,
+    ...(item.href ? { item: `${siteUrl}${item.href}` } : {})
+  }))
+};
+---
+
+<nav class="editorial-breadcrumbs" aria-label="Brotkrümelnavigation">
+  {items.map((item, idx) => (
+    <>
+      {idx > 0 && <span aria-hidden="true">—</span>}
+      {item.href ? (
+        <a href={item.href}>{item.label}</a>
+      ) : (
+        <span style="color: var(--text-primary); font-weight: 500;" aria-current="page">
+          {item.label}
+        </span>
+      )}
+    </>
+  ))}
+</nav>
+
+<script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />

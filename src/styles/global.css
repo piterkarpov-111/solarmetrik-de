@@ -1,0 +1,1257 @@
+/* ==========================================================================
+   SOLARMETRIK (solarmetrik.de) — Pure White & Airy Axopar.com Design System
+   100% Scandi-European Light Aesthetic · Zero Black · Zero Clutter
+   ========================================================================== */
+
+:root {
+  --bg-white: #ffffff;
+  --bg-soft: #f6f7f9;
+  --bg-card-subtle: #f9fafb;
+
+  --text-primary: #181a1c;
+  --text-secondary: #525860;
+  --text-muted: #868e96;
+
+  --accent-blue: #0f4c81;
+  --accent-blue-light: #eef4fa;
+  --accent-solar: #d9820f;
+  --accent-green: #16794b;
+  --accent-green-light: #ecfdf3;
+  --accent-red: #b42318;
+  --accent-red-light: #fef3f2;
+
+  --border-hairline: #e6e8ec;
+  --border-button: #cfd4dc;
+
+  --font-condensed: 'Barlow Condensed', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+
+  --container-wide: 1380px;
+  --container-editorial: 780px;
+  --radius-photo: 10px;
+  --radius-btn: 6px;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  font-family: var(--font-sans);
+  color: var(--text-primary);
+  background-color: var(--bg-white);
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  background-color: var(--bg-white);
+  color: var(--text-primary);
+  line-height: 1.65;
+  font-size: 15.5px;
+  font-weight: 400;
+  overflow-x: hidden;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+  transition: opacity 0.2s ease, color 0.2s ease;
+}
+
+ul, ol {
+  list-style: none;
+}
+
+img, video, svg {
+  display: block;
+  max-width: 100%;
+}
+
+button, input, select, textarea {
+  font: inherit;
+}
+
+.container {
+  max-width: var(--container-wide);
+  margin: 0 auto;
+  padding: 0 48px;
+}
+
+.container--editorial {
+  max-width: var(--container-editorial);
+  margin: 0 auto;
+  padding: 0 28px;
+}
+
+/* ==========================================================================
+   1. AXOPAR HEADER & NAVIGATION (Single-line, never wraps, ultra-clean)
+   ========================================================================== */
+.ax-header {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background: rgba(255, 255, 255, 0.97);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--border-hairline);
+  transition: background 0.25s ease, color 0.25s ease;
+}
+
+.ax-header--hero {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  background: linear-gradient(180deg, rgba(15, 28, 46, 0.45) 0%, rgba(15, 28, 46, 0) 100%);
+  backdrop-filter: none;
+  border-bottom: none;
+  color: #ffffff;
+}
+
+.ax-header__utility {
+  max-width: var(--container-wide);
+  margin: 0 auto;
+  padding: 10px 48px 0;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 24px;
+  font-size: 12.5px;
+  font-weight: 400;
+  opacity: 0.92;
+  white-space: nowrap;
+}
+
+.ax-header__main {
+  max-width: var(--container-wide);
+  margin: 0 auto;
+  padding: 12px 48px 18px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 36px;
+}
+
+.ax-logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-condensed);
+  font-size: 26px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  font-style: italic;
+  white-space: nowrap;
+}
+
+.ax-logo__fin {
+  display: inline-block;
+  width: 12px;
+  height: 18px;
+  background: currentColor;
+  transform: skewX(-18deg);
+  margin-left: 2px;
+}
+
+.ax-nav {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+  white-space: nowrap;
+}
+
+.ax-nav__item {
+  position: relative;
+  padding: 6px 0;
+}
+
+.ax-nav__link {
+  font-size: 14.5px;
+  font-weight: 400;
+  white-space: nowrap;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  position: relative;
+}
+
+.ax-nav__link::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -4px;
+  height: 1.5px;
+  background: currentColor;
+  transform: scaleX(0);
+  transition: transform 0.2s ease;
+}
+
+.ax-nav__link:hover::after,
+.ax-nav__link.active::after {
+  transform: scaleX(1);
+}
+
+/* Clean White Mega-Menu Dropdown */
+.ax-mega {
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 84px;
+  background: #ffffff;
+  color: var(--text-primary);
+  border-top: 1px solid var(--border-hairline);
+  border-bottom: 1px solid var(--border-hairline);
+  box-shadow: 0 24px 48px rgba(15, 23, 42, 0.08);
+  padding: 36px 0;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-6px);
+  transition: all 0.2s ease;
+  pointer-events: none;
+  white-space: normal;
+}
+
+.ax-nav__item:hover .ax-mega,
+.ax-nav__item:focus-within .ax-mega {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+.ax-mega__grid {
+  max-width: var(--container-wide);
+  margin: 0 auto;
+  padding: 0 48px;
+  display: grid;
+  grid-template-columns: 1.5fr 1.1fr 0.9fr;
+  gap: 44px;
+}
+
+.ax-mega__heading {
+  font-family: var(--font-condensed);
+  font-size: 15px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-muted);
+  margin-bottom: 14px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--border-hairline);
+}
+
+.ax-mega__list {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 6px 24px;
+}
+
+.ax-mega__list--single {
+  grid-template-columns: 1fr;
+}
+
+.ax-mega__link {
+  font-size: 13.5px;
+  color: var(--text-secondary);
+  padding: 4px 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.ax-mega__link:hover {
+  color: var(--accent-blue);
+}
+
+.ax-mega__score {
+  font-size: 11.5px;
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+.ax-search-box {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--bg-soft);
+  border: 1px solid var(--border-hairline);
+  border-radius: var(--radius-btn);
+  padding: 6px 12px;
+}
+
+.ax-header--hero .ax-search-box {
+  background: rgba(255, 255, 255, 0.14);
+  border-color: rgba(255, 255, 255, 0.35);
+}
+
+.ax-search-input {
+  border: none;
+  background: transparent;
+  font-size: 13px;
+  color: inherit;
+  width: 175px;
+  outline: none;
+}
+
+.ax-search-input::placeholder {
+  color: currentColor;
+  opacity: 0.68;
+}
+
+/* ==========================================================================
+   2. AXOPAR HERO (Full-Screen Bright Sunlit Video/Photo, Left Text, 1 Button)
+   ========================================================================== */
+.ax-hero {
+  position: relative;
+  height: 86vh;
+  min-height: 620px;
+  max-height: 860px;
+  width: 100%;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  color: #ffffff;
+  background: #dce6f2;
+}
+
+.ax-hero__media {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+}
+
+.ax-hero__media video,
+.ax-hero__media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+.ax-hero__scrim {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    rgba(16, 32, 54, 0.56) 0%,
+    rgba(16, 32, 54, 0.26) 46%,
+    rgba(16, 32, 54, 0.03) 100%
+  );
+  z-index: 2;
+}
+
+.ax-hero__inner {
+  position: relative;
+  z-index: 3;
+  width: 100%;
+  max-width: var(--container-wide);
+  margin: 0 auto;
+  padding: 64px 48px 0;
+}
+
+.ax-hero__content {
+  max-width: 560px;
+}
+
+.ax-hero__eyebrow {
+  font-size: 12.5px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  opacity: 0.92;
+  margin-bottom: 14px;
+  display: inline-block;
+}
+
+.ax-hero__title {
+  font-family: var(--font-condensed);
+  font-size: clamp(44px, 5.2vw, 68px);
+  font-weight: 700;
+  line-height: 1.02;
+  text-transform: uppercase;
+  letter-spacing: 0.01em;
+  margin-bottom: 22px;
+}
+
+.ax-hero__lead {
+  font-size: 16px;
+  line-height: 1.62;
+  font-weight: 400;
+  color: rgba(255, 255, 255, 0.95);
+  margin-bottom: 34px;
+}
+
+.ax-hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  align-items: center;
+}
+
+.ax-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 13px 26px;
+  border-radius: var(--radius-btn);
+  font-size: 14px;
+  font-weight: 500;
+  border: 1px solid rgba(255, 255, 255, 0.85);
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(6px);
+  color: #ffffff;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.ax-btn:hover {
+  background: #ffffff;
+  color: var(--text-primary);
+}
+
+.ax-btn--light {
+  border-color: #22252a;
+  color: var(--text-primary);
+  background: transparent;
+  backdrop-filter: none;
+}
+
+.ax-btn--light:hover {
+  background: var(--text-primary);
+  color: #ffffff;
+}
+
+.ax-btn--primary {
+  background: var(--accent-blue);
+  border-color: var(--accent-blue);
+  color: #ffffff;
+  backdrop-filter: none;
+}
+
+.ax-btn--primary:hover {
+  background: #0b3963;
+  border-color: #0b3963;
+  color: #ffffff;
+}
+
+/* ==========================================================================
+   3. SECTIONS, PHOTO CARDS & KPI GRIDS
+   ========================================================================== */
+.ax-section {
+  padding: 88px 0;
+  background: var(--bg-white);
+}
+
+.ax-section--soft {
+  background: var(--bg-soft);
+}
+
+.ax-section--compact {
+  padding: 56px 0;
+}
+
+.ax-section__head {
+  margin-bottom: 48px;
+  max-width: 740px;
+}
+
+.ax-eyebrow {
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--accent-blue);
+  margin-bottom: 10px;
+  display: block;
+}
+
+.ax-h1 {
+  font-family: var(--font-condensed);
+  font-size: clamp(36px, 4.2vw, 54px);
+  font-weight: 700;
+  text-transform: uppercase;
+  line-height: 1.05;
+  letter-spacing: 0.01em;
+  color: var(--text-primary);
+  margin-bottom: 18px;
+}
+
+.ax-h2 {
+  font-family: var(--font-condensed);
+  font-size: clamp(28px, 3vw, 40px);
+  font-weight: 700;
+  text-transform: uppercase;
+  line-height: 1.08;
+  letter-spacing: 0.01em;
+  color: var(--text-primary);
+  margin-bottom: 14px;
+}
+
+.ax-h3 {
+  font-family: var(--font-condensed);
+  font-size: 22px;
+  font-weight: 700;
+  text-transform: uppercase;
+  line-height: 1.15;
+  color: var(--text-primary);
+  margin-bottom: 10px;
+}
+
+.ax-sub {
+  color: var(--text-secondary);
+  font-size: 16px;
+  line-height: 1.65;
+}
+
+.ax-cards-3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 28px;
+}
+
+.ax-cards-4 {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+}
+
+.ax-cards-2 {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 32px;
+}
+
+.ax-photo-card {
+  display: block;
+}
+
+.ax-photo-card__img-wrap {
+  border-radius: var(--radius-photo);
+  overflow: hidden;
+  aspect-ratio: 4 / 3;
+  background: #eef1f5;
+  margin-bottom: 18px;
+}
+
+.ax-photo-card__img-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.55s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.ax-photo-card:hover .ax-photo-card__img-wrap img {
+  transform: scale(1.035);
+}
+
+.ax-photo-card__meta {
+  font-size: 12px;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 6px;
+}
+
+.ax-photo-card__title {
+  font-family: var(--font-condensed);
+  font-size: 22px;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--text-primary);
+  margin-bottom: 8px;
+  line-height: 1.15;
+}
+
+.ax-photo-card__desc {
+  font-size: 14.5px;
+  color: var(--text-secondary);
+  margin-bottom: 12px;
+  line-height: 1.55;
+}
+
+.ax-photo-card__caption {
+  font-size: 14.5px;
+  font-weight: 500;
+  color: var(--text-primary);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.ax-photo-card:hover .ax-photo-card__caption {
+  color: var(--accent-blue);
+}
+
+/* Clean Light KPI Cards */
+.kpi-card {
+  background: var(--bg-white);
+  border: 1px solid var(--border-hairline);
+  border-radius: var(--radius-photo);
+  padding: 28px;
+}
+
+.kpi-card--soft {
+  background: var(--bg-soft);
+  border-color: transparent;
+}
+
+.kpi-card__label {
+  font-size: 12.5px;
+  color: var(--text-secondary);
+  margin-bottom: 8px;
+  font-weight: 500;
+}
+
+.kpi-card__value {
+  font-family: var(--font-condensed);
+  font-size: 36px;
+  font-weight: 700;
+  line-height: 1.05;
+  color: var(--text-primary);
+  margin-bottom: 8px;
+}
+
+.kpi-card__note {
+  font-size: 13px;
+  color: var(--text-muted);
+  line-height: 1.45;
+}
+
+/* ==========================================================================
+   4. REAL GEOGRAPHICAL SVG MAP OF GERMANY (Clean Light Architectural Style)
+   ========================================================================== */
+.map-layout {
+  display: grid;
+  grid-template-columns: 0.95fr 1.05fr;
+  gap: 56px;
+  align-items: start;
+}
+
+.map-canvas {
+  background: #ffffff;
+  border-radius: var(--radius-photo);
+  padding: 36px;
+  border: 1px solid var(--border-hairline);
+}
+
+.germany-real-svg {
+  width: 100%;
+  max-width: 440px;
+  margin: 0 auto;
+}
+
+.de-state-path {
+  fill: #e9eef4;
+  stroke: #ffffff;
+  stroke-width: 1.6;
+  stroke-linejoin: round;
+  cursor: pointer;
+  transition: fill 0.2s ease;
+  outline: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.de-state-path:focus,
+.de-state-path:focus-visible {
+  outline: none;
+}
+
+.de-state-path:hover {
+  fill: #cbd8e8;
+}
+
+.de-state-path.active {
+  fill: var(--accent-blue);
+}
+
+.map-info-card {
+  background: #ffffff;
+  border-radius: var(--radius-photo);
+  padding: 40px;
+  border: 1px solid var(--border-hairline);
+}
+
+.map-metrics-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+  padding: 24px 0;
+  margin: 20px 0;
+  border-top: 1px solid var(--border-hairline);
+  border-bottom: 1px solid var(--border-hairline);
+}
+
+.map-metric__val {
+  font-family: var(--font-condensed);
+  font-size: 32px;
+  font-weight: 700;
+  line-height: 1.05;
+  color: var(--text-primary);
+  margin-bottom: 4px;
+}
+
+.map-metric__label {
+  font-size: 12.5px;
+  color: var(--text-secondary);
+}
+
+.city-pill-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.city-pill {
+  padding: 7px 14px;
+  border-radius: 6px;
+  background: var(--bg-soft);
+  border: 1px solid var(--border-hairline);
+  font-size: 13.5px;
+  font-weight: 500;
+  color: var(--text-primary);
+  transition: all 0.15s ease;
+}
+
+.city-pill:hover {
+  background: var(--accent-blue-light);
+  border-color: var(--accent-blue);
+  color: var(--accent-blue);
+}
+
+/* ==========================================================================
+   5. AXOPAR EDITORIAL, BREADCRUMBS, E-E-A-T & TABLES
+   ========================================================================== */
+.editorial-breadcrumbs {
+  font-size: 12.5px;
+  color: var(--text-muted);
+  margin-bottom: 22px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+
+.editorial-breadcrumbs a:hover {
+  color: var(--text-primary);
+  text-decoration: underline;
+}
+
+.editorial-h1 {
+  font-family: var(--font-condensed);
+  font-size: clamp(34px, 4.2vw, 50px);
+  font-weight: 700;
+  text-transform: uppercase;
+  line-height: 1.05;
+  color: var(--text-primary);
+  margin-bottom: 18px;
+}
+
+.editorial-meta {
+  font-size: 13.5px;
+  color: var(--text-secondary);
+  margin-bottom: 24px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--border-hairline);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  align-items: center;
+}
+
+.editorial-h2 {
+  font-family: var(--font-condensed);
+  font-size: clamp(24px, 2.5vw, 30px);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.01em;
+  margin: 48px 0 16px;
+  color: var(--text-primary);
+  scroll-margin-top: 100px;
+}
+
+.editorial-h3 {
+  font-family: var(--font-condensed);
+  font-size: 21px;
+  font-weight: 700;
+  text-transform: uppercase;
+  margin: 32px 0 12px;
+  color: var(--text-primary);
+}
+
+.editorial-p {
+  margin-bottom: 18px;
+  color: #2c3136;
+  font-size: 16px;
+  line-height: 1.72;
+}
+
+.editorial-list {
+  list-style: disc;
+  padding-left: 22px;
+  margin-bottom: 22px;
+}
+
+.editorial-list li {
+  margin-bottom: 10px;
+  color: #2c3136;
+  font-size: 15.5px;
+  line-height: 1.65;
+}
+
+.editorial-photo {
+  border-radius: var(--radius-photo);
+  overflow: hidden;
+  margin: 32px 0;
+  background: var(--bg-soft);
+}
+
+.editorial-photo figcaption {
+  font-size: 12.5px;
+  color: var(--text-muted);
+  padding: 10px 14px;
+  background: var(--bg-soft);
+}
+
+.clean-summary-box {
+  background: var(--bg-soft);
+  border-radius: var(--radius-photo);
+  padding: 28px 32px;
+  margin: 28px 0;
+  border-left: 3px solid var(--accent-blue);
+}
+
+.clean-summary-box--green {
+  background: var(--accent-green-light);
+  border-left-color: var(--accent-green);
+}
+
+.clean-summary-box--warn {
+  background: #fffbeb;
+  border-left-color: var(--accent-solar);
+}
+
+.clean-table-wrap {
+  width: 100%;
+  overflow-x: visible;
+  margin: 26px 0;
+  border-top: 1.5px solid var(--text-primary);
+  border-bottom: 1px solid var(--border-hairline);
+}
+
+.clean-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  font-size: 13.5px;
+  table-layout: auto;
+}
+
+.clean-table th {
+  padding: 12px 12px 11px 0;
+  font-weight: 600;
+  color: var(--text-primary);
+  border-bottom: 1px solid var(--border-hairline);
+  line-height: 1.35;
+  vertical-align: bottom;
+}
+
+.clean-table td {
+  padding: 12px 12px 12px 0;
+  border-bottom: 1px solid var(--border-hairline);
+  color: var(--text-secondary);
+  line-height: 1.45;
+  vertical-align: top;
+}
+
+.clean-table th:last-child,
+.clean-table td:last-child {
+  padding-right: 0;
+}
+
+.clean-table tr:last-child td {
+  border-bottom: none;
+}
+
+.clean-table td strong {
+  color: var(--text-primary);
+}
+
+/* Jump Links TOC Box */
+.toc-box {
+  background: var(--bg-soft);
+  border-radius: var(--radius-photo);
+  padding: 24px 28px;
+  margin: 28px 0;
+}
+
+.toc-box__title {
+  font-family: var(--font-condensed);
+  font-size: 16px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 12px;
+  color: var(--text-primary);
+}
+
+.toc-box__list {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px 24px;
+}
+
+.toc-box__link {
+  font-size: 14px;
+  color: var(--accent-blue);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.toc-box__link:hover {
+  text-decoration: underline;
+}
+
+/* ==========================================================================
+   6. CALCULATORS, 360° ROOF COMPASS & MONTHLY SEASONAL BARS
+   ========================================================================== */
+.calc-grid-light {
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr;
+  gap: 48px;
+  align-items: start;
+}
+
+.calc-card-light {
+  background: #ffffff;
+  border: 1px solid var(--border-hairline);
+  border-radius: var(--radius-photo);
+  padding: 36px;
+}
+
+.calc-summary-light {
+  background: var(--bg-soft);
+  border: 1px solid var(--border-hairline);
+  border-radius: var(--radius-photo);
+  padding: 36px;
+  position: sticky;
+  top: 96px;
+}
+
+.slider-group {
+  margin-bottom: 26px;
+}
+
+.slider-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 8px;
+  font-size: 14.5px;
+}
+
+.slider-input {
+  width: 100%;
+  accent-color: var(--accent-blue);
+  height: 5px;
+  cursor: pointer;
+}
+
+.preset-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin-bottom: 28px;
+}
+
+.preset-chip {
+  padding: 12px 10px;
+  border: 1px solid var(--border-button);
+  border-radius: var(--radius-btn);
+  background: #ffffff;
+  cursor: pointer;
+  text-align: center;
+  font-size: 13px;
+  transition: all 0.15s ease;
+}
+
+.preset-chip.active,
+.preset-chip:hover {
+  border-color: var(--accent-blue);
+  background: var(--accent-blue-light);
+  color: var(--accent-blue);
+  font-weight: 600;
+}
+
+.form-select,
+.form-input {
+  width: 100%;
+  padding: 11px 14px;
+  border: 1px solid var(--border-button);
+  border-radius: var(--radius-btn);
+  background: #ffffff;
+  color: var(--text-primary);
+  font-size: 14.5px;
+}
+
+/* Monthly Generation Chart (Jan - Dec) */
+.monthly-bars {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 8px;
+  align-items: end;
+  height: 150px;
+  padding-top: 20px;
+  border-bottom: 1px solid var(--border-hairline);
+}
+
+.monthly-bar-col {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
+  justify-content: flex-end;
+}
+
+.monthly-bar-fill {
+  width: 100%;
+  max-width: 28px;
+  background: var(--accent-blue);
+  border-radius: 4px 4px 0 0;
+  transition: height 0.25s ease;
+}
+
+.monthly-bar-label {
+  font-size: 11px;
+  color: var(--text-muted);
+  margin-top: 6px;
+}
+
+.monthly-bar-val {
+  font-size: 10.5px;
+  color: var(--text-secondary);
+  margin-bottom: 4px;
+  font-weight: 500;
+}
+
+/* FAQ Accordion */
+.faq-list {
+  border-top: 1px solid var(--border-hairline);
+}
+
+.faq-item {
+  border-bottom: 1px solid var(--border-hairline);
+}
+
+.faq-question {
+  padding: 20px 0;
+  font-weight: 600;
+  font-size: 16px;
+  color: var(--text-primary);
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  list-style: none;
+}
+
+.faq-question::-webkit-details-marker {
+  display: none;
+}
+
+.faq-answer {
+  padding-bottom: 22px;
+  color: var(--text-secondary);
+  font-size: 15px;
+  line-height: 1.68;
+}
+
+/* Badge Pills — Pure Scandi Monochrome (No AI Green/Yellow) */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 10px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 500;
+  background: #f2f4f7;
+  color: var(--text-primary);
+  border: 1px solid #dde2e8;
+}
+
+.badge--green {
+  background: #f2f4f7;
+  color: var(--text-primary);
+  border-color: #cfd4dc;
+  font-weight: 600;
+}
+
+.badge--blue {
+  background: #f2f4f7;
+  color: var(--text-primary);
+  border-color: #cfd4dc;
+}
+
+.badge--amber {
+  background: #f8f9fa;
+  color: var(--text-secondary);
+  border-color: #e6e8ec;
+}
+
+/* ==========================================================================
+   7. CLEAN LIGHT FOOTER
+   ========================================================================== */
+.ax-footer {
+  background: var(--bg-soft);
+  border-top: 1px solid var(--border-hairline);
+  padding: 72px 0 48px;
+  color: var(--text-secondary);
+  font-size: 14px;
+}
+
+.ax-footer__grid {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr 1fr 1fr;
+  gap: 44px;
+  margin-bottom: 48px;
+}
+
+.ax-footer__title {
+  font-family: var(--font-condensed);
+  font-size: 15px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-primary);
+  margin-bottom: 16px;
+}
+
+.ax-footer__list li {
+  margin-bottom: 9px;
+}
+
+.ax-footer__list a:hover {
+  color: var(--accent-blue);
+}
+
+.print-only-header {
+  display: none;
+}
+
+@media print {
+  @page {
+    size: A4 portrait;
+    margin: 10mm 12mm;
+  }
+
+  * {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  .ax-header,
+  .ax-footer,
+  .editorial-breadcrumbs,
+  .no-print,
+  .slider-input {
+    display: none !important;
+  }
+
+  .print-only-header {
+    display: block !important;
+  }
+
+  body {
+    background: #ffffff !important;
+    font-size: 9.5pt !important;
+    line-height: 1.35 !important;
+  }
+
+  .ax-section {
+    padding: 0 !important;
+  }
+
+  .container,
+  .container--editorial {
+    max-width: 100% !important;
+    padding: 0 !important;
+  }
+
+  /* Fit Calculator Input + Summary side-by-side on 1 single A4 page */
+  .calc-grid-light {
+    display: grid !important;
+    grid-template-columns: 1.05fr 0.95fr !important;
+    gap: 16px !important;
+    align-items: start !important;
+    margin-top: 8px !important;
+    break-inside: avoid !important;
+    page-break-inside: avoid !important;
+  }
+
+  .calc-card-light,
+  .calc-summary-light {
+    position: static !important;
+    padding: 16px !important;
+    border: 1px solid #cfd4dc !important;
+    break-inside: avoid !important;
+    page-break-inside: avoid !important;
+  }
+
+  .slider-group {
+    margin-bottom: 10px !important;
+    padding-bottom: 6px !important;
+    border-bottom: 1px solid #e6e8ec !important;
+  }
+
+  .slider-header {
+    margin-bottom: 0 !important;
+    font-size: 9.5pt !important;
+  }
+
+  .form-select {
+    padding: 5px 8px !important;
+    font-size: 9pt !important;
+  }
+
+  .monthly-bars {
+    height: 95px !important;
+    padding-top: 10px !important;
+  }
+
+  .monthly-bar-fill {
+    background-color: #0f4c81 !important;
+  }
+
+  .kpi-card,
+  .clean-summary-box,
+  .clean-table-wrap,
+  figure {
+    break-inside: avoid !important;
+    page-break-inside: avoid !important;
+  }
+}
+
+@media (max-width: 1080px) {
+  .container, .ax-header__main, .ax-header__utility, .ax-hero__inner {
+    padding-left: 24px;
+    padding-right: 24px;
+  }
+  .ax-cards-3, .ax-cards-4, .ax-cards-2, .map-layout, .calc-grid-light, .ax-footer__grid, .toc-box__list {
+    grid-template-columns: 1fr;
+  }
+  .ax-nav {
+    gap: 18px;
+    overflow-x: auto;
+  }
+  .calc-summary-light {
+    position: static;
+  }
+}

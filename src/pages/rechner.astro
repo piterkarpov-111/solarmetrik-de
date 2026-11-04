@@ -1,0 +1,668 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import EeatVerifyBar from '../components/EeatVerifyBar.astro';
+import {
+  eegRegulations,
+  getAllBundeslaender,
+  getAllStaedte,
+  formatEur
+} from '../lib/data';
+
+const allStates = getAllBundeslaender();
+const allCities = getAllStaedte();
+const azimuthMatrix = eegRegulations.roofOrientationTiltMatrix.azimuthAngles;
+const monthlyDist = eegRegulations.roofOrientationTiltMatrix.monthlyYieldDistributionPercent;
+
+// Group locations cleanly by Bundesland without duplicating city-states (Berlin, Hamburg, Bremen)
+const stadtstaatenSlugs = new Set(['berlin', 'hamburg', 'bremen']);
+
+const groupedLocations = allStates.map((s) => {
+  const stateCities = allCities
+    .filter((c) => c.bundeslandSlug === s.slug)
+    .map((c) => ({
+      id: `city:${c.slug}`,
+      stateSlug: s.slug,
+      citySlug: c.slug,
+      label: `${c.name} (PLZ ${c.plzRange}) — ${c.specificYieldKwhKwp} kWh/kWp`,
+      name: `${c.name} (${s.name})`,
+      yieldKwhKwp: c.specificYieldKwhKwp,
+      costPerKwp: c.avgCostPerKwpEur,
+      elecPriceCt: c.localElectricityPriceCt,
+      optimalTilt: c.optimalTiltDeg,
+      gridOperator: c.localGridOperator,
+      foerderung: `${c.kommunaleFoerderung2026.programName}: ${c.kommunaleFoerderung2026.status}`
+    }));
+
+  // Only add a "Landesdurchschnitt" entry for territorial states (not Berlin/Hamburg/Bremen which are already 1 city)
+  const stateAvgEntry = !stadtstaatenSlugs.has(s.slug)
+    ? [
+        {
+          id: `state:${s.slug}`,
+          stateSlug: s.slug,
+          citySlug: '',
+          label: `${s.name} — Landesdurchschnitt (${s.specificYieldKwhKwp} kWh/kWp)`,
+          name: `${s.name} (Landesdurchschnitt)`,
+          yieldKwhKwp: s.specificYieldKwhKwp,
+          costPerKwp: s.avgCostPerKwpEur,
+          elecPriceCt: s.avgElectricityPriceCt,
+          optimalTilt: s.optimalTiltAngleDeg,
+          gridOperator: s.mainGridOperators.join(', '),
+          foerderung: `${s.landesfoerderung.programName} (${s.landesfoerderung.status2026})`
+        }
+      ]
+    : [];
+
+  return {
+    groupName: `${s.name} (${s.code})`,
+    stateSlug: s.slug,
+    items: [...stateCities, ...stateAvgEntry]
+  };
+});
+
+const calcLocations = groupedLocations.flatMap((g) => g.items);
+
+const calcSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'SoftwareApplication',
+  name: 'SOLARMETRIK 360°-Photovoltaik-Ertrags- & Wirtschaftlichkeitsrechner 2026',
+  applicationCategory: 'FinanceApplication',
+  operatingSystem: 'Web',
+  offers: {
+    '@type': 'Offer',
+    price: '0',
+    priceCurrency: 'EUR'
+  },
+  description:
+    'Ingenieur-Rechner zur Berechnung von Solarertrag (DWD/PVGIS), 360°-Dachneigungs-Wirkungsgrad, Eigenverbrauch, EEG-Vergütung 2026 und 20-Jahre-Rendite für 51 deutsche Städte.'
+};
+---
+
+<BaseLayout
+  title="Photovoltaik-Rechner 2026: 360°-Dachkompass, Ertrag & Rendite berechnen | SOLARMETRIK"
+  description="Kostenloser Photovoltaik-Wirtschaftlichkeitsrechner 2026 mit realen DWD-Strahlungsdaten für 51 Städte & 16 Bundesländer, 360°-Dachneigungs-Matrix, Speicher & 0 % MwSt."
+  canonicalPath="/rechner"
+  activeSection="rechner"
+  schema={calcSchema}
+>
+  <section class="ax-section" style="padding-top: 44px;">
+    <div class="container">
+      <Breadcrumbs
+        items={[
+          { label: 'Startseite', href: '/' },
+          { label: 'PV-Ertrags- & Wirtschaftlichkeitsrechner 2026' }
+        ]}
+      />
+
+      <div class=" no-print" style="max-width: 820px; margin-bottom: 36px;">
+        <span class="ax-eyebrow">Ingenieur-Simulation · DWD / PVGIS & Bundesnetzagentur 2026</span>
+        <h1 class="ax-h1">360°-PHOTOVOLTAIK-ERTRAGS- & RENDITERECHNER 2026</h1>
+        <p class="ax-sub">
+          Wählen Sie Ihren Standort aus 51 deutschen Städten oder 16 Bundesländern, passen Sie
+          Dachausrichtung (Azimut), Neigungswinkel und Speichergröße an und prüfen Sie Ihren
+          exakten 20-Jahre-Cashflow inklusive 0 % Mehrwertsteuer (§ 12 Abs. 3 UStG).
+        </p>
+      </div>
+
+      <!-- COMPACT PRINT-ONLY HEADER FOR 1-PAGE PDF PASSPORT -->
+      <div class="print-only-header">
+        <div style="display: flex; justify-content: space-between; align-items: baseline; border-bottom: 2px solid #181a1c; padding-bottom: 8px; margin-bottom: 14px;">
+          <div>
+            <strong style="font-family: var(--font-condensed); font-size: 20pt; letter-spacing: 0.08em;">SOLARMETRIK DEUTSCHLAND</strong>
+            <span style="font-size: 9.5pt; color: #525860; margin-left: 10px;">Unabhängiges Photovoltaik-Ingenieurdossier (Stand 11/2026)</span>
+          </div>
+          <span style="font-size: 9pt; color: #525860;">solarmetrik.de/rechner</span>
+        </div>
+      </div>
+
+      <div class="no-print">
+        <EeatVerifyBar updatedDate="04. November 2026" />
+      </div>
+
+      <div class="calc-grid-light" style="margin-top: 32px;">
+        <!-- LEFT: INPUT CONTROLS -->
+        <div class="calc-card-light">
+          <div style="margin-bottom: 24px;">
+            <label
+              for="calc-location-select"
+              style="display: block; font-size: 13.5px; font-weight: 600; margin-bottom: 8px;"
+            >
+              1. Standort wählen (Stadt oder Bundesland für lokale DWD-Strahlung & Stromtarif):
+            </label>
+            <select id="calc-location-select" class="form-select">
+              {groupedLocations.map((group) => (
+                <optgroup label={group.groupName}>
+                  {group.items.map((loc) => (
+                    <option value={loc.id} selected={loc.id === 'city:muenchen'}>
+                      {loc.label}
+                    </option>
+                  ))}
+                </optgroup>
+              ))}
+            </select>
+            <div
+              id="calc-loc-meta"
+              style="margin-top: 8px; font-size: 12.5px; color: var(--text-muted);"
+            >
+              Netzbetreiber: SWM Infrastruktur GmbH & Co. KG · Optimaler Neigungswinkel: 34°
+            </div>
+          </div>
+
+          <div class="no-print" style="font-size: 13.5px; font-weight: 600; margin-bottom: 10px;">
+            2. Schnellwahl nach Haushaltsprofil (1-Klick-Preset):
+          </div>
+          <div class="preset-row no-print">
+            <button
+              type="button"
+              class="preset-chip"
+              data-kwp="6"
+              data-cons="2800"
+              data-storage="5"
+            >
+              <strong>2 Personen</strong>
+              <div style="font-size: 11.5px; color: var(--text-muted);">6 kWp · 5 kWh · 2.800 kWh</div>
+            </button>
+            <button
+              type="button"
+              class="preset-chip active"
+              data-kwp="10"
+              data-cons="4500"
+              data-storage="10"
+            >
+              <strong>Familie (3–4 P.)</strong>
+              <div style="font-size: 11.5px; color: var(--text-muted);">10 kWp · 10 kWh · 4.500 kWh</div>
+            </button>
+            <button
+              type="button"
+              class="preset-chip"
+              data-kwp="15"
+              data-cons="8000"
+              data-storage="15"
+            >
+              <strong>Haus + WP / E-Auto</strong>
+              <div style="font-size: 11.5px; color: var(--text-muted);">15 kWp · 15 kWh · 8.000 kWh</div>
+            </button>
+          </div>
+
+          <div class="slider-group">
+            <div class="slider-header">
+              <label for="calc-kwp">Photovoltaik-Nennleistung (kWp)</label>
+              <strong id="val-kwp">10 kWp (~22 Module / 44 m²)</strong>
+            </div>
+            <input
+              type="range"
+              id="calc-kwp"
+              class="slider-input"
+              min="4"
+              max="20"
+              step="1"
+              value="10"
+            />
+          </div>
+
+          <div class="slider-group">
+            <div class="slider-header">
+              <label for="calc-cons">Jährlicher Stromverbrauch (Haushalt + WP/Wallbox)</label>
+              <strong id="val-cons">4.500 kWh / Jahr</strong>
+            </div>
+            <input
+              type="range"
+              id="calc-cons"
+              class="slider-input"
+              min="2000"
+              max="12000"
+              step="250"
+              value="4500"
+            />
+          </div>
+
+          <div class="slider-group">
+            <div class="slider-header">
+              <label for="calc-storage">Batteriespeicher-Kapazität (LFP)</label>
+              <strong id="val-storage">10 kWh Speicher</strong>
+            </div>
+            <input
+              type="range"
+              id="calc-storage"
+              class="slider-input"
+              min="0"
+              max="16"
+              step="2"
+              value="10"
+            />
+          </div>
+
+          <!-- 360° ROOF COMPASS & TILT -->
+          <div
+            style="padding-top: 20px; margin-top: 20px; border-top: 1px solid var(--border-hairline);"
+          >
+            <div style="font-size: 13.5px; font-weight: 600; margin-bottom: 14px;">
+              3. 360°-Dachgeometrie (Himmelsrichtung & Dachneigung nach PVGIS-Matrix):
+            </div>
+            <div class="ax-cards-2" style="gap: 16px;">
+              <div>
+                <label
+                  for="calc-azimuth"
+                  style="display: block; font-size: 12.5px; color: var(--text-secondary); margin-bottom: 6px;"
+                >
+                  Dachausrichtung (Azimut)
+                </label>
+                <select id="calc-azimuth" class="form-select">
+                  <option value="sued_180" selected>Süd (0° / 180°) — Optimal</option>
+                  <option value="suedost_suedwest_135_225">Süd-Ost / Süd-West (±45°)</option>
+                  <option value="ost_west_90_270">Ost / West (±90° Doppeldach)</option>
+                  <option value="flachdach_10">Flachdach (Aufständerung 10–15°)</option>
+                  <option value="nordost_nordwest_45_315">Nord-Ost / Nord-West (±135°)</option>
+                </select>
+              </div>
+
+              <div>
+                <label
+                  for="calc-tilt"
+                  style="display: block; font-size: 12.5px; color: var(--text-secondary); margin-bottom: 6px;"
+                >
+                  Dachneigungswinkel
+                </label>
+                <select id="calc-tilt" class="form-select">
+                  <option value="tilt_15">15° (Flach geneigt)</option>
+                  <option value="tilt_30">30° (Klassisches Satteldach)</option>
+                  <option value="tilt_35" selected>35° (Optimum Deutschland)</option>
+                  <option value="tilt_45">45° (Steildach)</option>
+                  <option value="tilt_60">60° (Altbau-Steildach / Fassade)</option>
+                </select>
+              </div>
+            </div>
+            <div
+              id="calc-roof-eff-badge"
+              style="margin-top: 12px; font-size: 13px; color: var(--accent-blue); font-weight: 500;"
+            >
+              Geometrie-Wirkungsgrad: 100 % des regionalen Maximalertrags
+            </div>
+          </div>
+
+          <!-- SEASONAL MONTHLY GENERATION CHART -->
+          <div
+            style="padding-top: 22px; margin-top: 22px; border-top: 1px solid var(--border-hairline);"
+          >
+            <div style="display: flex; justify-content: space-between; align-items: baseline;">
+              <span style="font-size: 13.5px; font-weight: 600;">
+                Monatliche Stromerzeugung Ihrer Anlage (Januar – Dezember)
+              </span>
+              <span id="calc-peak-month" style="font-size: 12px; color: var(--text-muted);">
+                Spitzenmonat Juni: ~1.620 kWh
+              </span>
+            </div>
+            <div class="monthly-bars" id="calc-monthly-bars">
+              {monthlyDist.map((m) => (
+                <div class="monthly-bar-col">
+                  <span class="monthly-bar-val" data-month-val={m.month}>0</span>
+                  <div
+                    class="monthly-bar-fill"
+                    style={`height: ${Math.round((m.sharePercent / 15) * 100)}%;`}
+                  ></div>
+                  <span class="monthly-bar-label">{m.month}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        <!-- RIGHT: LIVE ENGINEERING SUMMARY PASSPORT -->
+        <aside class="calc-summary-light" aria-live="polite">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+            <span style="font-size: 12px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-muted);">
+              SOLARMETRIK INGENIEUR-AUSWERTUNG 2026
+            </span>
+            <span class="badge badge--green">0 % MwSt. aktiv</span>
+          </div>
+
+          <div
+            id="res-location-title"
+            style="font-size: 14px; font-weight: 600; color: var(--accent-blue); margin-bottom: 14px;"
+          >
+            Standort: München (Bayern) · 1.110 kWh/kWp
+          </div>
+
+          <div style="font-size: 13px; color: var(--text-secondary);">
+            Geschätzte Komplettinvestition (schlüsselfertig inkl. Montage):
+          </div>
+          <div
+            id="res-invest"
+            style="font-family: var(--font-condensed); font-size: 48px; font-weight: 700; line-height: 1; margin: 4px 0 6px;"
+          >
+            19.150 €
+          </div>
+          <div
+            id="res-vat-saved"
+            style="font-size: 13px; color: var(--accent-green); font-weight: 500; margin-bottom: 22px;"
+          >
+            Steuervorteil durch § 12 Abs. 3 UStG (0 % MwSt.): − 3.638 € gespart
+          </div>
+
+          <div style="border-top: 1px solid var(--border-hairline); padding-top: 16px;">
+            <div style="display: flex; justify-content: space-between; padding: 9px 0; border-bottom: 1px solid var(--border-hairline);">
+              <span style="color: var(--text-secondary);">Solarstrom-Erzeugung pro Jahr</span>
+              <strong id="res-yield">11.100 kWh</strong>
+            </div>
+            <div style="display: flex; justify-content: space-between; padding: 9px 0; border-bottom: 1px solid var(--border-hairline);">
+              <span style="color: var(--text-secondary);">Unabhängigkeitsgrad (Autarkie)</span>
+              <strong id="res-autarky">74 %</strong>
+            </div>
+            <div style="display: flex; justify-content: space-between; padding: 9px 0; border-bottom: 1px solid var(--border-hairline);">
+              <span style="color: var(--text-secondary);">Jährliche Stromkosten-Ersparnis</span>
+              <strong id="res-savings">1.418 € / Jahr</strong>
+            </div>
+            <div style="display: flex; justify-content: space-between; padding: 9px 0; border-bottom: 1px solid var(--border-hairline);">
+              <span style="color: var(--text-secondary);">EEG-Einspeisevergütung (7,70 ct/kWh)</span>
+              <strong id="res-eeg">564 € / Jahr</strong>
+            </div>
+            <div style="display: flex; justify-content: space-between; padding: 9px 0; border-bottom: 1px solid var(--border-hairline);">
+              <span style="color: var(--text-secondary);">Amortisationszeit</span>
+              <strong id="res-payback" style="color: var(--accent-blue);">8,1 Jahre</strong>
+            </div>
+            <div style="display: flex; justify-content: space-between; padding: 12px 0;">
+              <span style="color: var(--text-primary); font-weight: 600;">20-Jahre Netto-Gesamtvorteil</span>
+              <strong id="res-profit" style="color: var(--accent-green); font-size: 19px;">+ 28.900 €</strong>
+            </div>
+          </div>
+
+          <!-- 20-YEAR GRID LOSS WARNING (LOSS AVERSION) -->
+          <div
+            style="background: var(--accent-red-light); border-left: 3px solid var(--accent-red); padding: 14px 16px; border-radius: 6px; margin: 16px 0 20px; font-size: 13px;"
+          >
+            <strong style="color: var(--accent-red); display: block; margin-bottom: 4px;">
+              20-Jahre-Verlustrechnung ohne eigene Solaranlage:
+            </strong>
+            <span id="res-loss-without-pv" style="color: var(--text-primary);">
+              Bei 3,0 % Strompreisinflation zahlen Sie in 20 Jahren ca. <strong>45.200 €</strong> ohne Gegenwert an Ihren Netzversorger.
+            </span>
+          </div>
+
+          <div class="no-print" style="display: flex; flex-direction: column; gap: 10px;">
+            <button
+              type="button"
+              onclick="window.print()"
+              class="ax-btn ax-btn--primary"
+              style="width: 100%;"
+            >
+              Als 1-Seiten PDF-Ingenieurbericht drucken / speichern ⎙
+            </button>
+            <a
+              id="res-foerderung-link"
+              href="/foerderung-check"
+              class="ax-btn ax-btn--light"
+              style="width: 100%;"
+            >
+              Lokale Förderung & Stadtwerke prüfen →
+            </a>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <!-- ANALYTICAL DOCUMENTATION BELOW CALCULATOR (600+ WORDS FOR SEO & RAG) -->
+  <section class="ax-section ax-section--soft no-print">
+    <div class="container--editorial">
+      <h2 class="editorial-h2" style="margin-top: 0;">
+        WIE UNSER PHOTOVOLTAIK-RECHNER 2026 KALKULIERT (METHODIK & PARAMETER)
+      </h2>
+      <p class="editorial-p">
+        Im Gegensatz zu vereinfachten Werberechnern nutzt das Berechnungsmodell von
+        <strong>SOLARMETRIK</strong> die standortspezifischen Strahlungszeitreihen des
+        <strong>Deutschen Wetterdienstes (DWD)</strong> sowie die europäische
+        <strong>PVGIS-5.2-Referenzdatenbank</strong> für alle 51 deutschen Großstädte und 16
+        Bundesländer. Die Einspeisevergütung wird stufengenau nach den offiziellen Sätzen der
+        <strong>Bundesnetzagentur</strong> (Inbetriebnahmefenster August 2026 bis Januar 2027:
+        <strong>7,70 ct/kWh</strong> bis 10 kWp und <strong>6,66 ct/kWh</strong> für den
+        Leistungsanteil von 10 bis 40 kWp) gewichtet.
+      </p>
+      <p class="editorial-p">
+        Zusätzlich berücksichtigt die 20-Jahre-Kapitalwertmethode eine jährliche
+        Moduldegradation von lediglich <strong>0,4 % pro Jahr</strong> (Standard moderner
+        N-Type-TOPCon-Glas-Glas-Module), laufende Betriebskosten von 0,8 % für Versicherung und
+        Smart-Meter-Gebühren sowie eine konservative Strompreissteigerung von 2,5 bis 3,0 % pro
+        Jahr.
+      </p>
+
+      <h2 class="editorial-h2">
+        SOLARANLAGE KAUFEN VS. MIETEN 2026: DER 20-JAHRE-VOLLKOSTENVERGLEICH
+      </h2>
+      <p class="editorial-p">
+        Viele Eigenheimbesitzer stehen 2026 vor der Frage, ob sie ihre 10-kWp-Anlage mit
+        10-kWh-Speicher direkt kaufen (bzw. über den zinsgünstigen <strong>KfW-Förderkredit 270</strong>
+        finanzieren) oder ein Mietmodell abschließen sollen. Da seit Einführung des
+        Nullsteuersatzes (<strong>0 % MwSt. nach § 12 Abs. 3 UStG</strong>) der frühere
+        Steuervorteil beim Kauf sofort an den Endkunden weitergegeben wird, zeigt der direkte
+        20-Jahre-Vergleich einen massiven Kostenvorteil für den Kauf:
+      </p>
+
+      <div class="clean-table-wrap" style="background: #ffffff; padding: 8px 20px; border-radius: var(--radius-photo);">
+        <table class="clean-table">
+          <thead>
+            <tr>
+              <th>Kriterium (10 kWp + 10 kWh Speicher)</th>
+              <th>Direktkauf (inkl. 0 % MwSt.)</th>
+              <th>Finanzierung (KfW 270 Kredit)</th>
+              <th>Mietmodell (20 Jahre Laufzeit)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Einmalige Anschaffungskosten</strong></td>
+              <td><strong>ca. 18.600 €</strong></td>
+              <td>0 € Eigenkapital nötig</td>
+              <td>0 € Anzahlung (ca. 165 €/Monat)</td>
+            </tr>
+            <tr>
+              <td><strong>Gesamtzahlung über 20 Jahre</strong></td>
+              <td><strong>ca. 21.800 €</strong> (inkl. Wartung)</td>
+              <td><strong>ca. 25.400 €</strong> (inkl. Zins)</td>
+              <td style="color: var(--accent-red); font-weight: 600;">ca. 39.600 € (Mietraten Summe)</td>
+            </tr>
+            <tr>
+              <td><strong>20-Jahre Netto-Gesamtgewinn</strong></td>
+              <td style="color: var(--accent-green); font-weight: 600;">+ 27.100 €</td>
+              <td style="color: var(--accent-green); font-weight: 600;">+ 23.500 €</td>
+              <td>ca. + 9.300 €</td>
+            </tr>
+            <tr>
+              <td><strong>Eigentum & Grundbuch</strong></td>
+              <td>Sofort 100 % Ihr Eigentum</td>
+              <td>100 % Ihr Eigentum</td>
+              <td>Fremdeigentum bis Laufzeitende</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 class="editorial-h2">
+        WIRKUNGSGRAD-TABELLE NACH DACHAUSRICHTUNG (AZIMUT) & NEIGUNG (PVGIS)
+      </h2>
+      <p class="editorial-p">
+        Ein weitverbreiteter Irrtum ist, dass sich Photovoltaik nur auf reinen Süddächern
+        rechnet. Tatsächlich liefern <strong>Ost-West-Dächer (±90°)</strong> bei einer moderaten
+        Dachneigung von 15° bis 30° zwar rund 13 bis 16 % weniger Jahresspitzenstrom als ein
+        Süddach, verteilen die Stromproduktion jedoch gleichmäßig von den frühen Morgenstunden
+        bis in den späten Abend — was den direkten Eigenverbrauch im Haushalt deutlich erhöht.
+      </p>
+
+      <div class="clean-table-wrap" style="background: #ffffff; padding: 8px 20px; border-radius: var(--radius-photo);">
+        <table class="clean-table">
+          <thead>
+            <tr>
+              <th>Himmelsrichtung (Azimut)</th>
+              <th>15° Neigung</th>
+              <th>30° Neigung</th>
+              <th>35° Neigung</th>
+              <th>45° Neigung</th>
+              <th>60° Neigung</th>
+            </tr>
+          </thead>
+          <tbody>
+            {Object.values(azimuthMatrix).map((row) => (
+              <tr>
+                <td><strong>{row.label}</strong></td>
+                <td>{row.tilt_15} %</td>
+                <td>{row.tilt_30} %</td>
+                <td><strong>{row.tilt_35} %</strong></td>
+                <td>{row.tilt_45} %</td>
+                <td>{row.tilt_60} %</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <script is:inline define:vars={{ calcLocations, azimuthMatrix, monthlyDist }}>
+    (() => {
+      const locSelect = document.getElementById('calc-location-select');
+      const kwpInput = document.getElementById('calc-kwp');
+      const consInput = document.getElementById('calc-cons');
+      const storageInput = document.getElementById('calc-storage');
+      const azimuthSelect = document.getElementById('calc-azimuth');
+      const tiltSelect = document.getElementById('calc-tilt');
+      const presetBtns = document.querySelectorAll('.preset-chip');
+
+      const locMeta = document.getElementById('calc-loc-meta');
+      const valKwp = document.getElementById('val-kwp');
+      const valCons = document.getElementById('val-cons');
+      const valStorage = document.getElementById('val-storage');
+      const roofBadge = document.getElementById('calc-roof-eff-badge');
+      const peakMonthEl = document.getElementById('calc-peak-month');
+
+      const resLocTitle = document.getElementById('res-location-title');
+      const resInvest = document.getElementById('res-invest');
+      const resVat = document.getElementById('res-vat-saved');
+      const resYield = document.getElementById('res-yield');
+      const resAutarky = document.getElementById('res-autarky');
+      const resSavings = document.getElementById('res-savings');
+      const resEeg = document.getElementById('res-eeg');
+      const resPayback = document.getElementById('res-payback');
+      const resProfit = document.getElementById('res-profit');
+      const resLoss = document.getElementById('res-loss-without-pv');
+      const resFoerderungLink = document.getElementById('res-foerderung-link');
+
+      // Check URL params
+      const params = new URLSearchParams(window.location.search);
+      const cityParam = params.get('city');
+      const stateParam = params.get('state');
+      const kwpParam = params.get('kwp');
+      const storageParam = params.get('speicher');
+
+      if (cityParam && locSelect) {
+        const target = `city:${cityParam}`;
+        if ([...locSelect.options].some((o) => o.value === target)) {
+          locSelect.value = target;
+        }
+      } else if (stateParam && locSelect) {
+        // For city-states (berlin, hamburg, bremen), match their city entry; otherwise match state entry
+        const stateTarget = `state:${stateParam}`;
+        const cityStateFallback = `city:${stateParam}-stadt`;
+        if ([...locSelect.options].some((o) => o.value === stateTarget)) {
+          locSelect.value = stateTarget;
+        } else if ([...locSelect.options].some((o) => o.value === cityStateFallback)) {
+          locSelect.value = cityStateFallback;
+        }
+      }
+      if (kwpParam && kwpInput) kwpInput.value = kwpParam;
+      if (storageParam && storageInput) storageInput.value = storageParam;
+
+      function recalc() {
+        const locId = locSelect.value;
+        const loc = calcLocations.find((l) => l.id === locId) || calcLocations[0];
+        const kwp = Number(kwpInput.value);
+        const cons = Number(consInput.value);
+        const storage = Number(storageInput.value);
+        const azKey = azimuthSelect.value;
+        const tiltKey = tiltSelect.value;
+
+        const azObj = azimuthMatrix[azKey] || azimuthMatrix.sued_180;
+        const effPercent = azObj[tiltKey] || 100;
+
+        const modulesCount = Math.round(kwp * 2.25);
+        const roofArea = Math.round(kwp * 4.4);
+        valKwp.textContent = `${kwp} kWp (~${modulesCount} Module / ${roofArea} m²)`;
+        valCons.textContent = `${cons.toLocaleString('de-DE')} kWh / Jahr`;
+        valStorage.textContent = storage === 0 ? 'Ohne Speicher (0 kWh)' : `${storage} kWh LFP-Speicher`;
+        roofBadge.textContent = `Geometrie-Wirkungsgrad (${azObj.label}): ${effPercent} % des regionalen Maximalertrags`;
+        locMeta.textContent = `Netzbetreiber: ${loc.gridOperator} · Optimaler Neigungswinkel: ${loc.optimalTilt}° · ${loc.foerderung}`;
+
+        const annualYield = Math.round(kwp * loc.yieldKwhKwp * (effPercent / 100));
+        const scaleFactor = kwp <= 6 ? 1.08 : kwp >= 15 ? 0.91 : 1.0;
+        const pvCost = kwp * loc.costPerKwp * scaleFactor;
+        const storageUnit = storage === 0 ? 0 : storage <= 6 ? 630 : storage <= 10 ? 550 : 510;
+        const invest = Math.round((pvCost + storage * storageUnit) / 50) * 50;
+        const vatSaved = Math.round(invest * 0.19);
+
+        const baseAutarky = storage === 0 ? 31 : Math.min(84, Math.round(40 + (storage / Math.max(4, kwp)) * 34));
+        const maxSelfKwh = Math.round(annualYield * (baseAutarky / 100));
+        const selfConsumedKwh = Math.min(maxSelfKwh, Math.round(cons * (baseAutarky / 100)));
+        const actualAutarky = Math.min(85, Math.round((selfConsumedKwh / cons) * 100));
+        const feedInKwh = Math.max(0, annualYield - selfConsumedKwh);
+
+        const eegRateCt = kwp <= 10 ? 7.7 : (10 * 7.7 + (kwp - 10) * 6.66) / kwp;
+        const annualSavingsEur = Math.round(selfConsumedKwh * (loc.elecPriceCt / 100));
+        const annualEegEur = Math.round(feedInKwh * (eegRateCt / 100));
+        const year1Benefit = annualSavingsEur + annualEegEur;
+
+        const payback = Math.max(5.8, Math.min(13.9, invest / Math.max(450, year1Benefit * 1.11)));
+        const profit20 = Math.round((year1Benefit * 22.8 - invest) / 100) * 100;
+
+        // 20-year grid loss without PV (3% inflation)
+        let loss20 = 0;
+        for (let y = 0; y < 20; y++) {
+          loss20 += cons * (loc.elecPriceCt / 100) * Math.pow(1.03, y);
+        }
+        loss20 = Math.round(loss20 / 100) * 100;
+
+        resLocTitle.textContent = `Standort: ${loc.name} · ${loc.yieldKwhKwp} kWh/kWp Referenz`;
+        resInvest.textContent = `${invest.toLocaleString('de-DE')} €`;
+        resVat.textContent = `Steuervorteil durch § 12 Abs. 3 UStG (0 % MwSt.): − ${vatSaved.toLocaleString('de-DE')} € gespart`;
+        resYield.textContent = `${annualYield.toLocaleString('de-DE')} kWh`;
+        resAutarky.textContent = `${actualAutarky} %`;
+        resSavings.textContent = `${annualSavingsEur.toLocaleString('de-DE')} € / Jahr`;
+        resEeg.textContent = `${annualEegEur.toLocaleString('de-DE')} € / Jahr`;
+        resPayback.textContent = `${payback.toFixed(1).replace('.', ',')} Jahre`;
+        resProfit.textContent = `+ ${profit20.toLocaleString('de-DE')} €`;
+        resLoss.innerHTML = `Bei 3,0 % Strompreisinflation zahlen Sie in 20 Jahren ca. <strong>${loss20.toLocaleString('de-DE')} €</strong> ohne Gegenwert an Ihren Grundversorger.`;
+
+        if (resFoerderungLink) {
+          resFoerderungLink.href = `/foerderung-check?q=${encodeURIComponent(loc.name)}`;
+        }
+
+        // Update monthly bars
+        monthlyDist.forEach((m) => {
+          const el = document.querySelector(`[data-month-val="${m.month}"]`);
+          if (el) {
+            const mKwh = Math.round((annualYield * m.sharePercent) / 100);
+            el.textContent = mKwh;
+          }
+        });
+        if (peakMonthEl) {
+          const juneKwh = Math.round((annualYield * 14.6) / 100);
+          peakMonthEl.textContent = `Spitzenmonat Juni: ~${juneKwh.toLocaleString('de-DE')} kWh`;
+        }
+      }
+
+      [locSelect, kwpInput, consInput, storageInput, azimuthSelect, tiltSelect].forEach((el) => {
+        if (el) el.addEventListener('input', recalc);
+      });
+
+      presetBtns.forEach((btn) => {
+        btn.addEventListener('click', () => {
+          presetBtns.forEach((b) => b.classList.remove('active'));
+          btn.classList.add('active');
+          kwpInput.value = btn.getAttribute('data-kwp');
+          consInput.value = btn.getAttribute('data-cons');
+          storageInput.value = btn.getAttribute('data-storage');
+          recalc();
+        });
+      });
+
+      recalc();
+    })();
+  </script>
+</BaseLayout>

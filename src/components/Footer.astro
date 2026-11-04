@@ -1,0 +1,85 @@
+---
+import { getAllBundeslaender, getAllStaedte } from '../lib/data';
+
+const topLaender = getAllBundeslaender().slice(0, 8);
+const topStaedte = getAllStaedte().slice(0, 8);
+---
+
+<footer class="ax-footer">
+  <div class="container">
+    <div class="ax-footer__grid">
+      <div>
+        <div class="ax-logo" style="font-size: 22px; margin-bottom: 14px; color: var(--text-primary);">
+          SOLARMETRIK<span class="ax-logo__fin"></span>
+        </div>
+        <p style="line-height: 1.65; margin-bottom: 16px;">
+          Unabhängiges Fachportal & Dateninstitut für Photovoltaik-Wirtschaftlichkeit,
+          regionale Sonneneinstrahlung (DWD / PVGIS) und EEG-Regulierung in Deutschland.
+          100 % kostenfreie Ingenieur-Analysen ohne Verkaufsinteresse.
+        </p>
+        <p style="font-size: 12.5px; color: var(--text-muted);">
+          Datenstand: November 2026 · Referenzindex: SME-2026 · Lizenz: CC BY 4.0 bei Namensnennung (solarmetrik.de)
+        </p>
+      </div>
+
+      <div>
+        <div class="ax-footer__title">Bundesländer (Solar-Atlas)</div>
+        <ul class="ax-footer__list">
+          {topLaender.map((l) => (
+            <li>
+              <a href={`/solaratlas/${l.slug}`}>
+                {l.name} ({l.specificYieldKwhKwp} kWh/kWp)
+              </a>
+            </li>
+          ))}
+          <li>
+            <a href="/solaratlas" style="font-weight: 600; color: var(--accent-blue);">
+              Alle 16 Bundesländer →
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <div>
+        <div class="ax-footer__title">Top-Städte & Rechner</div>
+        <ul class="ax-footer__list">
+          <li><a href="/rechner"><strong>PV-Ertrags- & Renditerechner</strong></a></li>
+          <li><a href="/speicher-rechner"><strong>Stromspeicher-Dimensionierung</strong></a></li>
+          <li><a href="/foerderung-check"><strong>Förderung & Solarpflicht-Check</strong></a></li>
+          {topStaedte.slice(0, 5).map((s) => (
+            <li>
+              <a href={`/solaratlas/${s.bundeslandSlug}/${s.slug}`}>
+                Photovoltaik {s.name}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <div>
+        <div class="ax-footer__title">Ratgeber & Rechtliches</div>
+        <ul class="ax-footer__list">
+          <li><a href="/ratgeber/photovoltaik-kosten-2026">Photovoltaik Kosten 2026</a></li>
+          <li><a href="/ratgeber/eeg-2026-vs-2027-einspeiseverguetung">EEG-Reform 2027 & Bestandsschutz</a></li>
+          <li><a href="/ratgeber/stromspeicher-test-dimensionierung-2026">HTW Berlin Stromspeicher-Test</a></li>
+          <li><a href="/ratgeber/balkonkraftwerk-2026-speicher-800w-2000w">Balkonkraftwerk 800W / 2000W</a></li>
+          <li><a href="/methodik">Methodik & Datenquellen (SME-2026)</a></li>
+          <li><a href="/ueber-uns">Über uns & Fachredaktion</a></li>
+          <li><a href="/impressum">Impressum (§ 5 DDG)</a></li>
+          <li><a href="/datenschutz">Datenschutz (DSGVO)</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div
+      style="padding-top: 24px; border-top: 1px solid var(--border-hairline); display: flex; flex-wrap: wrap; justify-content: space-between; gap: 16px; font-size: 12.5px; color: var(--text-muted);"
+    >
+      <span>© 2026 SOLARMETRIK Deutschland (solarmetrik.de). Alle Berechnungen nach DWD-, PVGIS- und Bundesnetzagentur-Referenzdaten.</span>
+      <div style="display: flex; gap: 18px; flex-wrap: wrap;">
+        <a href="/impressum">Impressum</a>
+        <a href="/datenschutz">Datenschutz</a>
+        <a href="/methodik">Methodik</a>
+      </div>
+    </div>
+  </div>
+</footer>

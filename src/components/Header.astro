@@ -1,0 +1,187 @@
+---
+import { getAllBundeslaender, getAllStaedte } from '../lib/data';
+
+interface Props {
+  isHero?: boolean;
+  activeSection?: 'atlas' | 'rechner' | 'ratgeber' | 'methodik' | 'home';
+}
+
+const { isHero = false, activeSection = 'home' } = Astro.props;
+const bundeslaender = getAllBundeslaender();
+const topStaedte = getAllStaedte().slice(0, 12);
+const allStaedteSearch = getAllStaedte().map((s) => ({
+  name: s.name,
+  plz: s.plzRange,
+  url: `/solaratlas/${s.bundeslandSlug}/${s.slug}`
+}));
+---
+
+<header class:list={['ax-header', { 'ax-header--hero': isHero }]}>
+  <div class="ax-header__utility">
+    <span>Datenbasis: Bundesnetzagentur & DWD (Stand: 11/2026)</span>
+    <a href="/rechner">Wirtschaftlichkeitsrechner →</a>
+    <a href="/foerderung-check">Förderung & PLZ-Check →</a>
+    <a href="/ueber-uns">Über uns & Redaktion →</a>
+  </div>
+
+  <div class="ax-header__main">
+    <a href="/" class="ax-logo" aria-label="SOLARMETRIK Startseite">
+      SOLARMETRIK<span class="ax-logo__fin"></span>
+    </a>
+
+    <nav class="ax-nav" aria-label="Hauptnavigation">
+      <div class="ax-nav__item">
+        <a
+          href="/solaratlas"
+          class:list={['ax-nav__link', { active: activeSection === 'atlas' }]}
+        >
+          Solar-Atlas (16 Länder) ▾
+        </a>
+
+        <div class="ax-mega" role="region" aria-label="Solar-Atlas Deutschland Mega-Menü">
+          <div class="ax-mega__grid">
+            <div>
+              <div class="ax-mega__heading">Alle 16 Bundesländer (SME-2026 Index)</div>
+              <div class="ax-mega__list">
+                {bundeslaender.map((land) => (
+                  <a href={`/solaratlas/${land.slug}`} class="ax-mega__link">
+                    <span>{land.name}</span>
+                    <span class="ax-mega__score">{land.solarmetrikScore}/100</span>
+                  </a>
+                ))}
+              </div>
+            </div>
+
+            <div>
+              <div class="ax-mega__heading">Meistgeprüfte Städte 2026</div>
+              <div class="ax-mega__list">
+                {topStaedte.map((stadt) => (
+                  <a
+                    href={`/solaratlas/${stadt.bundeslandSlug}/${stadt.slug}`}
+                    class="ax-mega__link"
+                  >
+                    <span>{stadt.name}</span>
+                    <span class="ax-mega__score">{stadt.specificYieldKwhKwp} kWh/kWp</span>
+                  </a>
+                ))}
+              </div>
+              <div style="margin-top: 14px; padding-top: 10px; border-top: 1px solid var(--border-hairline);">
+                <a href="/solaratlas" style="font-size: 13px; font-weight: 600; color: var(--accent-blue);">
+                  Alle 51 Städte & Regionen im Solar-Atlas ansehen →
+                </a>
+              </div>
+            </div>
+
+            <div>
+              <div class="ax-mega__heading">Rechner & Ingenieur-Tools</div>
+              <div class="ax-mega__list ax-mega__list--single">
+                <a href="/rechner" class="ax-mega__link">
+                  <strong>PV-Rendite & 360°-Dachrechner</strong>
+                  <span>→</span>
+                </a>
+                <a href="/speicher-rechner" class="ax-mega__link">
+                  <strong>Stromspeicher & Autarkie-Rechner</strong>
+                  <span>→</span>
+                </a>
+                <a href="/foerderung-check" class="ax-mega__link">
+                  <strong>Förderung, Solarpflicht & Stadtwerke</strong>
+                  <span>→</span>
+                </a>
+                <a href="/methodik" class="ax-mega__link">
+                  <span>SME-2026 Methodik & Formeln</span>
+                  <span>→</span>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="ax-nav__item">
+        <a
+          href="/rechner"
+          class:list={['ax-nav__link', { active: activeSection === 'rechner' }]}
+        >
+          PV-Rechner & Speicher
+        </a>
+      </div>
+
+      <div class="ax-nav__item">
+        <a
+          href="/foerderung-check"
+          class="ax-nav__link"
+        >
+          Förderung 2026
+        </a>
+      </div>
+
+      <div class="ax-nav__item">
+        <a
+          href="/ratgeber"
+          class:list={['ax-nav__link', { active: activeSection === 'ratgeber' }]}
+        >
+          Ratgeber & EEG 2027
+        </a>
+      </div>
+
+      <div class="ax-nav__item">
+        <a
+          href="/methodik"
+          class:list={['ax-nav__link', { active: activeSection === 'methodik' }]}
+        >
+          Methodik
+        </a>
+      </div>
+    </nav>
+
+    <search role="search" aria-label="Stadt oder Postleitzahl suchen">
+      <form id="header-city-search-form" class="ax-search-box" onsubmit="return false;">
+        <input
+          type="search"
+          id="header-city-search-input"
+          class="ax-search-input"
+          list="solarmetrik-cities-datalist"
+          placeholder="Stadt oder PLZ (z.B. 80331)..."
+          aria-label="Stadt oder PLZ suchen"
+        />
+        <datalist id="solarmetrik-cities-datalist">
+          {allStaedteSearch.map((item) => (
+            <option value={item.name} data-url={item.url}>{item.plz}</option>
+          ))}
+        </datalist>
+      </form>
+    </search>
+  </div>
+</header>
+
+<script is:inline define:vars={{ allStaedteSearch }}>
+  (() => {
+    const input = document.getElementById('header-city-search-input');
+    const form = document.getElementById('header-city-search-form');
+    if (!input || !form) return;
+
+    function navigateMatch(val) {
+      const q = (val || '').trim().toLowerCase();
+      if (!q) return;
+      const match = allStaedteSearch.find(
+        (s) =>
+          s.name.toLowerCase() === q ||
+          s.name.toLowerCase().startsWith(q) ||
+          s.plz.toLowerCase().includes(q)
+      );
+      if (match) {
+        window.location.href = match.url;
+      } else {
+        window.location.href = `/foerderung-check?q=${encodeURIComponent(val.trim())}`;
+      }
+    }
+
+    input.addEventListener('change', (e) => {
+      navigateMatch(e.target.value);
+    });
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      navigateMatch(input.value);
+    });
+  })();
+</script>

@@ -1,0 +1,201 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import EeatVerifyBar from '../components/EeatVerifyBar.astro';
+---
+
+<BaseLayout
+  title="Stromspeicher-Rechner 2026: Speichergröße, Autarkie & HTW-Effizienz berechnen | SOLARMETRIK"
+  description="Berechnen Sie die optimale Batteriespeicher-Kapazität (kWh) für Ihre Solaranlage nach HTW Berlin Stromspeicher-Inspektion 2026, Solarspitzengesetz (§ 51 EEG) & § 14a EnWG."
+  canonicalPath="/speicher-rechner"
+  activeSection="rechner"
+>
+  <section class="ax-section" style="padding-top: 44px;">
+    <div class="container">
+      <Breadcrumbs
+        items={[
+          { label: 'Startseite', href: '/' },
+          { label: 'PV-Rechner', href: '/rechner' },
+          { label: 'Stromspeicher-Dimensionierung & Autarkie-Rechner 2026' }
+        ]}
+      />
+
+      <div style="max-width: 820px; margin-bottom: 36px;">
+        <span class="ax-eyebrow">HTW Berlin Referenzmodell · § 51 EEG & § 14a EnWG</span>
+        <h1 class="ax-h1">STROMSPEICHER-RECHNER 2026: OPTIMALE KAPAZITÄT & AUTARKIE</h1>
+        <p class="ax-sub">
+          Ermitteln Sie, welche Speichergröße (kWh) zu Ihrem Jahresstromverbrauch und Ihrer
+          Photovoltaikanlage passt, wie viel Geld ein System der HTW-Effizienzklasse A gegenüber
+          Durchschnittsspeichern spart und welchen Netzentgelt-Bonus Sie nach § 14a EnWG erhalten.
+        </p>
+      </div>
+
+      <EeatVerifyBar updatedDate="04. November 2026" />
+
+      <div class="calc-grid-light" style="margin-top: 32px;">
+        <div class="calc-card-light">
+          <div class="slider-group">
+            <div class="slider-header">
+              <label for="sp-kwp">Photovoltaik-Leistung auf dem Dach (kWp)</label>
+              <strong id="sp-val-kwp">10 kWp</strong>
+            </div>
+            <input type="range" id="sp-kwp" class="slider-input" min="4" max="20" step="1" value="10" />
+          </div>
+
+          <div class="slider-group">
+            <div class="slider-header">
+              <label for="sp-cons">Jährlicher Stromverbrauch im Haus (kWh)</label>
+              <strong id="sp-val-cons">4.500 kWh / Jahr</strong>
+            </div>
+            <input type="range" id="sp-cons" class="slider-input" min="2000" max="12000" step="250" value="4500" />
+          </div>
+
+          <div class="slider-group">
+            <div class="slider-header">
+              <label for="sp-kwh">Gewählte nutzbare Speicherkapazität (kWh LFP)</label>
+              <strong id="sp-val-kwh">10 kWh</strong>
+            </div>
+            <input type="range" id="sp-kwh" class="slider-input" min="2" max="20" step="1" value="10" />
+          </div>
+
+          <div class="ax-cards-2" style="gap: 16px; margin-top: 24px;">
+            <div>
+              <label for="sp-eff" style="display: block; font-size: 13px; font-weight: 600; margin-bottom: 6px;">
+                Systemwirkungsgrad (HTW Berlin SPI-Klasse)
+              </label>
+              <select id="sp-eff" class="form-select">
+                <option value="0.94" selected>Effizienzklasse A (SPI ~94 % · DC-Hybrid Top-System)</option>
+                <option value="0.88">Effizienzklasse B (SPI ~88 % · Markt-Durchschnitt)</option>
+                <option value="0.81">Effizienzklasse C (SPI ~81 % · Ineffizientes AC-System)</option>
+              </select>
+            </div>
+
+            <div>
+              <label for="sp-enwg" style="display: block; font-size: 13px; font-weight: 600; margin-bottom: 6px;">
+                Steuerbare Einrichtung nach § 14a EnWG (> 4,2 kW)
+              </label>
+              <select id="sp-enwg" class="form-select">
+                <option value="155" selected>Modul 1: Pauschale Netzentgelt-Prämie (~155 €/Jahr)</option>
+                <option value="240">Modul 2: 60 % Arbeitspreis-Reduzierung (mit WP/Wallbox)</option>
+                <option value="0">Ohne § 14a EnWG Anmeldung</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <aside class="calc-summary-light" aria-live="polite">
+          <span style="font-size: 12px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-muted);">
+            SPEICHER-DIMENSIONIERUNG & AUTARKIE-CHECK
+          </span>
+          <div style="margin: 12px 0 6px; font-size: 13.5px; color: var(--text-secondary);">
+            Ingenieur-Empfehlung für Ihr Profil:
+          </div>
+          <div
+            id="sp-res-rec"
+            style="font-family: var(--font-condensed); font-size: 42px; font-weight: 700; color: var(--accent-blue); line-height: 1.05; margin-bottom: 18px;"
+          >
+            9 bis 11 kWh Nutzkapazität
+          </div>
+
+          <div style="border-top: 1px solid var(--border-hairline); padding-top: 14px;">
+            <div style="display: flex; justify-content: space-between; padding: 9px 0; border-bottom: 1px solid var(--border-hairline);">
+              <span style="color: var(--text-secondary);">Autarkiegrad ohne Speicher</span>
+              <strong>ca. 30 %</strong>
+            </div>
+            <div style="display: flex; justify-content: space-between; padding: 9px 0; border-bottom: 1px solid var(--border-hairline);">
+              <span style="color: var(--text-secondary);">Autarkiegrad mit gewähltem Speicher</span>
+              <strong id="sp-res-autarky" style="color: var(--accent-green);">73 %</strong>
+            </div>
+            <div style="display: flex; justify-content: space-between; padding: 9px 0; border-bottom: 1px solid var(--border-hairline);">
+              <span style="color: var(--text-secondary);">Vollzyklen pro Jahr (Realbetrieb)</span>
+              <strong id="sp-res-cycles">ca. 215 Zyklen / Jahr</strong>
+            </div>
+            <div style="display: flex; justify-content: space-between; padding: 9px 0; border-bottom: 1px solid var(--border-hairline);">
+              <span style="color: var(--text-secondary);">Speicherpreis inkl. 0 % MwSt.</span>
+              <strong id="sp-res-cost">ca. 5.700 €</strong>
+            </div>
+            <div style="display: flex; justify-content: space-between; padding: 9px 0; border-bottom: 1px solid var(--border-hairline);">
+              <span style="color: var(--text-secondary);">§ 14a EnWG Netzentgelt-Ersparnis</span>
+              <strong id="sp-res-enwg">+ 155 € / Jahr</strong>
+            </div>
+            <div style="display: flex; justify-content: space-between; padding: 12px 0;">
+              <span style="font-weight: 600;">Zusätzliche Speicher-Ersparnis pro Jahr</span>
+              <strong id="sp-res-benefit" style="color: var(--accent-green); font-size: 18px;">+ 760 € / Jahr</strong>
+            </div>
+          </div>
+
+          <div style="margin-top: 16px; display: flex; flex-direction: column; gap: 10px;">
+            <a href="/ratgeber/stromspeicher-test-dimensionierung-2026" class="ax-btn ax-btn--primary" style="width: 100%;">
+              HTW Berlin Stromspeicher-Test 2026 lesen →
+            </a>
+            <a href="/rechner" class="ax-btn ax-btn--light" style="width: 100%;">
+              Zurück zum Komplett-PV-Rechner →
+            </a>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <section class="ax-section ax-section--soft">
+    <div class="container--editorial">
+      <h2 class="editorial-h2" style="margin-top: 0;">
+        FAUSTREGEL DER SPEICHER-DIMENSIONIERUNG 2026 (1 KWP : 1 KWH)
+      </h2>
+      <p class="editorial-p">
+        Nach den Messdaten der <strong>HTW Berlin (Stromspeicher-Inspektion)</strong> erreicht
+        ein Heimspeicher das wirtschaftliche Optimum, wenn er im Jahr zwischen <strong>200 und
+        250 Vollzyklen</strong> durchläuft. Als verlässliche Ingenieur-Faustregel gilt: Pro
+        1.000 kWh Jahresstromverbrauch bzw. pro 1 kWp installierter PV-Leistung sollten rund
+        <strong>0,9 bis 1,2 kWh nutzbare Speicherkapazität</strong> eingeplant werden. Ein
+        überdimensionierter 20-kWh-Speicher an einer kleinen 6-kWp-Anlage wird im Winterhalbjahr
+        kaum voll und im Sommer nachts nicht leer.
+      </p>
+    </div>
+  </section>
+
+  <script is:inline>
+    (() => {
+      const kwpEl = document.getElementById('sp-kwp');
+      const consEl = document.getElementById('sp-cons');
+      const kwhEl = document.getElementById('sp-kwh');
+      const effEl = document.getElementById('sp-eff');
+      const enwgEl = document.getElementById('sp-enwg');
+
+      function update() {
+        const kwp = Number(kwpEl.value);
+        const cons = Number(consEl.value);
+        const kwh = Number(kwhEl.value);
+        const eff = Number(effEl.value);
+        const enwgBonus = Number(enwgEl.value);
+
+        document.getElementById('sp-val-kwp').textContent = `${kwp} kWp`;
+        document.getElementById('sp-val-cons').textContent = `${cons.toLocaleString('de-DE')} kWh / Jahr`;
+        document.getElementById('sp-val-kwh').textContent = `${kwh} kWh`;
+
+        const idealMin = Math.max(4, Math.round(Math.min(kwp, cons / 480) * 0.85));
+        const idealMax = Math.max(idealMin + 2, Math.round(Math.min(kwp, cons / 420) * 1.15));
+        document.getElementById('sp-res-rec').textContent = `${idealMin} bis ${idealMax} kWh Nutzkapazität`;
+
+        const ratio = kwh / Math.max(3, cons / 1000);
+        const autarky = Math.min(84, Math.round(32 + Math.min(50, ratio * 21) * eff));
+        const cycles = Math.max(130, Math.min(265, Math.round(245 - (kwh - kwp) * 7)));
+        const unitPrice = kwh <= 6 ? 640 : kwh <= 10 ? 570 : 525;
+        const cost = Math.round((kwh * unitPrice) / 50) * 50;
+
+        const storedKwhYear = Math.round(kwh * cycles * eff);
+        // Spread between 37 ct grid electricity and 7.7 ct lost feed-in tariff = ~29.3 ct/kWh
+        const annualStorageSavings = Math.round(storedKwhYear * 0.293) + enwgBonus;
+
+        document.getElementById('sp-res-autarky').textContent = `${autarky} %`;
+        document.getElementById('sp-res-cycles').textContent = `ca. ${cycles} Zyklen / Jahr`;
+        document.getElementById('sp-res-cost').textContent = `ca. ${cost.toLocaleString('de-DE')} €`;
+        document.getElementById('sp-res-enwg').textContent = `+ ${enwgBonus} € / Jahr`;
+        document.getElementById('sp-res-benefit').textContent = `+ ${annualStorageSavings.toLocaleString('de-DE')} € / Jahr`;
+      }
+
+      [kwpEl, consEl, kwhEl, effEl, enwgEl].forEach((el) => el.addEventListener('input', update));
+      update();
+    })();
+  </script>
+</BaseLayout>

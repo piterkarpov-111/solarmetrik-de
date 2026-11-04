@@ -1,0 +1,84 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+---
+
+<BaseLayout
+  title="Über uns, Fachredaktion & Vier-Augen-Prüfstandard | SOLARMETRIK Deutschland"
+  description="Lernen Sie die Fachredaktion und das Ingenieur-Prüfteam hinter SOLARMETRIK (solarmetrik.de) kennen: 100 % unabhängige Photovoltaik-Analysen für Deutschland."
+  canonicalPath="/ueber-uns"
+  activeSection="methodik"
+>
+  <article class="ax-section" style="padding-top: 44px;">
+    <div class="container--editorial">
+      <Breadcrumbs
+        items={[
+          { label: 'Startseite', href: '/' },
+          { label: 'Über uns & Redaktionsstatut' }
+        ]}
+      />
+
+      <span class="ax-eyebrow">Unabhängiges Fachportal · Redaktionsstatut</span>
+      <h1 class="editorial-h1">
+        ÜBER SOLARMETRIK: UNABHÄNGIGE PHOTOVOLTAIK-ANALYTIK FÜR DEUTSCHLAND
+      </h1>
+
+      <p class="editorial-p">
+        <strong>SOLARMETRIK (solarmetrik.de)</strong> wurde gegründet, um Eigenheimbesitzern,
+        Bauherren, Kommunen und Energieberatern in Deutschland eine verlässliche, werbefreie und
+        ingenieurwissenschaftlich fundierte Datenbasis zur Photovoltaik-Wirtschaftlichkeit zu
+        bieten. Wir verkaufen keine Solaranlagen, vermitteln keine Adressdaten und veröffentlichen
+        keine bezahlten Produktplatzierungen.
+      </p>
+
+      <h2 class="editorial-h2">FACHREDAKTION & TECHNISCHER BEIRAT (VIER-AUGEN-PRINZIP)</h2>
+      <p class="editorial-p">
+        Jede Berechnung, jede Stadtanalyse und jeder Fachbeitrag auf SOLARMETRIK durchläuft vor der
+        Veröffentlichung ein verbindliches Vier-Augen-Prüfverfahren zwischen Energieökonomie und
+        praktischer PV-Systemtechnik:
+      </p>
+
+      <div class="ax-cards-2" style="margin: 28px 0;">
+        <div class="kpi-card">
+          <div style="font-size: 12px; color: var(--accent-blue); font-weight: 600; text-transform: uppercase; margin-bottom: 6px;">
+            Leitung Fachredaktion & Energiemarkt
+          </div>
+          <h3 class="ax-h3">Lukas Hartmann (M.Sc. Energieökonomik)</h3>
+          <p style="font-size: 14px; color: var(--text-secondary); line-height: 1.6;">
+            Spezialisiert auf deutsche Strommarktregulierung (EEG 2026/2027, § 14a EnWG, § 51 EEG),
+            kommunale Förderprogramme und 20-jährige Kapitalwertmodelle (TCO) für Wohngebäude.
+          </p>
+        </div>
+
+        <div class="kpi-card">
+          <div style="font-size: 12px; color: var(--accent-blue); font-weight: 600; text-transform: uppercase; margin-bottom: 6px;">
+            Technische Fachprüfung & Systemauslegung
+          </div>
+          <h3 class="ax-h3">Dipl.-Ing. Markus Weber</h3>
+          <p style="font-size: 14px; color: var(--text-secondary); line-height: 1.6;">
+            Diplom-Ingenieur für Elektrotechnik und Photovoltaik-Systemtechnik. Verantwortlich für
+            die Validierung der PVGIS/DWD-Ertragsmodelle, die 360°-Azimut-Matrizen, VDE-Normen
+            (VDE-AR-N 4100 / 4105) und Batteriespeicher-Wirkungsgrade.
+          </p>
+        </div>
+      </div>
+
+      <h2 class="editorial-h2">REDAKTIONELLE QUALITÄTSGARANTIE</h2>
+      <ul class="editorial-list">
+        <li>
+          <strong>100 % Nachprüfbare Primärdaten:</strong> Alle Strahlungswerte basieren auf den
+          Datensätzen des Deutschen Wetterdienstes (DWD) und des EU-Forschungszentrums (PVGIS).
+        </li>
+        <li>
+          <strong>Monatliches Förder-Audit:</strong> Kommunale Fördertöpfe der 51 größten deutschen
+          Städte und die Vorgaben der lokalen Stadtwerke werden fortlaufend auf Budgetstatus und
+          Antragsfristen überprüft.
+        </li>
+        <li>
+          <strong>Kein Verkaufsdruck:</strong> Alle Rechner und PDF-Berichte sind ohne Registrierung
+          und ohne Eingabe persönlicher Kontaktdaten frei nutzbar.
+        </li>
+      </ul>
+    </div>
+  </article>
+</BaseLayout>

@@ -1,0 +1,40 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { bundeslaender } from '../lib/data';
+---
+
+<BaseLayout
+  title="Seite nicht gefunden (404) | SOLARMETRIK Deutschland"
+  description="Die angeforderte Seite wurde im SOLARMETRIK Photovoltaik-Fachportal nicht gefunden. Nutzen Sie unseren Solar-Atlas oder den PV-Ertragsrechner 2026."
+  canonicalPath="/404"
+  activeSection="home"
+>
+  <section class="section-white" style="padding: 88px 0 96px;">
+    <div class="container-editorial" style="text-align: center;">
+      <div class="section-eyebrow" style="margin-bottom: 12px;">STATUSCODE 404 · SEITE NICHT GEFUNDEN</div>
+      <h1 style="font-family: var(--font-condensed); font-size: clamp(38px, 5vw, 56px); font-weight: 700; text-transform: uppercase; margin-bottom: 18px;">
+        DIESE SEITE EXISTIERT NICHT ODER WURDE VERSCHOBEN
+      </h1>
+      <p style="font-size: 16.5px; color: var(--text-secondary); line-height: 1.7; max-width: 600px; margin: 0 auto 32px;">
+        Die aufgerufene URL ist im <strong>SOLARMETRIK Dateninstitut (Stand: November 2026)</strong> nicht hinterlegt. Wählen Sie direkt Ihr Bundesland oder starten Sie unseren kostenfreien Wirtschaftlichkeitsrechner:
+      </p>
+
+      <div style="display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; margin-bottom: 48px;">
+        <a href="/" class="btn-solid-blue">Zurück zur Startseite →</a>
+        <a href="/rechner" class="btn-outline-clean">Zum PV-Ertragsrechner 2026 →</a>
+        <a href="/solaratlas" class="btn-outline-clean">Deutscher Solar-Atlas (16 Länder) →</a>
+      </div>
+
+      <div style="text-align: left; background: var(--bg-soft); border: 1px solid var(--border-hairline); border-radius: 10px; padding: 28px;">
+        <div class="section-eyebrow" style="margin-bottom: 12px;">DIREKTWAHL NACH BUNDESLAND (16 LÄNDER)</div>
+        <div style="display: flex; flex-wrap: wrap; gap: 8px;">
+          {bundeslaender.map((b) => (
+            <a href={`/solaratlas/${b.slug}`} class="city-pill-link">
+              {b.name} ({b.specificYieldKwhPerKwp} kWh/kWp) →
+            </a>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

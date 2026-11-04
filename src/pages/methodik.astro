@@ -1,0 +1,116 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import EeatVerifyBar from '../components/EeatVerifyBar.astro';
+import { eegRegulations } from '../lib/data';
+
+const scoreFormula = eegRegulations.solarmetrikScoreFormula;
+---
+
+<BaseLayout
+  title="Methodik, Formeln & Datenquellen (SME-2026 Index) | SOLARMETRIK Deutschland"
+  description="Transparenz & Berechnungsformeln von SOLARMETRIK: So entsteht der SOLARMETRIK-Effizienzscore (SME-2026) auf Basis von DWD, PVGIS, Bundesnetzagentur & Fraunhofer ISE."
+  canonicalPath="/methodik"
+  activeSection="methodik"
+>
+  <article class="ax-section" style="padding-top: 44px;">
+    <div class="container--editorial">
+      <Breadcrumbs
+        items={[
+          { label: 'Startseite', href: '/' },
+          { label: 'Methodik, Berechnungsmodelle & Offene Daten (SME-2026)' }
+        ]}
+      />
+
+      <span class="ax-eyebrow">Wissenschaftliche Transparenz · Referenzmodell Deutschland</span>
+      <h1 class="editorial-h1">
+        METHODIK, BERECHNUNGSFORMELN & OFFIZIELLE DATENQUELLEN (SME-2026)
+      </h1>
+
+      <EeatVerifyBar updatedDate="04. November 2026" readingTimeMin={5} />
+
+      <div class="clean-summary-box">
+        <strong>Grundsatz der Unabhängigkeit:</strong> SOLARMETRIK (<code>solarmetrik.de</code>)
+        arbeitet als herstellerneutrales Informations- und Ingenieurportal. Unsere Algorithmen
+        bevorzugen keine bestimmten Solarmodul- oder Speicherhersteller, sondern stützen sich
+        ausschließlich auf öffentlich nachprüfbare Referenzdaten deutscher und europäischer
+        Institutionen.
+      </div>
+
+      <h2 class="editorial-h2">
+        1. DIE FORMEL DES SOLARMETRIK-EFFIZIENZSCORES (SME-2026)
+      </h2>
+      <p class="editorial-p">
+        {scoreFormula.formulaExplanation}
+      </p>
+
+      <div class="clean-table-wrap">
+        <table class="clean-table">
+          <thead>
+            <tr>
+              <th>Faktor im SME-2026-Index</th>
+              <th>Gewichtung</th>
+              <th>Messgröße & Einheit</th>
+              <th>Primärquelle</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>1. Spezifischer Solarertrag</strong></td>
+              <td><strong>40 %</strong></td>
+              <td>kWh pro installiertem kWp / Jahr (inkl. optimalem Winkel)</td>
+              <td>Deutscher Wetterdienst (DWD) & EU PVGIS 5.2</td>
+            </tr>
+            <tr>
+              <td><strong>2. Regionale Montage-Effizienz</strong></td>
+              <td><strong>25 %</strong></td>
+              <td>Durchschnittlicher Fachhandwerkspreis in €/kWp (0 % MwSt.)</td>
+              <td>SOLARMETRIK Marktpreis-Erhebung Q4/2026</td>
+            </tr>
+            <tr>
+              <td><strong>3. Lokaler Strompreis-Hebel</strong></td>
+              <td><strong>20 %</strong></td>
+              <td>Haushaltsstromtarif in ct/kWh im Grundversorgungsgebiet</td>
+              <td>Lokale Stadtwerke / Verteilnetzbetreiber</td>
+            </tr>
+            <tr>
+              <td><strong>4. Förder- & Regulatorik-Bonus</strong></td>
+              <td><strong>15 %</strong></td>
+              <td>Aktive Kommunal-/Landesförderung & Solarpflicht-Synergien</td>
+              <td>Landesförderbanken (L-Bank, IBB, NRW.BANK etc.)</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 class="editorial-h2">
+        2. PRIMÄRQUELLEN & REGULATORISCHE REFERENZEN (STAND NOVEMBER 2026)
+      </h2>
+      <ul class="editorial-list">
+        {eegRegulations.meta.sources.map((src) => (
+          <li>{src}</li>
+        ))}
+        <li>HTW Berlin (Hochschule für Technik und Wirtschaft): Stromspeicher-Inspektion (System Performance Index SPI)</li>
+      </ul>
+
+      <h2 class="editorial-h2">
+        3. NUTZUNG FÜR KOMMUNEN, ENERGIEBERATER & FACHMEDIEN (CC BY 4.0)
+      </h2>
+      <p class="editorial-p">
+        Um eine einheitliche und nachprüfbare Einordnung regionaler Photovoltaik-Kennzahlen in
+        journalistischen Medien, kommunalen Klimaschutzkonzepten sowie Energieberatungen zu
+        gewährleisten, dürfen alle Tabellen und Standortwerte des Deutschen Solar-Atlas unter der
+        Lizenz <strong>Creative Commons Attribution 4.0 (CC BY 4.0)</strong> bei Nennung der Quelle
+        (<code>solarmetrik.de</code>) frei zitiert werden.
+      </p>
+      <div style="display: flex; flex-wrap: wrap; gap: 12px; margin-top: 20px;">
+        <a href="/solaratlas" class="ax-btn ax-btn--primary">
+          Zum Deutschen Solar-Atlas (16 Bundesländer & 51 Städte) →
+        </a>
+        <a href="/rechner" class="ax-btn ax-btn--light">
+          Zum 360°-Ertrags- & Wirtschaftlichkeitsrechner →
+        </a>
+      </div>
+    </div>
+  </article>
+</BaseLayout>

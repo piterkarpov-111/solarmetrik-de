@@ -1,0 +1,53 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+---
+
+<BaseLayout
+  title="Datenschutzerklärung (DSGVO & TDDDG) | SOLARMETRIK Deutschland"
+  description="Datenschutzerklärung gemäß Datenschutz-Grundverordnung (DSGVO) und Telekommunikation-Digitale-Dienste-Datenschutz-Gesetz (TDDDG) für solarmetrik.de."
+  canonicalPath="/datenschutz"
+>
+  <article class="ax-section" style="padding-top: 44px;">
+    <div class="container--editorial">
+      <Breadcrumbs
+        items={[
+          { label: 'Startseite', href: '/' },
+          { label: 'Datenschutzerklärung (DSGVO)' }
+        ]}
+      />
+
+      <h1 class="editorial-h1">DATENSCHUTZERKLÄRUNG (DSGVO & TDDDG)</h1>
+
+      <div class="clean-summary-box clean-summary-box--green">
+        <strong>Datensparsamkeit nach Art. 5 DSGVO:</strong> Alle Photovoltaik-Rechner,
+        Speicher-Simulationen und Förderabfragen auf <code>solarmetrik.de</code> werden lokal in
+        Ihrem Browser berechnet. Wir setzen keine Werbe-Tracker ein und erheben keine
+        personenbezogenen Kontaktdaten zur Nutzung unserer Werkzeuge.
+      </div>
+
+      <h2 class="editorial-h2">1. VERANTWORTLICHE STELLE</h2>
+      <p class="editorial-p">
+        Verantwortlich für die Datenverarbeitung auf dieser Website im Sinne der
+        Datenschutz-Grundverordnung (DSGVO) ist das SOLARMETRIK Institut für Solare Datenanalyse &
+        Fachpublikationen, Maximilianstraße 35a, 80539 München (E-Mail: datenschutz@solarmetrik.de).
+      </p>
+
+      <h2 class="editorial-h2">2. SERVER-LOG-DATEIEN BEIM SEITENAUFRUF</h2>
+      <p class="editorial-p">
+        Beim Aufruf unserer statisch generierten Seiten werden durch den Webserver technisch
+        notwendige Zugriffsdaten (anonymisierte IP-Adresse, Zeitpunkt des Abrufs, aufgerufene URL,
+        Browsertyp) gemäß Art. 6 Abs. 1 lit. f DSGVO verarbeitet, um die Sicherheit und
+        Auslieferung der Website zu gewährleisten. Eine Zusammenführung mit anderen Datenquellen
+        erfolgt nicht.
+      </p>
+
+      <h2 class="editorial-h2">3. IHRE BETROFFENENRECHTE NACH ART. 15–21 DSGVO</h2>
+      <p class="editorial-p">
+        Sie haben jederzeit das Recht auf unentgeltliche Auskunft über Ihre gespeicherten
+        personenbezogenen Daten sowie ein Recht auf Berichtigung, Löschung, Einschränkung der
+        Verarbeitung und Beschwerde bei der zuständigen Datenschutz-Aufsichtsbehörde.
+      </p>
+    </div>
+  </article>
+</BaseLayout>

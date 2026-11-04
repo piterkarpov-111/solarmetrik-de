@@ -1,0 +1,339 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import Breadcrumbs from '../../../components/Breadcrumbs.astro';
+import EeatVerifyBar from '../../../components/EeatVerifyBar.astro';
+import {
+  staedte,
+  getBundeslandBySlug,
+  getNearbyStaedte,
+  calculateLocalSystemScenario,
+  getMonthlyYieldBreakdown,
+  formatEur,
+  formatNumber,
+  type StadtData
+} from '../../../lib/data';
+
+export function getStaticPaths() {
+  return staedte.map((stadt) => ({
+    params: {
+      bundesland: stadt.bundeslandSlug,
+      stadt: stadt.slug
+    },
+    props: { stadt }
+  }));
+}
+
+interface Props {
+  stadt: StadtData;
+}
+
+const { stadt } = Astro.props;
+const parentState = getBundeslandBySlug(stadt.bundeslandSlug);
+const nearbyCities = getNearbyStaedte(stadt, 5);
+const monthly10kWp = getMonthlyYieldBreakdown(stadt.specificYieldKwhKwp * 10);
+
+const cityScenarios = [
+  calculateLocalSystemScenario(
+    stadt.specificYieldKwhKwp,
+    stadt.avgCostPerKwpEur,
+    stadt.localElectricityPriceCt,
+    6,
+    5,
+    2800,
+    'Reihenhaus / 2 Personen'
+  ),
+  calculateLocalSystemScenario(
+    stadt.specificYieldKwhKwp,
+    stadt.avgCostPerKwpEur,
+    stadt.localElectricityPriceCt,
+    10,
+    10,
+    4500,
+    'Einfamilienhaus (Referenz)'
+  ),
+  calculateLocalSystemScenario(
+    stadt.specificYieldKwhKwp,
+    stadt.avgCostPerKwpEur,
+    stadt.localElectricityPriceCt,
+    15,
+    15,
+    8000,
+    'EFH mit Wärmepumpe & E-Auto'
+  )
+];
+
+const cityFaqs = [
+  {
+    q: `Wie viel Strom erzeugt eine 10-kWp-Solaranlage in ${stadt.name} (${stadt.plzRange}) pro Jahr?`,
+    a: `In ${stadt.name} beträgt die mittlere jährliche Globalstrahlung laut DWD/PVGIS ${formatNumber(stadt.globalRadiationKwhM2)} kWh/m² bei rund ${formatNumber(stadt.sunHoursPerYear)} Sonnenstunden. Bei einem optimalen Dachneigungswinkel von ${stadt.optimalTiltDeg}° Süd erzielt eine Photovoltaikanlage durchschnittlich ${formatNumber(stadt.specificYieldKwhKwp)} kWh pro kWp — eine 10-kWp-Anlage liefert somit rund ${formatNumber(stadt.specificYieldKwhKwp * 10)} kWh Solarstrom pro Jahr.`
+  },
+  {
+    q: `Welche Photovoltaik-Förderung gibt es 2026 in ${stadt.name}?`,
+    a: `Für ${stadt.name} gilt im Herbst 2026 beim Programm "${stadt.kommunaleFoerderung2026.programName}" folgender Status: ${stadt.kommunaleFoerderung2026.status}. ${stadt.kommunaleFoerderung2026.details} Zusätzlich gilt bundesweit der Nullsteuersatz (0 % MwSt. nach § 12 Abs. 3 UStG) sowie die 20-jährige EEG-Vergütung.`
+  },
+  {
+    q: `Wer ist der zuständige Netzbetreiber für die PV-Anmeldung in ${stadt.name}?`,
+    a: `Der örtlich zuständige Verteilnetzbetreiber (VNB) für den Netzanschluss, das Inbetriebnahmeprotokoll (E.8) und den Einbau des intelligenten Messsystems (Smart Meter) im Postleitzahlengebiet ${stadt.plzRange} (${stadt.name}) ist: ${stadt.localGridOperator}.`
+  },
+  {
+    q: `Was kostet eine schlüsselfertige 10-kWp-Solaranlage mit Speicher in ${stadt.name} 2026?`,
+    a: `In ${stadt.name} liegt der durchschnittliche Komplettpreis für eine 10-kWp-Photovoltaikanlage inklusive 10-kWh-Batteriespeicher und Montage bei ca. ${formatEur(stadt.turnkey10kWpWithStorageEur)} (inkl. 0 % MwSt.). Bei einem lokalen Haushaltsstrompreis von ${formatNumber(stadt.localElectricityPriceCt, 1)} ct/kWh amortisiert sich die Investition nach ${formatNumber(stadt.amortisationYears, 1)} Jahren und erwirtschaftet über 20 Jahre einen Nettovorteil von + ${formatEur(stadt.twentyYearNetProfitEur)}.`
+  }
+];
+
+const embedCode = `<div style="border:1px solid #e6e8ec;border-radius:8px;padding:16px;font-family:sans-serif;background:#fff;max-width:440px;"><strong>PV-Index ${stadt.name} 2026 (SME-2026: ${stadt.solarmetrikScore}/100)</strong><br/>Solarertrag: ${stadt.specificYieldKwhKwp} kWh/kWp · Optimaler Winkel: ${stadt.optimalTiltDeg}° · Ø 10 kWp + Speicher: ${stadt.turnkey10kWpWithStorageEur.toLocaleString('de-DE')} € (0% MwSt).<br/><small>Quelle: <a href="https://solarmetrik.de/solaratlas/${stadt.bundeslandSlug}/${stadt.slug}">SOLARMETRIK Solar-Atlas ${stadt.name} 2026</a></small></div>`;
+
+const citySchema = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: cityFaqs.map((f) => ({
+      '@type': 'Question',
+      name: f.q,
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: f.a
+      }
+    }))
+  }
+];
+---
+
+<BaseLayout
+  title={`Photovoltaik ${stadt.name} 2026: Ertrag (${stadt.specificYieldKwhKwp} kWh/kWp), Förderung & Kosten | SOLARMETRIK`}
+  description={`Unabhängige PV-Analyse für ${stadt.name} (PLZ ${stadt.plzRange}): ${stadt.specificYieldKwhKwp} kWh/kWp Ertrag, Förderstatus "${stadt.kommunaleFoerderung2026.programName}", ${stadt.localGridOperator} & Preise.`}
+  canonicalPath={`/solaratlas/${stadt.bundeslandSlug}/${stadt.slug}`}
+  activeSection="atlas"
+  schema={citySchema}
+>
+  <article class="ax-section" style="padding-top: 44px;">
+    <div class="container--editorial">
+      <Breadcrumbs
+        items={[
+          { label: 'Startseite', href: '/' },
+          { label: 'Solar-Atlas', href: '/solaratlas' },
+          { label: stadt.bundeslandName, href: `/solaratlas/${stadt.bundeslandSlug}` },
+          { label: `Photovoltaik ${stadt.name}` }
+        ]}
+      />
+
+      <span class="ax-eyebrow">
+        Standort-Dossier · PLZ {stadt.plzRange} · Koordinaten {stadt.lat.toFixed(2)}° N, {stadt.lon.toFixed(2)}° O · SME-2026: {stadt.solarmetrikScore}/100
+      </span>
+      <h1 class="editorial-h1">
+        PHOTOVOLTAIK IN {stadt.name.toUpperCase()} 2026: SOLARERTRAG, FÖRDERUNG & KOSTENANALYSE
+      </h1>
+
+      <EeatVerifyBar updatedDate="04. November 2026" readingTimeMin={4} />
+
+      <div style="display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 28px;" class="no-print">
+        <a href={`/rechner?city=${stadt.slug}`} class="ax-btn ax-btn--primary">
+          Im 360°-Rechner mit {stadt.name}-Daten starten →
+        </a>
+        <button type="button" onclick="window.print()" class="ax-btn ax-btn--light">
+          Stadtdossier {stadt.name} als PDF drucken ⎙
+        </button>
+      </div>
+
+      <!-- 1. BLUF SUMMARY BLOCK (RAG CHUNK #1) -->
+      <div class="clean-summary-box">
+        <div style="font-size: 12px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--accent-blue); font-weight: 700; margin-bottom: 8px;">
+          Kernaussage & Standort-Metrik {stadt.name} (Stand November 2026)
+        </div>
+        <p style="font-size: 15.5px; line-height: 1.65; color: var(--text-primary);">
+          Im Postleitzahlengebiet <strong>{stadt.plzRange} ({stadt.name}, {stadt.bundeslandName})</strong>
+          erreicht die jährliche Globalstrahlung laut DWD/PVGIS{' '}
+          <strong>{formatNumber(stadt.globalRadiationKwhM2)} kWh/m²</strong> bei durchschnittlich{' '}
+          <strong>{formatNumber(stadt.sunHoursPerYear)} Sonnenstunden</strong>. Eine im optimalen
+          Winkel von <strong>{stadt.optimalTiltDeg}° Süd</strong> installierte 10-kWp-Dachanlage
+          erzeugt jährlich rund <strong>{formatNumber(stadt.specificYieldKwhKwp * 10)} kWh</strong>{' '}
+          Solarstrom ({formatNumber(stadt.specificYieldKwhKwp)} kWh/kWp), kostet inklusive
+          10-kWh-Speicher durchschnittlich <strong>{formatEur(stadt.turnkey10kWpWithStorageEur)}</strong>{' '}
+          (0 % MwSt.) und amortisiert sich nach <strong>{formatNumber(stadt.amortisationYears, 1)} Jahren</strong>.
+        </p>
+      </div>
+
+      <!-- KEY METRICS GRID -->
+      <div class="ax-cards-3" style="margin: 28px 0;">
+        <div class="kpi-card">
+          <div class="kpi-card__label">Spezifischer Ertrag {stadt.name}</div>
+          <div class="kpi-card__value">{formatNumber(stadt.specificYieldKwhKwp)} kWh</div>
+          <div class="kpi-card__note">
+            Pro kWp/Jahr · Optimaler Neigungswinkel: {stadt.optimalTiltDeg}° · Sonnenstunden: {formatNumber(stadt.sunHoursPerYear)} Std.
+          </div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-card__label">10 kWp + 10 kWh Speicher</div>
+          <div class="kpi-card__value">{formatEur(stadt.turnkey10kWpWithStorageEur)}</div>
+          <div class="kpi-card__note">
+            Schlüsselfertig (0 % MwSt.) · Lokaler Montagepreis: Ø {formatEur(stadt.avgCostPerKwpEur)}/kWp.
+          </div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-card__label">20-Jahre Nettovorteil</div>
+          <div class="kpi-card__value" style="color: var(--accent-green);">
+            + {formatEur(stadt.twentyYearNetProfitEur)}
+          </div>
+          <div class="kpi-card__note">
+            Amortisation: {formatNumber(stadt.amortisationYears, 1)} Jahre bei {formatNumber(stadt.localElectricityPriceCt, 1)} ct/kWh Netzstrom.
+          </div>
+        </div>
+      </div>
+
+      <!-- 2. LOCAL GRID OPERATOR & MUNICIPAL SUBSIDY 2026 (RAG CHUNK #2) -->
+      <h2 class="editorial-h2">
+        1. KOMMUNALE FÖRDERUNG 2026, SOLARPFICHT & NETZBETREIBER IN {stadt.name.toUpperCase()}
+      </h2>
+      <p class="editorial-p">
+        Für den Netzanschluss Ihrer Photovoltaikanlage, die technische Inbetriebnahme nach VDE-AR-N 4105
+        sowie den Einbau eines intelligenten Messsystems (Smart Meter nach § 14a EnWG / § 51 EEG) ist
+        im Stadtgebiet <strong>{stadt.name} (PLZ {stadt.plzRange})</strong> der lokale
+        Verteilnetzbetreiber <strong>{stadt.localGridOperator}</strong> zuständig.
+      </p>
+      <p class="editorial-p">
+        Beim städtischen Förderprogramm <strong>„{stadt.kommunaleFoerderung2026.programName}“</strong>
+        gilt im Herbst 2026 folgender Verifizierungsstatus:{' '}
+        <strong>{stadt.kommunaleFoerderung2026.status}</strong>. {stadt.kommunaleFoerderung2026.details}
+      </p>
+      {parentState && (
+        <p class="editorial-p">
+          Zusätzlich greifen in {stadt.name} die landesweiten Regelungen von{' '}
+          <a href={`/solaratlas/${parentState.slug}`} style="color: var(--accent-blue); text-decoration: underline;">
+            {parentState.name}
+          </a>
+          : <strong>{parentState.solarpflicht.effectiveRule2026}</strong> Ergänzend steht das
+          Landesprogramm <em>{parentState.landesfoerderung.programName}</em> zur Verfügung.
+        </p>
+      )}
+
+      <!-- 3. LOCAL PRICE & AMORTISATION TABLE (RAG CHUNK #3) -->
+      <h2 class="editorial-h2">
+        2. PREISTABELLE & RENDITE FÜR HAUSHALTE IN {stadt.name.toUpperCase()} (6, 10 & 15 KWP)
+      </h2>
+      <p class="editorial-p">
+        Ohne eigene Solaranlage summieren sich die Stromkosten eines durchschnittlichen
+        Vierpersonenhaushalts in {stadt.name} bei einem lokalen Grundversorgertarif von{' '}
+        <strong>{formatNumber(stadt.localElectricityPriceCt, 1)} ct/kWh</strong> und 3 % jährlicher
+        Inflation in 20 Jahren auf <strong>{formatEur(stadt.twentyYearGridLossWithoutPvEur)}</strong>{' '}
+        reinen Geldabfluss. Mit einer eigenen Dachanlage kehrt sich diese Bilanz in einen
+        dauerhaften Vermögenszuwachs um:
+      </p>
+
+      <div class="clean-table-wrap">
+        <table class="clean-table">
+          <thead>
+            <tr>
+              <th>Anlagengröße ({stadt.name})</th>
+              <th>Jahresertrag</th>
+              <th>Komplettpreis (0% MwSt)</th>
+              <th>Vorteil im 1. Jahr</th>
+              <th>Amortisation</th>
+              <th>20-J. Nettogewinn</th>
+            </tr>
+          </thead>
+          <tbody>
+            {cityScenarios.map((sc) => (
+              <tr>
+                <td>
+                  <strong>{sc.kWp} kWp + {sc.storageKwh} kWh</strong>
+                  <div style="font-size: 12px; color: var(--text-muted);">{sc.householdLabel}</div>
+                </td>
+                <td>{formatNumber(sc.annualYieldKwh)} kWh</td>
+                <td><strong>{formatEur(sc.turnkeyCostEur)}</strong></td>
+                <td>{formatEur(sc.totalAnnualBenefitYear1Eur)} / J.</td>
+                <td>{formatNumber(sc.amortisationYears, 1)} Jahre</td>
+                <td style="color: var(--accent-green); font-weight: 600;">
+                  + {formatEur(sc.twentyYearNetProfitEur)}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+
+      <!-- MONTHLY YIELD BAR CHART FOR THIS CITY -->
+      <div class="kpi-card" style="margin: 32px 0;">
+        <h3 class="ax-h3">
+          Monatlicher Solarertrag einer 10-kWp-Anlage in {stadt.name} ({formatNumber(stadt.specificYieldKwhKwp * 10)} kWh/Jahr)
+        </h3>
+        <div class="monthly-bars">
+          {monthly10kWp.map((m) => (
+            <div class="monthly-bar-col">
+              <span class="monthly-bar-val">{m.kwh}</span>
+              <div
+                class="monthly-bar-fill"
+                style={`height: ${Math.round((m.sharePercent / 15) * 100)}%;`}
+              ></div>
+              <span class="monthly-bar-label">{m.month}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <!-- 4. LOCAL FAQ (RAG CHUNK #4) -->
+      <h2 class="editorial-h2">
+        3. HÄUFIGE FRAGEN ZU PHOTOVOLTAIK IN {stadt.name.toUpperCase()} ({stadt.plzRange})
+      </h2>
+      <div class="faq-list">
+        {cityFaqs.map((f, idx) => (
+          <details class="faq-item" open={idx === 0}>
+            <summary class="faq-question">
+              <span>{f.q}</span>
+              <span style="color: var(--accent-blue);">+</span>
+            </summary>
+            <div class="faq-answer">
+              <p>{f.a}</p>
+            </div>
+          </details>
+        ))}
+      </div>
+
+      <!-- NEARBY CITIES SILO RING LINKING -->
+      <div
+        style="margin-top: 48px; padding-top: 32px; border-top: 1px solid var(--border-hairline);"
+        class="no-print"
+      >
+        <h2 class="editorial-h3" style="margin-top: 0;">
+          Regionaler Vergleich: Nachbarstädte im Umfeld von {stadt.name}
+        </h2>
+        <p style="font-size: 14.5px; color: var(--text-secondary); margin-bottom: 14px;">
+          Vergleichen Sie Strahlungswerte, Montagepreise und Förderprogramme in den nächstgelegenen
+          Städten rund um {stadt.name}:
+        </p>
+        <div class="city-pill-list">
+          {nearbyCities.map((nc) => (
+            <a
+              href={`/solaratlas/${nc.bundeslandSlug}/${nc.slug}`}
+              class="city-pill"
+            >
+              <strong>{nc.name}</strong> ({nc.distanceKm} km) · {nc.specificYieldKwhKwp} kWh/kWp →
+            </a>
+          ))}
+          <a href={`/solaratlas/${stadt.bundeslandSlug}`} class="city-pill" style="color: var(--accent-blue);">
+            Alle Städte in {stadt.bundeslandName} →
+          </a>
+        </div>
+      </div>
+
+      <!-- PASSIVE LINKBUILDING WIDGET -->
+      <div
+        style="margin-top: 36px; background: var(--bg-soft); padding: 22px 24px; border-radius: var(--radius-photo);"
+        class="no-print"
+      >
+        <div style="font-size: 13px; font-weight: 600; margin-bottom: 6px;">
+          Offene Daten-Lizenz (CC BY 4.0) — Standortdaten {stadt.name} auf Ihrer Website einbinden:
+        </div>
+        <p style="font-size: 12.5px; color: var(--text-secondary); margin-bottom: 10px;">
+          Kommunen, Energieberater und Bauherren-Foren dürfen diesen verifizierten Datensatz frei zitieren:
+        </p>
+        <textarea
+          readonly
+          rows="3"
+          class="form-input"
+          style="font-family: monospace; font-size: 11.5px; resize: none;"
+          onclick="this.select()"
+        >{embedCode}</textarea>
+      </div>
+    </div>
+  </article>
+</BaseLayout>

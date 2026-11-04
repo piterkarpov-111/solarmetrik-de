@@ -1,0 +1,269 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import EeatVerifyBar from '../../components/EeatVerifyBar.astro';
+import { getAllArticles, type ArticleData } from '../../lib/articles';
+
+export function getStaticPaths() {
+  const all = getAllArticles();
+  return all.map((article) => ({
+    params: { slug: article.slug },
+    props: { article }
+  }));
+}
+
+interface Props {
+  article: ArticleData;
+}
+
+const { article } = Astro.props;
+const otherArticles = getAllArticles()
+  .filter((a) => a.slug !== article.slug)
+  .slice(0, 3);
+
+const articleSchema = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'TechArticle',
+    headline: article.title,
+    description: article.metaDescription,
+    image: `https://solarmetrik.de${article.heroImage}`,
+    datePublished: '2026-10-15',
+    dateModified: '2026-11-04',
+    author: {
+      '@type': 'Person',
+      name: 'Lukas Hartmann',
+      jobTitle: 'Energieökonom (M.Sc.) — Leitung Fachredaktion'
+    },
+    reviewedBy: {
+      '@type': 'Person',
+      name: 'Dipl.-Ing. Markus Weber',
+      jobTitle: 'Prüfingenieur für Photovoltaik-Systemtechnik'
+    },
+    publisher: {
+      '@type': 'Organization',
+      name: 'SOLARMETRIK Deutschland',
+      url: 'https://solarmetrik.de'
+    }
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: article.faqs.map((f) => ({
+      '@type': 'Question',
+      name: f.q,
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: f.a
+      }
+    }))
+  }
+];
+---
+
+<BaseLayout
+  title={article.metaTitle}
+  description={article.metaDescription}
+  canonicalPath={`/ratgeber/${article.slug}`}
+  activeSection="ratgeber"
+  ogImage={`https://solarmetrik.de${article.heroImage}`}
+  schema={articleSchema}
+>
+  <article class="ax-section" style="padding-top: 44px;">
+    <div class="container--editorial">
+      <Breadcrumbs
+        items={[
+          { label: 'Startseite', href: '/' },
+          { label: 'Ratgeber & Studien', href: '/ratgeber' },
+          { label: article.title }
+        ]}
+      />
+
+      <span class="ax-eyebrow">{article.category} · Fachstudie 2026/2027</span>
+      <h1 class="editorial-h1">{article.title}</h1>
+
+      <EeatVerifyBar updatedDate={article.updatedDate} readingTimeMin={article.readingTimeMin} />
+
+      <div style="display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 28px;" class="no-print">
+        <a href={article.relatedToolHref} class="ax-btn ax-btn--primary">
+          {article.relatedToolLabel}
+        </a>
+        <button type="button" onclick="window.print()" class="ax-btn ax-btn--light">
+          Leitfaden als PDF drucken ⎙
+        </button>
+      </div>
+
+      <!-- BLUF SUMMARY BOX (OPTIMIZED FOR AI OVERVIEWS & RAG EXTRACTION) -->
+      <div class="clean-summary-box">
+        <div
+          style="font-size: 12px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--accent-blue); font-weight: 700; margin-bottom: 8px;"
+        >
+          Management Summary (Das Wichtigste in 30 Sekunden · Stand November 2026)
+        </div>
+        <p style="font-size: 15.5px; line-height: 1.68; color: var(--text-primary);">
+          {article.blufSummary}
+        </p>
+      </div>
+
+      <!-- JUMP LINKS TABLE OF CONTENTS -->
+      <nav class="toc-box" aria-label="Inhaltsverzeichnis des Artikels">
+        <div class="toc-box__title">Direktsprung zu den Abschnitten (Jump Links):</div>
+        <div class="toc-box__list">
+          {article.sections.map((sec) => (
+            <a href={`#${sec.id}`} class="toc-box__link">
+              {sec.heading}
+            </a>
+          ))}
+          <a href="#fach-faq" class="toc-box__link">
+            Häufige Fragen (FAQ) zum Thema
+          </a>
+        </div>
+      </nav>
+
+      <!-- ROUNDED 16:9 EDITORIAL PHOTO (AXOPAR NEWS STYLE) -->
+      <figure class="editorial-photo">
+        <img
+          src={article.heroImage}
+          alt={article.heroAlt}
+          width="1200"
+          height="675"
+          fetchpriority="high"
+        />
+        <figcaption>{article.heroAlt} — Datenstand: November 2026 (SOLARMETRIK)</figcaption>
+      </figure>
+
+      <!-- INDEXED SEMANTIC SVG ENGINEERING DIAGRAM -->
+      <figure
+        style="background: var(--bg-soft); border: 1px solid var(--border-hairline); border-radius: var(--radius-photo); padding: 28px; margin: 32px 0;"
+      >
+        <div
+          style="font-family: var(--font-condensed); font-size: 19px; font-weight: 700; text-transform: uppercase; margin-bottom: 16px;"
+        >
+          {article.svgDiagramTitle}
+        </div>
+        <svg
+          viewBox="0 0 720 155"
+          role="img"
+          aria-label={article.svgDiagramTitle}
+          style="width: 100%; height: auto;"
+        >
+          <title>{article.svgDiagramTitle}</title>
+          {article.svgKeyLabels.map((item, idx) => {
+            const x = idx * 240;
+            return (
+              <g transform={`translate(${x}, 10)`}>
+                <rect
+                  x="4"
+                  y="0"
+                  width="226"
+                  height="130"
+                  rx="8"
+                  fill="#ffffff"
+                  stroke="#cfd4dc"
+                  stroke-width="1.2"
+                />
+                <text x="18" y="30" fill="#525860" font-size="11.5" font-weight="600">
+                  {item.label}
+                </text>
+                <text x="18" y="66" fill="#0f4c81" font-size="20" font-weight="700">
+                  {item.value}
+                </text>
+                <text x="18" y="96" fill="#525860" font-size="10.5">
+                  {item.sub.slice(0, 36)}
+                </text>
+                <text x="18" y="112" fill="#868e96" font-size="10.5">
+                  {item.sub.slice(36)}
+                </text>
+              </g>
+            );
+          })}
+        </svg>
+        <figcaption style="font-size: 12.5px; color: var(--text-muted); margin-top: 12px;">
+          {article.svgDiagramCaption}
+        </figcaption>
+      </figure>
+
+      <!-- MODULAR H2 SECTIONS (RAG CHUNKS) -->
+      {article.sections.map((sec) => (
+        <section>
+          <h2 id={sec.id} class="editorial-h2">
+            {sec.heading}
+          </h2>
+          {sec.paragraphs.map((p) => (
+            <p class="editorial-p">{p}</p>
+          ))}
+          {sec.bullets && (
+            <ul class="editorial-list">
+              {sec.bullets.map((b) => (
+                <li>{b}</li>
+              ))}
+            </ul>
+          )}
+          {sec.table && (
+            <div class="clean-table-wrap">
+              <table class="clean-table">
+                <thead>
+                  <tr>
+                    {sec.table.headers.map((h) => (
+                      <th>{h}</th>
+                    ))}
+                  </tr>
+                </thead>
+                <tbody>
+                  {sec.table.rows.map((r) => (
+                    <tr>
+                      {r.map((cell, cIdx) => (
+                        <td>{cIdx === 0 ? <strong>{cell}</strong> : cell}</td>
+                      ))}
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          )}
+        </section>
+      ))}
+
+      <!-- FAQ SECTION -->
+      <h2 id="fach-faq" class="editorial-h2">
+        HÄUFIGE FRAGEN ZU DIESEM FACHBEITRAG
+      </h2>
+      <div class="faq-list">
+        {article.faqs.map((f, idx) => (
+          <details class="faq-item" open={idx === 0}>
+            <summary class="faq-question">
+              <span>{f.q}</span>
+              <span style="color: var(--accent-blue);">+</span>
+            </summary>
+            <div class="faq-answer">
+              <p>{f.a}</p>
+            </div>
+          </details>
+        ))}
+      </div>
+
+      <!-- RELATED ARTICLES -->
+      <div
+        style="margin-top: 56px; padding-top: 36px; border-top: 1px solid var(--border-hairline);"
+        class="no-print"
+      >
+        <h2 class="editorial-h3" style="margin-top: 0; margin-bottom: 20px;">
+          Weiterführende Studien & Berechnungen der SOLARMETRIK-Redaktion
+        </h2>
+        <div class="ax-cards-3">
+          {otherArticles.map((oa) => (
+            <a href={`/ratgeber/${oa.slug}`} class="kpi-card" style="padding: 20px;">
+              <div style="font-size: 11.5px; color: var(--accent-blue); font-weight: 600; margin-bottom: 6px;">
+                {oa.category}
+              </div>
+              <div style="font-family: var(--font-condensed); font-size: 18px; font-weight: 700; text-transform: uppercase; line-height: 1.15; margin-bottom: 8px;">
+                {oa.title}
+              </div>
+              <span style="font-size: 13px; color: var(--text-secondary);">Leitfaden lesen →</span>
+            </a>
+          ))}
+        </div>
+      </div>
+    </div>
+  </article>
+</BaseLayout>

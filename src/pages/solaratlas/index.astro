@@ -1,0 +1,173 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import EeatVerifyBar from '../../components/EeatVerifyBar.astro';
+import GermanyMapAtlas from '../../components/GermanyMapAtlas.astro';
+import {
+  getAllBundeslaender,
+  getStaedteByBundesland,
+  formatEur,
+  formatNumber
+} from '../../lib/data';
+
+const allStates = getAllBundeslaender();
+
+const datasetSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Dataset',
+  name: 'Deutscher Solar-Atlas 2026 (SME-2026) — Strahlung, Kosten & Förderungen in 16 Bundesländern & 51 Städten',
+  description:
+    'Verifizierter Referenzdatensatz zur Photovoltaik-Wirtschaftlichkeit, Globalstrahlung (DWD/PVGIS), Solarpflicht 2026 und kommunalen Förderungen für alle 16 deutschen Bundesländer und 51 Großstädte.',
+  url: 'https://solarmetrik.de/solaratlas',
+  license: 'https://creativecommons.org/licenses/by/4.0/',
+  creator: {
+    '@type': 'Organization',
+    name: 'SOLARMETRIK Deutschland',
+    url: 'https://solarmetrik.de'
+  },
+  distribution: {
+    '@type': 'DataDownload',
+    encodingFormat: 'application/json',
+    contentUrl: 'https://solarmetrik.de/api/solaratlas-2026.json'
+  }
+};
+---
+
+<BaseLayout
+  title="Deutscher Solar-Atlas 2026: Alle 16 Bundesländer & 51 Städte im Vergleich | SOLARMETRIK"
+  description="Photovoltaik-Ertrag (kWh/kWp), DWD-Globalstrahlung, Montagepreise, Solarpflicht 2026 und Förderprogramme für alle 16 Bundesländer und 51 deutschen Städte."
+  canonicalPath="/solaratlas"
+  activeSection="atlas"
+  schema={datasetSchema}
+>
+  <section class="ax-section" style="padding-top: 44px;">
+    <div class="container">
+      <Breadcrumbs
+        items={[
+          { label: 'Startseite', href: '/' },
+          { label: 'Deutscher Solar-Atlas 2026 (16 Bundesländer & 51 Städte)' }
+        ]}
+      />
+
+      <div style="max-width: 840px; margin-bottom: 32px;">
+        <span class="ax-eyebrow">Deutscher Photovoltaik-Atlas · Referenzindex SME-2026</span>
+        <h1 class="ax-h1">SOLAR-ATLAS DEUTSCHLAND 2026: ALLE 16 BUNDESLÄNDER & 51 STÄDTE</h1>
+        <p class="ax-sub">
+          Vergleichen Sie regionale Sonneneinstrahlung nach DWD/PVGIS, spezifische Erträge in
+          kWh pro kWp, aktuelle Montagepreise (inkl. 0 % MwSt.), die gesetzliche Solarpflicht
+          sowie die Förderprogramme aller 16 Bundesländer und 51 Großstädte.
+        </p>
+      </div>
+
+      <EeatVerifyBar updatedDate="04. November 2026" />
+
+      <div style="margin-top: 36px;">
+        <GermanyMapAtlas />
+      </div>
+
+      <!-- RANKING TABLE OF ALL 16 FEDERAL STATES -->
+      <div style="margin-top: 72px;">
+        <span class="ax-eyebrow">Bundesländer-Ranking nach SOLARMETRIK-Effizienzscore (SME-2026)</span>
+        <h2 class="ax-h2">VERGLEICHSTABELLE ALLER 16 BUNDESLÄNDER (STAND NOVEMBER 2026)</h2>
+        <p class="ax-sub" style="margin-bottom: 24px;">
+          Alle Werte beziehen sich auf eine schlüsselfertige 10-kWp-Referenzanlage mit
+          10-kWh-LFP-Speicher bei optimalem regionalem Neigungswinkel inklusive 0 % MwSt. (§ 12 Abs. 3 UStG).
+        </p>
+
+        <div class="clean-table-wrap">
+          <table class="clean-table">
+            <thead>
+              <tr>
+                <th>Rang & Bundesland</th>
+                <th>SME-2026</th>
+                <th>Globalstrahlung</th>
+                <th>PV-Ertrag / kWp</th>
+                <th>Ø Preis / kWp</th>
+                <th>10 kWp + Speicher</th>
+                <th>Amortisation</th>
+                <th>20-J. Nettovorteil</th>
+                <th>Solarpflicht 2026</th>
+              </tr>
+            </thead>
+            <tbody>
+              {allStates.map((s, idx) => (
+                <tr>
+                  <td>
+                    <a
+                      href={`/solaratlas/${s.slug}`}
+                      style="font-weight: 600; color: var(--accent-blue);"
+                    >
+                      {idx + 1}. {s.name} ({s.code}) →
+                    </a>
+                  </td>
+                  <td><span class="badge badge--blue">{s.solarmetrikScore}/100</span></td>
+                  <td>{formatNumber(s.globalRadiationKwhM2)} kWh/m²</td>
+                  <td><strong>{formatNumber(s.specificYieldKwhKwp)} kWh/kWp</strong></td>
+                  <td>{formatEur(s.avgCostPerKwpEur)}</td>
+                  <td>{formatEur(s.avgTurnkey10kWpWithStorageEur)}</td>
+                  <td>{formatNumber(s.amortisationYears, 1)} J.</td>
+                  <td style="color: var(--accent-green); font-weight: 600;">
+                    + {formatEur(s.twentyYearNetProfitEur)}
+                  </td>
+                  <td style="font-size: 13px;">
+                    {s.solarpflicht.neubauWohngebaeude && s.solarpflicht.dachsanierungBestand
+                      ? 'Neubau & Dachsanierung'
+                      : s.solarpflicht.neubauWohngebaeude
+                        ? 'Wohn-Neubau'
+                        : s.solarpflicht.dachsanierungBestand
+                          ? 'Dachsanierung (Bestand)'
+                          : 'Freiwillig (Wohnbau)'}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- COMPLETE DIRECTORY OF ALL 51 CITIES GROUPED BY STATE -->
+      <div style="margin-top: 72px;">
+        <span class="ax-eyebrow">Städteverzeichnis · Lokale Stadtwerke, PLZ & Kommunalförderung</span>
+        <h2 class="ax-h2">ALLE 51 GEPRÜFTEN STÄDTE NACH BUNDESLAND</h2>
+        <p class="ax-sub" style="margin-bottom: 36px;">
+          Jede Stadtanalyse enthält den zuständigen Verteilnetzbetreiber (Stadtwerke), den
+          tagesaktuellen Status städtischer Zuschussprogramme im Herbst 2026 sowie lokale
+          Amortisationsrechnungen für 6, 10 und 15 kWp.
+        </p>
+
+        <div class="ax-cards-2">
+          {allStates.map((s) => {
+            const stateCities = getStaedteByBundesland(s.slug);
+            return (
+              <div class="kpi-card">
+                <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 12px;">
+                  <h3 class="ax-h3" style="margin-bottom: 0;">
+                    <a href={`/solaratlas/${s.slug}`} style="color: var(--text-primary);">
+                      {s.name} ({s.code}) →
+                    </a>
+                  </h3>
+                  <span style="font-size: 12.5px; color: var(--text-muted);">
+                    Ø {s.specificYieldKwhKwp} kWh/kWp · Score {s.solarmetrikScore}/100
+                  </span>
+                </div>
+                <p style="font-size: 13.5px; color: var(--text-secondary); margin-bottom: 14px;">
+                  {s.landesfoerderung.programName}
+                </p>
+                <div class="city-pill-list">
+                  {stateCities.map((c) => (
+                    <a
+                      href={`/solaratlas/${c.bundeslandSlug}/${c.slug}`}
+                      class="city-pill"
+                    >
+                      <strong>{c.name}</strong> ({c.plzRange.split('–')[0]}) · {c.specificYieldKwhKwp} kWh/kWp →
+                    </a>
+                  ))}
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
