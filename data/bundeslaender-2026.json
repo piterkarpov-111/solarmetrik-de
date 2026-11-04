@@ -98,7 +98,7 @@
     "solarpflicht": {
       "neubauWohngebaeude": false,
       "dachsanierungBestand": false,
-      "effectiveRule2026": "Pflicht gilt seit 2024 primär für öffentliche und gewerbliche Neubauten/Parkplätze ab 50 m²; für private Wohngebäude besteht 2026 keine landesweite Solardachpflicht."
+      "effectiveRule2026": "Brandenburgische Bauordnung (BbgBO § 32a): Seit 01.06.2024 gilt die Solarpflicht für öffentliche und gewerbliche Nichtwohngebäude sowie Parkplätze ab 50 m² Fläche; für private Wohngebäude besteht 2026 keine landesweite Solardachpflicht."
     },
     "landesfoerderung": {
       "programName": "ILB-Finanzierung & Kommunale Klimafonds (z. B. Potsdam / Cottbus)",
@@ -393,9 +393,9 @@
     "twentyYearNetProfitEur": 23100,
     "solarmetrikScore": 86,
     "solarpflicht": {
-      "neubauWohngebaeude": true,
+      "neubauWohngebaeude": false,
       "dachsanierungBestand": false,
-      "effectiveRule2026": "Energiewende- und Klimaschutzgesetz SH (EWKG): Seit 2025 ausgeweitete Solarpflicht für Wohn-Neubauten sowie bei größeren Dachsanierungen von Nichtwohngebäuden."
+      "effectiveRule2026": "Energiewende- und Klimaschutzgesetz SH (EWKG § 9): Verbindliche Solarpflicht gilt für Nichtwohngebäude (Neubau & Dachsanierung > 10 %) sowie große Parkplätze (ab 70 Stellplätzen). Für private Wohngebäude besteht landesweit keine gesetzliche Installationspflicht (nur über kommunale B-Pläne)."
     },
     "landesfoerderung": {
       "programName": "IB.SH Energetische Stadtsanierung + § 14a EnWG Netzentgelt-Vorteil",

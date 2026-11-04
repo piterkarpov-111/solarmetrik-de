@@ -5,7 +5,7 @@
     "lastVerified": "2026-11-04",
     "sources": [
       "Bundesnetzagentur (EEG-Fördersätze ab 01.08.2026 bis 31.01.2027)",
-      "Deutscher Wetterdienst (DWD) Globalstrahlungsdaten",
+      "Deutscher Wetterdienst (DWD) Globalstrahlungsdaten (1×1 km Rasterdaten aus Bodenmessungen und Satellitendaten)",
       "PVGIS (Photovoltaic Geographical Information System - European Commission)",
       "Fraunhofer ISE (Photovoltaics Report & Stromgestehungskosten 2026)",
       "Umsatzsteuergesetz § 12 Abs. 3 UStG (Nullsteuersatz)",
@@ -32,8 +32,8 @@
     },
     "eeg2027ReformAlert": {
       "deadlineDate": "2026-12-31",
-      "headline": "Bestandsschutz bis 31.12.2026 sichern: Umbruch der EEG-Vergütung ab 2027",
-      "summary": "Die Bundesregierung baut das Fördersystem ab 2027 grundlegend um. Für Neuanlagen ab 2027 stehen das Auslaufen der klassischen 20-jährigen Festvergütung bzw. verkürzte Übergangsmodelle (36 Monate) und Direktvermarktung im Raum. Wer seine Anlage noch bis zum 31. Dezember 2026 offiziell in Betrieb nimmt, sichert sich den vollen gesetzlichen Bestandsschutz der 20-jährigen EEG-Vergütung."
+      "headline": "Bestandsschutz bis 31.12.2026 sichern: Gesetzentwurf zur EEG-Reform 2027",
+      "summary": "Rechtlicher Status (Regierungsentwurf vom 29.07.2026, 1. Lesung im Bundestag am 24.09.2026, vorbehaltlich finaler Verabschiedung durch Bundestag/Bundesrat): Die Bundesregierung plant ab 2027 den schrittweisen Ausstieg aus der klassischen 20-jährigen Festvergütung für Neuanlagen zugunsten von Direktvermarktung und Übergangsmodellen. Wer seine Anlage noch bis zum 31. Dezember 2026 nach geltendem EEG in Betrieb nimmt, sichert sich verbindlich den 20-jährigen gesetzlichen Bestandsschutz."
     },
     "solarspitzengesetz": {
       "paragraph": "§ 51 EEG (Negative Börsenstrompreise)",

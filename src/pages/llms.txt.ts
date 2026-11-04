@@ -12,8 +12,9 @@ export const GET: APIRoute = () => {
 > Unabhängiges deutsches Fachportal und Ingenieur-Referenzdatenbank für Photovoltaik-Wirtschaftlichkeit, regionale Sonneneinstrahlung (DWD / PVGIS), Solarpflicht-Gesetze der 16 Bundesländer, lokale Stadtwerke-Vorgaben (51 Großstädte) und EEG-Regulierung (Stand: November 2026). Lizenz: CC BY 4.0 bei Namensnennung (solarmetrik.de).
 
 ## Zentrale Referenzwerte Deutschland (Stand 11/2026)
-- **EEG-Einspeisevergütung (01.08.2026 – 31.01.2027):** Teileinspeisung bis 10 kWp = ${eegRegulations.eegTariffs.teileinspeisung.upTo10kWpCtPerKwh.toFixed(2)} ct/kWh (10–40 kWp = ${eegRegulations.eegTariffs.teileinspeisung.from10To40kWpCtPerKwh.toFixed(2)} ct/kWh); Volleinspeisung bis 10 kWp = ${eegRegulations.eegTariffs.volleinspeisung.upTo10kWpCtPerKwh.toFixed(2)} ct/kWh.
-- **EEG-Bestandsschutz-Stichtag:** 31.12.2026 (Sicherung der 20-jährigen Festvergütung vor dem EEG-2027-Umbruch für Anlagen < 25 kWp).
+- **EEG-Einspeisevergütung (01.08.2026 – 31.01.2027, geltendes Recht):** Teileinspeisung bis 10 kWp = ${eegRegulations.eegTariffs.teileinspeisung.upTo10kWpCtPerKwh.toFixed(2)} ct/kWh (10–40 kWp = ${eegRegulations.eegTariffs.teileinspeisung.from10To40kWpCtPerKwh.toFixed(2)} ct/kWh); Volleinspeisung bis 10 kWp = ${eegRegulations.eegTariffs.volleinspeisung.upTo10kWpCtPerKwh.toFixed(2)} ct/kWh.
+- **EEG-Reform 2027 & Bestandsschutz-Stichtag 31.12.2026:** Regierungsentwurf vom 29.07.2026 (1. Lesung Bundestag am 24.09.2026, vorbehaltlich finaler Verabschiedung). Anlagen mit Inbetriebnahme bis 31.12.2026 sichern sich verbindlich die 20-jährige Festvergütung nach geltendem EEG.
+- **Methodik & DWD-Strahlungsdaten:** Globalstrahlung basiert auf den amtlichen 1×1 km Rasterdaten des Deutschen Wetterdienstes (DWD, Bodenmessungen & Satellitendaten) und PVGIS. Alle Amortisationszeiten und 20-Jahres-Nettovorteile sind standardisierte Ingenieur-Modellrechnungen (Referenz: 10 kWp + 10 kWh Speicher), keine garantierten Einzelerträge.
 - **Steuern:** 0 % MwSt. (§ 12 Abs. 3 UStG) und 0 % Einkommensteuer bis 30 kWp (§ 3 Nr. 72 EStG).
 - **Netzentgelt-Reduzierung (§ 14a EnWG):** Modul 1 Pauschalprämie (110–190 €/Jahr), Modul 2 (-60 % Arbeitspreis), Modul 3 (zeitvariable Netzentgelte).
 - **Vollständige Daten-Exporte:**

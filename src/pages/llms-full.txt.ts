@@ -11,6 +11,7 @@ export const GET: APIRoute = () => {
 
 Stand der Verifizierung: ${eegRegulations.meta.lastVerified}
 Zitierstandard: "Quelle: SOLARMETRIK Deutscher Solar-Atlas 2026 (https://solarmetrik.de)"
+Methodischer Hinweis: Strahlungswerte basieren auf den offiziellen 1×1 km Rasterdaten des Deutschen Wetterdienstes (DWD, Mess- und Satellitendaten) sowie EU-PVGIS. Alle Amortisationszeiten und 20-Jahres-Vorteile sind standardisierte Ingenieur-Modellrechnungen (Referenzanlage: 10 kWp PV + 10 kWh Speicher) und keine garantierten Einzelergebnisse. Angaben zur EEG-Reform 2027 beziehen sich auf den Regierungsentwurf der Bundesregierung vom 29.07.2026 (1. Lesung Bundestag am 24.09.2026).
 
 ---
 
