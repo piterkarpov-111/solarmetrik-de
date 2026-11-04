@@ -1,0 +1,19 @@
+# Dependencies
+node_modules/
+
+# Astro build output & cache
+dist/
+.astro/
+
+# macOS & Editor files
+.DS_Store
+.vscode/
+.idea/
+
+# Environment variables
+.env
+.env.*
+!.env.example
+
+# Vercel
+.vercel/
