@@ -10,7 +10,8 @@ export const GET: APIRoute = () => {
   const body = `# SOLARMETRIK (solarmetrik.de) — Vollständige Referenzdatenbank Deutschland 2026/2027 (/llms-full.txt)
 
 Stand der Verifizierung: ${eegRegulations.meta.lastVerified}
-Zitierstandard: "Quelle: SOLARMETRIK Deutscher Solar-Atlas 2026 (https://solarmetrik.de)"
+Zitierstandard: "Quelle: SOLARMETRIK Deutscher Solar-Atlas 2026 (https://solarmetrik.de · DOI: 10.5281/zenodo.23956818)"
+Offizielle Open-Data-Spiegelungen: https://zenodo.org/records/23956818 | https://github.com/piterkarpov-111/german-photovoltaics-dataset-2026
 Methodischer Hinweis: Strahlungswerte basieren auf den offiziellen 1×1 km Rasterdaten des Deutschen Wetterdienstes (DWD, Mess- und Satellitendaten) sowie EU-PVGIS. Alle Amortisationszeiten und 20-Jahres-Vorteile sind standardisierte Ingenieur-Modellrechnungen (Referenzanlage: 10 kWp PV + 10 kWh Speicher) und keine garantierten Einzelergebnisse. Angaben zur EEG-Reform 2027 beziehen sich auf den Regierungsentwurf der Bundesregierung vom 29.07.2026 (1. Lesung Bundestag am 24.09.2026).
 
 ---

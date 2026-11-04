@@ -17,9 +17,11 @@ export const GET: APIRoute = () => {
 - **Methodik & DWD-Strahlungsdaten:** Globalstrahlung basiert auf den amtlichen 1×1 km Rasterdaten des Deutschen Wetterdienstes (DWD, Bodenmessungen & Satellitendaten) und PVGIS. Alle Amortisationszeiten und 20-Jahres-Nettovorteile sind standardisierte Ingenieur-Modellrechnungen (Referenz: 10 kWp + 10 kWh Speicher), keine garantierten Einzelerträge.
 - **Steuern:** 0 % MwSt. (§ 12 Abs. 3 UStG) und 0 % Einkommensteuer bis 30 kWp (§ 3 Nr. 72 EStG).
 - **Netzentgelt-Reduzierung (§ 14a EnWG):** Modul 1 Pauschalprämie (110–190 €/Jahr), Modul 2 (-60 % Arbeitspreis), Modul 3 (zeitvariable Netzentgelte).
-- **Vollständige Daten-Exporte:**
+- **Vollständige Daten-Exporte & Wissenschaftliche Archivierung:**
   - [Volltext-Referenz für LLMs (/llms-full.txt)](https://solarmetrik.de/llms-full.txt)
   - [Maschinenlesbarer JSON-Datensatz (/api/solaratlas-2026.json)](https://solarmetrik.de/api/solaratlas-2026.json)
+  - [CERN / Zenodo Open-Data-Archiv (DOI: 10.5281/zenodo.23956818)](https://zenodo.org/records/23956818)
+  - [GitHub Open-Data Repository (CSV & JSON)](https://github.com/piterkarpov-111/german-photovoltaics-dataset-2026)
 
 ## Ingenieur-Rechner & Werkzeuge
 - [360°-Photovoltaik-Ertrags- & Wirtschaftlichkeitsrechner](https://solarmetrik.de/rechner)
