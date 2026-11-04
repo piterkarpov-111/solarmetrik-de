@@ -37,7 +37,11 @@ const baseOrgSchema = {
   logo: `${siteUrl}/favicon.svg`,
   description:
     'Unabhängiges deutsches Fachportal und Ingenieur-Dateninstitut für Photovoltaik-Wirtschaftlichkeit, regionale DWD-Strahlungsdaten und EEG-Regulierung 2026/2027.',
-  sameAs: [`${siteUrl}/methodik`, `${siteUrl}/api/solaratlas-2026.json`]
+  sameAs: [
+    `${siteUrl}/methodik`,
+    `${siteUrl}/api/solaratlas-2026.json`,
+    'https://github.com/piterkarpov-111/german-photovoltaics-dataset-2026'
+  ]
 };
 
 const schemas = Array.isArray(schema)
