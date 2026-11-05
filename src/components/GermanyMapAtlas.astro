@@ -58,9 +58,23 @@ const statePayload = Object.fromEntries(
       ))}
     </svg>
 
-    <div
-      style="display: flex; justify-content: space-between; align-items: center; margin-top: 18px; padding-top: 14px; border-top: 1px solid var(--border-hairline); font-size: 12px; color: var(--text-muted);"
-    >
+    <!-- Mobile Selection Indicator (Visible <= 992px) -->
+    <div class="map-mobile-badge" id="map-mobile-badge">
+      <div class="map-mobile-badge__content">
+        <span class="map-mobile-badge__dot"></span>
+        <span class="map-mobile-badge__title">
+          Ausgewählt: <strong id="map-badge-name">{defaultState.name}</strong>
+        </span>
+        <span class="badge badge--blue" id="map-badge-score">
+          Score: {defaultState.solarmetrikScore}/100
+        </span>
+      </div>
+      <button type="button" id="map-badge-scroll" class="map-mobile-badge__btn">
+        Detailwerte von <span id="map-badge-btn-name">{defaultState.name}</span> ansehen ↓
+      </button>
+    </div>
+
+    <div class="map-canvas-footer">
       <span>Quelle: DWD Globalstrahlungs-Referenz / PVGIS 2026</span>
       <a href="/solaratlas" style="color: var(--accent-blue); font-weight: 500;">
         Tabellenansicht aller 16 Länder →
@@ -226,6 +240,38 @@ const statePayload = Object.fromEntries(
         elCalcLink.href = `/rechner?state=${st.slug}`;
         elCalcLink.textContent = `Im PV-Rechner mit ${st.name}-Daten starten →`;
       }
+
+      // Update mobile feedback badge
+      const bName = document.getElementById('map-badge-name');
+      const bBtnName = document.getElementById('map-badge-btn-name');
+      const bScore = document.getElementById('map-badge-score');
+      const bBadge = document.getElementById('map-mobile-badge');
+      if (bName) bName.textContent = st.name;
+      if (bBtnName) bBtnName.textContent = st.name;
+      if (bScore) bScore.textContent = `Score: ${st.solarmetrikScore}/100`;
+      if (bBadge) {
+        bBadge.classList.remove('pulse');
+        void bBadge.offsetWidth;
+        bBadge.classList.add('pulse');
+      }
+
+      // On mobile devices, smoothly scroll down so user sees the updated telemetry card
+      if (window.innerWidth <= 992) {
+        const panel = document.getElementById('map-telemetry-panel');
+        if (panel) {
+          setTimeout(() => {
+            panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+          }, 150);
+        }
+      }
+    }
+
+    const scrollBtn = document.getElementById('map-badge-scroll');
+    if (scrollBtn) {
+      scrollBtn.addEventListener('click', () => {
+        const panel = document.getElementById('map-telemetry-panel');
+        if (panel) panel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
     }
 
     paths.forEach((p) => {

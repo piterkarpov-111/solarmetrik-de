@@ -168,10 +168,11 @@ const allStaedteSearch = getAllStaedte().map((s) => ({
       <span class="ax-mobile-toggle__bar"></span>
     </button>
   </div>
+</header>
 
-  <!-- Mobile Slide-Down Navigation Drawer -->
-  <div id="ax-mobile-drawer" class="ax-mobile-drawer" aria-hidden="true">
-    <div class="ax-mobile-drawer__inner">
+<!-- Mobile Slide-Down Navigation Drawer (outside header to prevent iOS Safari backdrop-filter clipping) -->
+<div id="ax-mobile-drawer" class="ax-mobile-drawer" aria-hidden="true">
+  <div class="ax-mobile-drawer__inner">
       <!-- Mobile Search Form -->
       <div class="ax-mobile-search">
         <form id="mobile-city-search-form" class="ax-mobile-search__form" onsubmit="return false;">
@@ -294,7 +295,6 @@ const allStaedteSearch = getAllStaedte().map((s) => ({
       </nav>
     </div>
   </div>
-</header>
 
 <script is:inline define:vars={{ allStaedteSearch }}>
   (() => {

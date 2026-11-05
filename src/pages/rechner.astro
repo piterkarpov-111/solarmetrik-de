@@ -284,7 +284,7 @@ const calcSchema = {
           <div
             style="padding-top: 22px; margin-top: 22px; border-top: 1px solid var(--border-hairline);"
           >
-            <div style="display: flex; justify-content: space-between; align-items: baseline;">
+            <div style="display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 6px 12px; margin-bottom: 8px;">
               <span style="font-size: 13.5px; font-weight: 600;">
                 Monatliche Stromerzeugung Ihrer Anlage (Januar – Dezember)
               </span>
@@ -309,7 +309,7 @@ const calcSchema = {
 
         <!-- RIGHT: LIVE ENGINEERING SUMMARY PASSPORT -->
         <aside class="calc-summary-light" aria-live="polite">
-          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+          <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px; margin-bottom: 10px;">
             <span style="font-size: 12px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-muted);">
               SOLARMETRIK INGENIEUR-AUSWERTUNG 2026
             </span>
@@ -340,27 +340,27 @@ const calcSchema = {
           </div>
 
           <div style="border-top: 1px solid var(--border-hairline); padding-top: 16px;">
-            <div style="display: flex; justify-content: space-between; padding: 9px 0; border-bottom: 1px solid var(--border-hairline);">
-              <span style="color: var(--text-secondary);">Solarstrom-Erzeugung pro Jahr</span>
+            <div class="calc-summary-row">
+              <span>Solarstrom-Erzeugung pro Jahr</span>
               <strong id="res-yield">11.100 kWh</strong>
             </div>
-            <div style="display: flex; justify-content: space-between; padding: 9px 0; border-bottom: 1px solid var(--border-hairline);">
-              <span style="color: var(--text-secondary);">Unabhängigkeitsgrad (Autarkie)</span>
+            <div class="calc-summary-row">
+              <span>Unabhängigkeitsgrad (Autarkie)</span>
               <strong id="res-autarky">74 %</strong>
             </div>
-            <div style="display: flex; justify-content: space-between; padding: 9px 0; border-bottom: 1px solid var(--border-hairline);">
-              <span style="color: var(--text-secondary);">Jährliche Stromkosten-Ersparnis</span>
+            <div class="calc-summary-row">
+              <span>Jährliche Stromkosten-Ersparnis</span>
               <strong id="res-savings">1.418 € / Jahr</strong>
             </div>
-            <div style="display: flex; justify-content: space-between; padding: 9px 0; border-bottom: 1px solid var(--border-hairline);">
-              <span style="color: var(--text-secondary);">EEG-Einspeisevergütung (7,70 ct/kWh)</span>
+            <div class="calc-summary-row">
+              <span>EEG-Einspeisevergütung (7,70 ct/kWh)</span>
               <strong id="res-eeg">564 € / Jahr</strong>
             </div>
-            <div style="display: flex; justify-content: space-between; padding: 9px 0; border-bottom: 1px solid var(--border-hairline);">
-              <span style="color: var(--text-secondary);">Amortisationszeit</span>
+            <div class="calc-summary-row">
+              <span>Amortisationszeit</span>
               <strong id="res-payback" style="color: var(--accent-blue);">8,1 Jahre</strong>
             </div>
-            <div style="display: flex; justify-content: space-between; padding: 12px 0;">
+            <div class="calc-summary-row" style="border-bottom: none; padding-top: 14px;">
               <span style="color: var(--text-primary); font-weight: 600;">20-Jahre Netto-Gesamtvorteil</span>
               <strong id="res-profit" style="color: var(--accent-green); font-size: 19px;">+ 28.900 €</strong>
             </div>
@@ -437,6 +437,7 @@ const calcSchema = {
         20-Jahre-Vergleich einen massiven Kostenvorteil für den Kauf:
       </p>
 
+      <div class="clean-table-scroll-hint">⇄ Tabelle horizontal scrollen</div>
       <div class="clean-table-wrap" style="background: #ffffff; padding: 8px 20px; border-radius: var(--radius-photo);">
         <table class="clean-table">
           <thead>
@@ -487,6 +488,7 @@ const calcSchema = {
         bis in den späten Abend — was den direkten Eigenverbrauch im Haushalt deutlich erhöht.
       </p>
 
+      <div class="clean-table-scroll-hint">⇄ Tabelle horizontal scrollen</div>
       <div class="clean-table-wrap" style="background: #ffffff; padding: 8px 20px; border-radius: var(--radius-photo);">
         <table class="clean-table">
           <thead>
