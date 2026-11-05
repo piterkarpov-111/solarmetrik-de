@@ -16,7 +16,7 @@ const allStaedteSearch = getAllStaedte().map((s) => ({
 }));
 ---
 
-<header class:list={['ax-header', { 'ax-header--hero': isHero }]}>
+<header class:list={['ax-header', { 'ax-header--hero': isHero }]} id="ax-site-header">
   <div class="ax-header__utility">
     <span>Datenbasis: Bundesnetzagentur & DWD (Stand: 11/2026)</span>
     <a href="/rechner">Wirtschaftlichkeitsrechner →</a>
@@ -29,7 +29,8 @@ const allStaedteSearch = getAllStaedte().map((s) => ({
       SOLARMETRIK<span class="ax-logo__fin"></span>
     </a>
 
-    <nav class="ax-nav" aria-label="Hauptnavigation">
+    <!-- Desktop Navigation -->
+    <nav class="ax-nav ax-nav--desktop" aria-label="Hauptnavigation">
       <div class="ax-nav__item">
         <a
           href="/solaratlas"
@@ -134,7 +135,8 @@ const allStaedteSearch = getAllStaedte().map((s) => ({
       </div>
     </nav>
 
-    <search role="search" aria-label="Stadt oder Postleitzahl suchen">
+    <!-- Desktop Search -->
+    <search role="search" aria-label="Stadt oder Postleitzahl suchen" class="ax-search--desktop">
       <form id="header-city-search-form" class="ax-search-box" onsubmit="return false;">
         <input
           type="search"
@@ -151,15 +153,151 @@ const allStaedteSearch = getAllStaedte().map((s) => ({
         </datalist>
       </form>
     </search>
+
+    <!-- Mobile Hamburger Toggle Button -->
+    <button
+      type="button"
+      id="ax-mobile-toggle"
+      class="ax-mobile-toggle"
+      aria-label="Menü öffnen"
+      aria-expanded="false"
+      aria-controls="ax-mobile-drawer"
+    >
+      <span class="ax-mobile-toggle__bar"></span>
+      <span class="ax-mobile-toggle__bar"></span>
+      <span class="ax-mobile-toggle__bar"></span>
+    </button>
+  </div>
+
+  <!-- Mobile Slide-Down Navigation Drawer -->
+  <div id="ax-mobile-drawer" class="ax-mobile-drawer" aria-hidden="true">
+    <div class="ax-mobile-drawer__inner">
+      <!-- Mobile Search Form -->
+      <div class="ax-mobile-search">
+        <form id="mobile-city-search-form" class="ax-mobile-search__form" onsubmit="return false;">
+          <input
+            type="search"
+            id="mobile-city-search-input"
+            class="ax-mobile-search__input"
+            list="solarmetrik-cities-datalist-mobile"
+            placeholder="Stadt oder PLZ suchen (z.B. 80331)..."
+            aria-label="Stadt oder PLZ suchen"
+            autocomplete="off"
+          />
+          <button type="submit" class="ax-mobile-search__btn" aria-label="Suchen">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="11" cy="11" r="8"></circle>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+          </button>
+          <datalist id="solarmetrik-cities-datalist-mobile">
+            {allStaedteSearch.map((item) => (
+              <option value={item.name} data-url={item.url}>{item.plz}</option>
+            ))}
+          </datalist>
+        </form>
+      </div>
+
+      <!-- Mobile Navigation Links -->
+      <nav class="ax-mobile-nav" aria-label="Mobile Navigation">
+        <!-- Group 1: Solar-Atlas -->
+        <div class="ax-mobile-nav__group">
+          <div class="ax-mobile-nav__heading">Solar-Atlas & Regionen</div>
+          <a href="/solaratlas" class:list={['ax-mobile-nav__link', { active: activeSection === 'atlas' }]}>
+            <div class="ax-mobile-nav__text">
+              <span class="ax-mobile-nav__primary">Solar-Atlas Deutschland</span>
+              <span class="ax-mobile-nav__secondary">16 Bundesländer & 51 Großstädte</span>
+            </div>
+            <span class="ax-mobile-nav__arrow">→</span>
+          </a>
+
+          <details class="ax-mobile-states-accordion">
+            <summary class="ax-mobile-states-summary">
+              <span>Alle 16 Bundesländer anwählen</span>
+              <span class="ax-accordion-icon">▾</span>
+            </summary>
+            <div class="ax-mobile-states-grid">
+              {bundeslaender.map((land) => (
+                <a href={`/solaratlas/${land.slug}`} class="ax-mobile-state-pill">
+                  <span>{land.name}</span>
+                  <span class="ax-mobile-state-pill__score">{land.solarmetrikScore}</span>
+                </a>
+              ))}
+            </div>
+          </details>
+        </div>
+
+        <!-- Group 2: Rechner & Tools -->
+        <div class="ax-mobile-nav__group">
+          <div class="ax-mobile-nav__heading">Rechner & Ingenieur-Tools</div>
+          <a href="/rechner" class:list={['ax-mobile-nav__link', { active: activeSection === 'rechner' }]}>
+            <div class="ax-mobile-nav__text">
+              <span class="ax-mobile-nav__primary">PV-Rendite- & Dachrechner</span>
+              <span class="ax-mobile-nav__secondary">360°-Ertragssimulation & Amortisation</span>
+            </div>
+            <span class="ax-mobile-nav__arrow">→</span>
+          </a>
+
+          <a href="/speicher-rechner" class="ax-mobile-nav__link">
+            <div class="ax-mobile-nav__text">
+              <span class="ax-mobile-nav__primary">Stromspeicher-Rechner</span>
+              <span class="ax-mobile-nav__secondary">Autarkiegrad & HTW-Inspektionsbenchmark</span>
+            </div>
+            <span class="ax-mobile-nav__arrow">→</span>
+          </a>
+
+          <a href="/foerderung-check" class="ax-mobile-nav__link">
+            <div class="ax-mobile-nav__text">
+              <span class="ax-mobile-nav__primary">Förderung 2026 & PLZ-Check</span>
+              <span class="ax-mobile-nav__secondary">KfW 270, Solarpflicht & Stadtwerke</span>
+            </div>
+            <span class="ax-mobile-nav__arrow">→</span>
+          </a>
+        </div>
+
+        <!-- Group 3: Wissen & Methodik -->
+        <div class="ax-mobile-nav__group">
+          <div class="ax-mobile-nav__heading">Wissen & Methodik</div>
+          <a href="/ratgeber" class:list={['ax-mobile-nav__link', { active: activeSection === 'ratgeber' }]}>
+            <div class="ax-mobile-nav__text">
+              <span class="ax-mobile-nav__primary">Ratgeber & EEG 2027</span>
+              <span class="ax-mobile-nav__secondary">Preise, 0 % MwSt., § 51 EEG & Smart Meter</span>
+            </div>
+            <span class="ax-mobile-nav__arrow">→</span>
+          </a>
+
+          <a href="/methodik" class:list={['ax-mobile-nav__link', { active: activeSection === 'methodik' }]}>
+            <div class="ax-mobile-nav__text">
+              <span class="ax-mobile-nav__primary">Methodik (SME-2026 Index)</span>
+              <span class="ax-mobile-nav__secondary">Formeln & DWD-1×1-km-Globalstrahlung</span>
+            </div>
+            <span class="ax-mobile-nav__arrow">→</span>
+          </a>
+        </div>
+
+        <!-- Group 4: Meta & E-E-A-T Links -->
+        <div class="ax-mobile-nav__meta">
+          <div class="ax-mobile-nav__meta-links">
+            <a href="/ueber-uns">Über uns & Redaktion</a>
+            <span>·</span>
+            <a href="https://doi.org/10.5281/zenodo.23956818" target="_blank" rel="noopener">Zenodo Open Data ↗</a>
+            <span>·</span>
+            <a href="/impressum">Impressum</a>
+            <span>·</span>
+            <a href="/datenschutz">Datenschutz</a>
+          </div>
+          <p class="ax-mobile-nav__meta-copy">
+            SOLARMETRIK — Deutsches Photovoltaik-Dateninstitut<br />
+            Datenbasis: Bundesnetzagentur (MaStR) & DWD (11/2026)
+          </p>
+        </div>
+      </nav>
+    </div>
   </div>
 </header>
 
 <script is:inline define:vars={{ allStaedteSearch }}>
   (() => {
-    const input = document.getElementById('header-city-search-input');
-    const form = document.getElementById('header-city-search-form');
-    if (!input || !form) return;
-
     function navigateMatch(val) {
       const q = (val || '').trim().toLowerCase();
       if (!q) return;
@@ -176,12 +314,71 @@ const allStaedteSearch = getAllStaedte().map((s) => ({
       }
     }
 
-    input.addEventListener('change', (e) => {
-      navigateMatch(e.target.value);
-    });
-    form.addEventListener('submit', (e) => {
-      e.preventDefault();
-      navigateMatch(input.value);
-    });
+    // Desktop Search
+    const deskInput = document.getElementById('header-city-search-input');
+    const deskForm = document.getElementById('header-city-search-form');
+    if (deskInput && deskForm) {
+      deskInput.addEventListener('change', (e) => navigateMatch(e.target.value));
+      deskForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        navigateMatch(deskInput.value);
+      });
+    }
+
+    // Mobile Search
+    const mobInput = document.getElementById('mobile-city-search-input');
+    const mobForm = document.getElementById('mobile-city-search-form');
+    if (mobInput && mobForm) {
+      mobInput.addEventListener('change', (e) => navigateMatch(e.target.value));
+      mobForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        navigateMatch(mobInput.value);
+      });
+    }
+
+    // Mobile Toggle & Drawer
+    const header = document.getElementById('ax-site-header');
+    const toggleBtn = document.getElementById('ax-mobile-toggle');
+    const drawer = document.getElementById('ax-mobile-drawer');
+
+    if (toggleBtn && drawer && header) {
+      function setMenuState(open) {
+        if (open) {
+          header.classList.add('has-mobile-open');
+          drawer.classList.add('is-open');
+          drawer.setAttribute('aria-hidden', 'false');
+          toggleBtn.setAttribute('aria-expanded', 'true');
+          toggleBtn.setAttribute('aria-label', 'Menü schließen');
+          document.body.classList.add('nav-locked');
+        } else {
+          header.classList.remove('has-mobile-open');
+          drawer.classList.remove('is-open');
+          drawer.setAttribute('aria-hidden', 'true');
+          toggleBtn.setAttribute('aria-expanded', 'false');
+          toggleBtn.setAttribute('aria-label', 'Menü öffnen');
+          document.body.classList.remove('nav-locked');
+        }
+      }
+
+      toggleBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const isOpen = drawer.classList.contains('is-open');
+        setMenuState(!isOpen);
+      });
+
+      // Close menu on link click inside drawer
+      drawer.querySelectorAll('a').forEach((link) => {
+        link.addEventListener('click', () => {
+          setMenuState(false);
+        });
+      });
+
+      // Close on ESC key
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && drawer.classList.contains('is-open')) {
+          setMenuState(false);
+        }
+      });
+    }
   })();
 </script>
