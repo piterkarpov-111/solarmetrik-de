@@ -34,7 +34,7 @@ export const articles: ArticleData[] = [
     slug: 'photovoltaik-kosten-2026',
     category: 'Preisanalyse & Wirtschaftlichkeit',
     title: 'Photovoltaik Kosten 2026: Preistabellen für 5 bis 20 kWp, Speicher & Montage',
-    metaTitle: 'Photovoltaik Kosten 2026: Preise für 5–20 kWp mit Speicher (0% MwSt) | SOLARMETRIK',
+    metaTitle: 'Photovoltaik Kosten 2026: Preise pro kWp & Speicher',
     metaDescription:
       'Was kostet eine Solaranlage 2026? Verifizierte Preistabelle für 5, 8, 10, 12, 15 & 20 kWp inkl. Speicher, Montage & 0 % MwSt. im Vergleich zur Finanztip-Faustregel.',
     updatedDate: '04. November 2026',
@@ -125,7 +125,7 @@ export const articles: ArticleData[] = [
     slug: 'eeg-2026-vs-2027-einspeiseverguetung',
     category: 'Gesetzgebung & Förderung',
     title: 'EEG-Einspeisevergütung 2026 vs. 2027: Kabinettsbeschluss & Bestandsschutz bis 31.12.2026',
-    metaTitle: 'Einspeisevergütung 2026 vs. EEG 2027 Reform: Frist 31.12.2026 | SOLARMETRIK',
+    metaTitle: 'Einspeisevergütung 2026 vs. EEG 2027: Stichtag 31.12.',
     metaDescription:
       'Aktuelle EEG-Einspeisevergütung ab August 2026 (7,70 / 12,22 ct/kWh) und Ausblick auf die EEG-Reform 2027 (Wegfall der Festvergütung unter 25 kWp). So sichern Sie den Bestandsschutz.',
     updatedDate: '04. November 2026',
@@ -197,7 +197,7 @@ export const articles: ArticleData[] = [
     slug: 'solarspitzengesetz-negative-strompreise',
     category: 'Netztechnik & § 51 EEG',
     title: 'Solarspitzengesetz (§ 51 EEG): Negative Strompreise, 60-%-Begrenzung & Kompensationsformel',
-    metaTitle: 'Solarspitzengesetz (§ 51 EEG) 2026: Negative Strompreise & 60% Regel | SOLARMETRIK',
+    metaTitle: 'Solarspitzengesetz (§ 51 EEG) 2026: Negative Strompreise',
     metaDescription:
       'Alles zum Solarspitzengesetz (§ 51 EEG) 2026: Wegfall der Vergütung bei negativen Börsenstrompreisen, 60-%-Abregelung ohne Smart Meter und die 20-Jahre-Verlängerungsformel.',
     updatedDate: '04. November 2026',
@@ -261,7 +261,7 @@ export const articles: ArticleData[] = [
     slug: 'solarpflicht-deutschland-2026',
     category: 'Baurecht & Bundesländer',
     title: 'Solarpflicht Deutschland 2026: Alle 16 Bundesländer bei Neubau & Dachsanierung',
-    metaTitle: 'Solarpflicht 2026 nach Bundesländern: Neubau & Dachsanierung (inkl. NRW) | SOLARMETRIK',
+    metaTitle: 'Solarpflicht Deutschland 2026: Alle 16 Bundesländer',
     metaDescription:
       'Wo gilt 2026 die Solarpflicht für private Wohnhäuser? Vollständige Übersicht aller 16 Bundesländer für Neubau und Dachsanierung inklusive NRW-Pflicht seit 01.01.2026.',
     updatedDate: '04. November 2026',
@@ -326,7 +326,7 @@ export const articles: ArticleData[] = [
     slug: 'solaranlage-kaufen-oder-mieten-2026',
     category: 'Finanzvergleich & TCO',
     title: 'Solaranlage kaufen vs. mieten 2026: Der unabhängige 20-Jahre-Wirtschaftlichkeitsvergleich',
-    metaTitle: 'Solaranlage kaufen oder mieten 2026? Ehrlicher 20-Jahre-Kostenvergleich | SOLARMETRIK',
+    metaTitle: 'Solaranlage kaufen oder mieten 2026? Kostenvergleich',
     metaDescription:
       'Lohnt sich das Mieten einer Solaranlage 2026 oder ist der Kauf (bzw. KfW-270-Kredit) günstiger? Vollkostenrechnung über 20 Jahre für 10 kWp mit 10 kWh Speicher.',
     updatedDate: '04. November 2026',
@@ -384,7 +384,7 @@ export const articles: ArticleData[] = [
     slug: 'photovoltaik-steuern-0-prozent-mwst',
     category: 'Steuerrecht & Bürokratie',
     title: 'Photovoltaik Steuern 2026: 0 % MwSt. (§ 12 Abs. 3 UStG) & Einkommensteuer (§ 3 Nr. 72 EStG)',
-    metaTitle: 'Photovoltaik Steuern 2026: 0 % MwSt & Einkommensteuerbefreiung bis 30 kWp | SOLARMETRIK',
+    metaTitle: 'Photovoltaik Steuern 2026: 0 % MwSt & Steuerbefreiung',
     metaDescription:
       'Steuerleitfaden 2026 für private Solaranlagen: Nullsteuersatz (0 % MwSt. nach § 12 Abs. 3 UStG), Einkommensteuerbefreiung (§ 3 Nr. 72 EStG) bis 30 kWp und Wegfall der EÜR.',
     updatedDate: '04. November 2026',
@@ -441,7 +441,7 @@ export const articles: ArticleData[] = [
     slug: 'stromspeicher-test-dimensionierung-2026',
     category: 'Speichertechnik & HTW Berlin',
     title: 'Stromspeicher-Test & Dimensionierung 2026: Erkenntnisse der HTW Berlin Stromspeicher-Inspektion',
-    metaTitle: 'Stromspeicher Test 2026: HTW Berlin Inspektion, SPI & Größe berechnen | SOLARMETRIK',
+    metaTitle: 'Stromspeicher Test 2026: HTW Inspektion & Dimensionierung',
     metaDescription:
       'Welche Batteriespeicher führen in der HTW Berlin Stromspeicher-Inspektion 2026? Vergleich von System Performance Index (SPI), Effizienzklasse A und optimaler Speichergröße.',
     updatedDate: '04. November 2026',
@@ -506,7 +506,7 @@ export const articles: ArticleData[] = [
     slug: 'photovoltaik-waermepumpe-kombinieren-14a-enwg',
     category: 'Sektorenkopplung & § 14a EnWG',
     title: 'Photovoltaik mit Wärmepumpe & Wallbox kombinieren: SG-Ready & § 14a EnWG Netzentgelte',
-    metaTitle: 'Photovoltaik mit Wärmepumpe kombinieren 2026: SG-Ready & § 14a EnWG | SOLARMETRIK',
+    metaTitle: 'Photovoltaik & Wärmepumpe 2026: § 14a EnWG & Optimierung',
     metaDescription:
       'So kombinieren Sie Photovoltaik, Wärmepumpe (SG-Ready) und Wallbox optimal: Eigenverbrauch bis 82 % steigern und bis zu 190 €/Jahr Netzentgelte nach § 14a EnWG (Modul 1–3) sparen.',
     updatedDate: '04. November 2026',
@@ -562,7 +562,7 @@ export const articles: ArticleData[] = [
     slug: 'balkonkraftwerk-2026-speicher-800w-2000w',
     category: 'Steckersolar & VDE-Norm',
     title: 'Balkonkraftwerk 2026 mit Speicher: 800W / 2000W Regeln (Solarpaket I) & VDE-Norm',
-    metaTitle: 'Balkonkraftwerk 2026 mit Speicher: 800W / 2000W & VDE-Norm | SOLARMETRIK',
+    metaTitle: 'Balkonkraftwerk 2026 mit Speicher: 800W & 2000Wp Norm',
     metaDescription:
       'Balkonkraftwerk 2026 Ratgeber: 2.000 Watt Modulleistung, 800 Watt Wechselrichter (Solarpaket I), Produktnorm DIN VDE V 0126-95, 2-kWh-Speicher und Anmeldung im MaStR.',
     updatedDate: '04. November 2026',
@@ -618,7 +618,7 @@ export const articles: ArticleData[] = [
     slug: 'dynamische-stromtarife-smart-meter-photovoltaik-2026',
     category: 'Smart Meter & Börsenstrom',
     title: 'Dynamische Stromtarife & Smart-Meter-Pflicht (iMSys) 2026: Lohnt das Netz-Laden im Winter?',
-    metaTitle: 'Dynamischer Stromtarif mit Photovoltaik & Speicher 2026 (Smart Meter) | SOLARMETRIK',
+    metaTitle: 'Dynamische Stromtarife & Photovoltaik 2026: Smart Meter',
     metaDescription:
       'Lohnt sich ein dynamischer Stromtarif (Tibber, Octopus, Awattar) mit PV-Anlage und Speicher 2026? Smart-Meter-Pflicht (iMSys), Preisobergrenzen & Winter-Netzladen.',
     updatedDate: '04. November 2026',
