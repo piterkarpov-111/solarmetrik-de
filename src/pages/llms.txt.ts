@@ -20,6 +20,7 @@ export const GET: APIRoute = () => {
 - **Vollständige Daten-Exporte & Wissenschaftliche Archivierung:**
   - [Volltext-Referenz für LLMs (/llms-full.txt)](https://solarmetrik.de/llms-full.txt)
   - [Maschinenlesbarer JSON-Datensatz (/api/solaratlas-2026.json)](https://solarmetrik.de/api/solaratlas-2026.json)
+  - [Wikidata Knowledge Graph Entity (Q142115572)](https://www.wikidata.org/wiki/Q142115572)
   - [CERN / Zenodo Open-Data-Archiv (DOI: 10.5281/zenodo.23956818)](https://zenodo.org/records/23956818)
   - [Hugging Face Datasets (CSV & JSON)](https://huggingface.co/datasets/john11234/german-photovoltaics-solar-atlas-2026)
   - [Kaggle Datasets (Google Dataset Search)](https://www.kaggle.com/datasets/johnjohnson1519/german-photovoltaics-and-solar-atlas-2026)
