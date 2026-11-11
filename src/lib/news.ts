@@ -42,7 +42,7 @@ export const newsItems: NewsItem[] = [
     dateModified: '2026-11-11T09:30:00+01:00',
     displayDate: '11. November 2026',
     readingTimeMin: 5,
-    heroImage: '/images/hero-solaranlage-deutschland-2026.webp',
+    heroImage: '/images/aktuelles-bundesnetzagentur-130gw-zubau-2026.webp',
     heroAlt: 'Bundesnetzagentur Photovoltaik Zubau Statistik November 2026 über 130 Gigawatt in Deutschland',
     summary:
       'Die kumulierte installierte Photovoltaik-Leistung im Marktstammdatenregister (MaStR) der Bundesnetzagentur hat im November 2026 die historische Schwelle von 130 Gigawatt (GW) überschritten. Während sich das Tempo bei reinen Aufdachanlagen ohne Speicher gegenüber dem Rekordjahr 2025 leicht normalisiert hat, verzeichnet das vierte Quartal 2026 zwei strukturelle Verschiebungen: Rund 79 % aller neu installierten Eigenheim-Dachanlagen (5 bis 20 kWp) werden sofort mit einem LFP-Heimspeicher kombiniert, und im Jahresendspurt vor dem 31.12.2026 zieht die Zahl der Inbetriebnahmen spürbar an.',
@@ -111,7 +111,7 @@ export const newsItems: NewsItem[] = [
     dateModified: '2026-11-11T08:00:00+01:00',
     displayDate: '09. November 2026',
     readingTimeMin: 6,
-    heroImage: '/images/eeg-2026-2027-einspeiseverguetung.webp',
+    heroImage: '/images/aktuelles-eeg-2027-inbetriebnahme-e8-2026.webp',
     heroAlt: 'EEG 2027 Stichtag 31.12.2026 und Inbetriebnahmeprotokoll E.8 für Photovoltaik Festvergütung',
     summary:
       'Für Bauherren und Eigenheimbesitzer, die noch im Jahr 2026 eine Photovoltaikanlage installieren lassen, rückt der entscheidende Stichtag 31. Dezember 2026 näher. Wer seine Anlage bis spätestens 31.12.2026 rechtssicher nach § 3 Nr. 30 EEG in Betrieb nimmt, sichert sich den gesetzlichen Bestandsschutz auf 20 Jahre feste Einspeisevergütung (7,70 ct/kWh Teileinspeisung bzw. 12,22 ct/kWh Volleinspeisung bis 10 kWp) und ist vom geplanten Systemwechsel des EEG 2027 dauerhaft befreit. Wichtigster Rechtsgrundsatz der Clearingstelle EEG|KWKG: Für die fristwahrende Inbetriebnahme muss der Netzbetreiber den Zweirichtungszähler noch NICHT physisch gewechselt haben.',
@@ -182,7 +182,7 @@ export const newsItems: NewsItem[] = [
     dateModified: '2026-11-06T14:00:00+01:00',
     displayDate: '06. November 2026',
     readingTimeMin: 6,
-    heroImage: '/images/solarspitzengesetz-smart-meter-2026.webp',
+    heroImage: '/images/aktuelles-solarspitzengesetz-smart-meter-2026.webp',
     heroAlt: 'Solarspitzengesetz Paragraph 9 EEG 60 Prozent Einspeisebegrenzung und Smart Meter Steuerbox',
     summary:
       'Seit dem Inkrafttreten des Solarspitzengesetzes unterliegen neu in Betrieb genommene Photovoltaikanlagen ab 2 kWp einer temporären 60-%-Einspeisebegrenzung am Netzverknüpfungspunkt (§ 9 EEG), solange noch kein intelligentes Messsystem (iMSys) samt Steuerbox aktiv ist. Unsere aktuelle Auswertung zeigt zwei zentrale Punkte für Anlagenbetreiber im Herbst 2026: Erstens bezieht sich die 60-%-Grenze ausschließlich auf den ins öffentliche Netz eingespeisten Überschussstrom — Eigenverbrauch, Wärmepumpe, Wallbox und Batterieladung nutzen weiterhin 100 % der Dachleistung. Zweitens entfällt die 60-%-Abregelung erst dann, wenn neben dem Smart Meter auch die Steuerbox installiert und die Fernsteuerbarkeit durch den Netzbetreiber erfolgreich getestet wurde.',
@@ -248,7 +248,7 @@ export const newsItems: NewsItem[] = [
     dateModified: '2026-11-10T16:20:00+01:00',
     displayDate: '04. November 2026',
     readingTimeMin: 6,
-    heroImage: '/images/photovoltaik-kosten-2026-solarmetrik.webp',
+    heroImage: '/images/aktuelles-pv-preisindex-q4-2026.webp',
     heroAlt: 'Photovoltaik Preisindex November 2026 für N-Type Glas-Glas Module und LFP Stromspeicher',
     summary:
       'Der SOLARMETRIK-Marktpreisindex für das vierte Quartal 2026 (Stand November 2026) zeigt eine klare Bodenbildung bei den Hardwarepreisen: Während bifaziale N-Type-TOPCon-Glas-Glas-Module (450–465 Wp) auf einem historischen Tiefstand verharren und Lithium-Eisenphosphat-Heimspeicher (LFP) im Hardware-Durchschnitt bei rund 410 bis 420 € pro Kilowattstunde liegen, kostet eine schlüsselfertige 10-kWp-Aufdachanlage inklusive 10-kWh-Speicher, Gerüst und VDE-konformer Elektroinstallation im Bundesdurchschnitt zwischen 17.400 € und 19.350 € (0 % MwSt.). Über 55 % der Gesamtkosten entfallen inzwischen auf Handwerk, Dachmontage und Elektrotechnik.',
@@ -316,7 +316,7 @@ export const newsItems: NewsItem[] = [
     dateModified: '2026-11-08T12:00:00+01:00',
     displayDate: '02. November 2026',
     readingTimeMin: 6,
-    heroImage: '/images/dynamische-stromtarife-smart-meter-imsys-2026.webp',
+    heroImage: '/images/aktuelles-netzentgelte-14a-enwg-modul3-2026.webp',
     heroAlt: 'Zeitvariable Netzentgelte nach Paragraph 14a EnWG Modul 3 für Photovoltaik Speicher und Wärmepumpe',
     summary:
       'Mit der Veröffentlichung der neuen Preisblätter der deutschen Verteilnetzbetreiber für die Winterperiode 2026/2027 rückt § 14a EnWG Modul 3 (zeitvariable Netzentgelte) in den Mittelpunkt der intelligenten Haussteuerung. Wer eine steuerbare Verbrauchseinrichtung (Wärmepumpe, Wallbox oder netzladender Batteriespeicher > 4,2 kW) samt Smart Meter besitzt, kann Modul 1 (Pauschalprämie von 110–190 €/Jahr) mit Modul 3 kombinieren und bezieht Strom in den nächtlichen Niedriglast-Zeitfenstern (meist 00:00 bis 05:00 Uhr) mit einem um 60 bis 90 % reduzierten Netzentgelt.',

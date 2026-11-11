@@ -679,7 +679,7 @@ export const articles: ArticleData[] = [
       'Alte Solarthermie abbauen und durch Photovoltaik ersetzen? Ingenieur-Vergleich 2026: Flächenertrag pro m², Wärmepumpe, Rückbaukosten, Brauchwasser-WP & 0 % MwSt.',
     updatedDate: '11. November 2026',
     readingTimeMin: 9,
-    heroImage: '/images/photovoltaik-waermepumpe-14a-enwg-2026.webp',
+    heroImage: '/images/solarthermie-ersetzen-photovoltaik-2026.webp',
     heroAlt: 'Solarthermie durch moderne Photovoltaik Module ersetzen in Kombination mit Wärmepumpe',
     blufSummary:
       'Der Rückbau einer 15 bis 25 Jahre alten Solarthermie-Anlage zugunsten moderner N-Type-Photovoltaikmodule (450–460 Wp) ist 2026 energetisch und wirtschaftlich fast immer überlegen: Auf derselben Dachfläche von 10 m² (ca. 5 Module = 2,25 kWp) erzeugt Photovoltaik in Kombination mit einer Wärmepumpe oder Brauchwasser-Wärmepumpe (COP 3,2–4,0) über das Gesamtjahr bis zu 2,5-mal mehr nutzbare Wärmeäquivalente als ein alter thermischer Kollektor — ohne Stagnationsprobleme im Hochsommer, ohne Pumpenstrom-Dauerverbrauch und mit voller 0-%-Mehrwertsteuer-Begünstigung (§ 12 Abs. 3 UStG) auch auf den Rückbau im Zuge der PV-Montage.',
@@ -779,7 +779,7 @@ export const articles: ArticleData[] = [
       'Lohnt sich eine Ost-West- oder Norddach-Photovoltaikanlage 2026? Spezifischer Ertrag nach Dachneigung, Wechselrichter-Überdimensionierung (130–150 %) & Teillast-Verluste.',
     updatedDate: '11. November 2026',
     readingTimeMin: 9,
-    heroImage: '/images/solarspitzengesetz-smart-meter-2026.webp',
+    heroImage: '/images/photovoltaik-ost-west-norddach-2026.webp',
     heroAlt: 'Photovoltaik Ost-West und Norddach Belegung mit Wechselrichter Dimensionierung 2026',
     blufSummary:
       'Durch die seit 2023/2026 um über 50 % gefallenen Modulpreise (N-Type-TOPCon-Module kosten im Großhandel oft unter 65 € pro 450-Wp-Modul) hat sich die goldene Regel der Dachbelegung grundlegend geändert: Eine Ost-West-Anlage liefert bei 30° Dachneigung zwar rund 16 bis 18 % weniger Spitzenertrag pro kWp als ein reines Süddach, erhöht aber durch das breite Ertragsplateau von 07:00 bis 20:00 Uhr den direkten Eigenverbrauch und umgeht die Abregelungsspitzen des Solarspitzengesetzes (§ 51 EEG). Selbst ein Norddach bis 22° Dachneigung erreicht in Deutschland noch 640 bis 740 kWh/kWp und amortisiert sich als Grenzkosten-Erweiterung auf demselben Wechselrichter in unter 8 Jahren.',
@@ -864,7 +864,7 @@ export const articles: ArticleData[] = [
       'Wie viel Strom erzeugt eine 10 kWp oder 15 kWp Photovoltaikanlage im Winter (November, Dezember, Januar, Februar) wirklich? Monats-Tabelle, Wärmepumpe & Speicher-Ruhemodus.',
     updatedDate: '11. November 2026',
     readingTimeMin: 8,
-    heroImage: '/images/stromspeicher-test-htw-berlin-2026.webp',
+    heroImage: '/images/photovoltaik-winterertrag-schnee-2026.webp',
     heroAlt: 'Photovoltaik Ertrag im Winter von November bis Februar mit Wärmepumpe und Stromspeicher',
     blufSummary:
       'In den vier Kernwintermonaten November, Dezember, Januar und Februar erzeugt eine Photovoltaikanlage in Deutschland zusammen nur rund 12 bis 14 % ihres gesamten Jahresertrags — im Dezember allein sind es bei einer 10-kWp-Anlage durchschnittlich nur 190 bis 260 kWh (ca. 6 bis 8,5 kWh pro Tag). Wer im Winter eine Wärmepumpe betreibt, sollte daher bei der Planung konsequent auf maximale Modulleistung (12 bis 20 kWp statt 8 kWp) setzen und einen Batteriespeicher wählen, der bei leeren Wintertagen automatisch in den Tiefschlaf-Standby (< 5 Watt Eigenverbrauch) wechselt, statt sich mit Netzstrom-Erhaltungsladungen selbst zu belasten.',
@@ -944,7 +944,7 @@ export const articles: ArticleData[] = [
       'Muss der Zählerschrank für die Photovoltaikanlage 2026 erneuert werden? VDE-AR-N 4100 Anforderungen (SLS-Schalter, Überspannungsschutz, APZ-Feld) & Kosten mit 0 % MwSt.',
     updatedDate: '11. November 2026',
     readingTimeMin: 8,
-    heroImage: '/images/photovoltaik-kosten-2026-solarmetrik.webp',
+    heroImage: '/images/zaehlerschrank-vde-4100-photovoltaik-2026.webp',
     heroAlt: 'Moderner Zählerschrank nach VDE-AR-N 4100 für Photovoltaik mit SLS und Überspannungsschutz',
     blufSummary:
       'Die Inbetriebnahme einer Photovoltaikanlage gilt nach den Technischen Anschlussbedingungen (TAB) der Netzbetreiber und der Anwendungsregel VDE-AR-N 4100 rechtlich als Nutzungsänderung von „Aussetzbetrieb" auf „Dauerstrombetrieb". Deshalb verlangen die Stadtwerke im Vorzählerbereich zwingend einen selektiven Hauptleitungsschutzschalter (SLS, meist 35 A oder 50 A) sowie einen Kombi-Überspannungsschutz (ÜSS Typ 1+2). Während Zählerschränke ab Baujahr ca. 2000 meist für 450 bis 950 € nachgerüstet werden können, ist bei alten schwarzen Bakelit-Tafeln oder Schränken ohne unteren Anschlussraum (vor ca. 1995) ein neuer Zählerschrank (1.800 bis 3.200 € — komplett mit 0 % MwSt. nach § 12 Abs. 3 UStG) erforderlich.',
@@ -1022,7 +1022,7 @@ export const articles: ArticleData[] = [
       'Lohnt sich der KfW-Kredit 270 für Photovoltaik und Speicher 2026? Aktuelle Zinssätze nach Bonität, Hausbank-Hürden, Modernisierungskredit-Alternativen & Cashflow-Rechnung.',
     updatedDate: '11. November 2026',
     readingTimeMin: 8,
-    heroImage: '/images/photovoltaik-steuern-0-prozent-mwst-2026.webp',
+    heroImage: '/images/kfw-270-photovoltaik-finanzierung-2026.webp',
     heroAlt: 'Photovoltaik Finanzierung 2026 mit KfW 270 Solarkredit und Modernisierungskredit im Vergleich',
     blufSummary:
       'Über das bundesweite Förderprogramm KfW 270 („Erneuerbare Energien – Standard") lassen sich Photovoltaikanlagen und Batteriespeicher auch im Herbst 2026 zu 100 % der Netto-Investitionskosten finanzieren. Allerdings gilt das beworbene Einstiegszinsniveau der KfW (ab ca. 3,41 % bis 3,75 % effektiv) nur für die höchste Bonitäts- und Besicherungsklasse (Preisklasse A) — und viele Geschäftsbanken lehnen die Durchleitung bei Kleinkrediten unter 20.000 € wegen der geringen Bankmarge ab. In der Praxis ist für eine 15.000- bis 20.000-€-Hausdachanlage ein grundbuchfreier Wohn- bzw. Modernisierungskredit (ab 3,89 bis 4,69 % effektiv mit jederzeitiger kostenloser Sondertilgung) oft schneller, unbürokratischer und unterm Strich gleich günstig.',
