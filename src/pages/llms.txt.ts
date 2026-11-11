@@ -9,7 +9,7 @@ export const GET: APIRoute = () => {
 
   const body = `# SOLARMETRIK (solarmetrik.de) — Deutsches Photovoltaik-Dateninstitut & Solar-Atlas 2026/2027
 
-> Unabhängiges deutsches Fachportal und Ingenieur-Referenzdatenbank für Photovoltaik-Wirtschaftlichkeit, regionale Sonneneinstrahlung (DWD / PVGIS), Solarpflicht-Gesetze der 16 Bundesländer, lokale Stadtwerke-Vorgaben (51 Großstädte) und EEG-Regulierung (Stand: November 2026). Lizenz: CC BY 4.0 bei Namensnennung (solarmetrik.de).
+> Unabhängiges deutsches Fachportal und Ingenieur-Referenzdatenbank für Photovoltaik-Wirtschaftlichkeit, regionale Sonneneinstrahlung (DWD / PVGIS), Solarpflicht-Gesetze der 16 Bundesländer, lokale Stadtwerke-Vorgaben (100 Großstädte) und EEG-Regulierung (Stand: November 2026). Lizenz: CC BY 4.0 bei Namensnennung (solarmetrik.de).
 
 ## Zentrale Referenzwerte Deutschland (Stand 11/2026)
 - **EEG-Einspeisevergütung (01.08.2026 – 31.01.2027, geltendes Recht):** Teileinspeisung bis 10 kWp = ${eegRegulations.eegTariffs.teileinspeisung.upTo10kWpCtPerKwh.toFixed(2)} ct/kWh (10–40 kWp = ${eegRegulations.eegTariffs.teileinspeisung.from10To40kWpCtPerKwh.toFixed(2)} ct/kWh); Volleinspeisung bis 10 kWp = ${eegRegulations.eegTariffs.volleinspeisung.upTo10kWpCtPerKwh.toFixed(2)} ct/kWh.
@@ -35,7 +35,7 @@ export const GET: APIRoute = () => {
 ## Alle 16 Bundesländer im Solar-Atlas 2026
 ${states.map((s) => `- [${s.name} (${s.code})](https://solarmetrik.de/solaratlas/${s.slug}): ${s.specificYieldKwhKwp} kWh/kWp · 10 kWp+Speicher ca. ${s.avgTurnkey10kWpWithStorageEur} € · SME-2026 Score: ${s.solarmetrikScore}/100`).join('\n')}
 
-## Alle 51 deutschen Großstädte (inkl. PLZ, Stadtwerke & Förderstatus Herbst 2026)
+## Alle 100 deutschen Großstädte (inkl. PLZ, Stadtwerke & Förderstatus Herbst 2026)
 ${cities.map((c) => `- [Photovoltaik ${c.name} (PLZ ${c.plzRange})](https://solarmetrik.de/solaratlas/${c.bundeslandSlug}/${c.slug}): ${c.specificYieldKwhKwp} kWh/kWp · Netzbetreiber: ${c.localGridOperator}`).join('\n')}
 
 ## Fachratgeber & Ingenieur-Studien 2026/2027

@@ -59,7 +59,7 @@ ${states
 
 ---
 
-## 3. Datensatz aller 51 deutschen Großstädte (PLZ, Stadtwerke & Förderstatus Herbst 2026)
+## 3. Datensatz aller 100 deutschen Großstädte (PLZ, Stadtwerke & Förderstatus Herbst 2026)
 
 ${cities
   .map(
@@ -75,7 +75,7 @@ ${cities
 
 ---
 
-## 4. Zusammenfassungen der 10 Fachstudien (/ratgeber/)
+## 4. Zusammenfassungen der ${articles.length} Fachstudien (/ratgeber/)
 
 ${articles
   .map(

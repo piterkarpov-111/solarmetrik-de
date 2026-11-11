@@ -15,9 +15,9 @@ const allStates = getAllBundeslaender();
 const datasetSchema = {
   '@context': 'https://schema.org',
   '@type': 'Dataset',
-  name: 'Deutscher Solar-Atlas 2026 (SME-2026) — Strahlung, Kosten & Förderungen in 16 Bundesländern & 51 Städten',
+  name: 'Deutscher Solar-Atlas 2026 (SME-2026) — Strahlung, Kosten & Förderungen in 16 Bundesländern & 100 Städten',
   description:
-    'Verifizierter Referenzdatensatz zur Photovoltaik-Wirtschaftlichkeit, Globalstrahlung (DWD/PVGIS), Solarpflicht 2026 und kommunalen Förderungen für alle 16 deutschen Bundesländer und 51 Großstädte.',
+    'Verifizierter Referenzdatensatz zur Photovoltaik-Wirtschaftlichkeit, Globalstrahlung (DWD/PVGIS), Solarpflicht 2026 und kommunalen Förderungen für alle 16 deutschen Bundesländer und 100 Großstädte.',
   url: 'https://solarmetrik.de/solaratlas',
   license: 'https://creativecommons.org/licenses/by/4.0/',
   creator: {
@@ -34,8 +34,8 @@ const datasetSchema = {
 ---
 
 <BaseLayout
-  title="Deutscher Solar-Atlas 2026: 16 Bundesländer & 51 Städte"
-  description="Photovoltaik-Ertrag (kWh/kWp), DWD-Globalstrahlung, Montagepreise, Solarpflicht 2026 und Förderprogramme für alle 16 Bundesländer und 51 deutschen Städte."
+  title="Deutscher Solar-Atlas 2026: 16 Bundesländer & 100 Städte"
+  description="Photovoltaik-Ertrag (kWh/kWp), DWD-Globalstrahlung, Montagepreise, Solarpflicht 2026 und Förderprogramme für alle 16 Bundesländer und 100 deutschen Städte."
   canonicalPath="/solaratlas"
   activeSection="atlas"
   schema={datasetSchema}
@@ -45,17 +45,17 @@ const datasetSchema = {
       <Breadcrumbs
         items={[
           { label: 'Startseite', href: '/' },
-          { label: 'Deutscher Solar-Atlas 2026 (16 Bundesländer & 51 Städte)' }
+          { label: 'Deutscher Solar-Atlas 2026 (16 Bundesländer & 100 Städte)' }
         ]}
       />
 
       <div style="max-width: 840px; margin-bottom: 32px;">
         <span class="ax-eyebrow">Deutscher Photovoltaik-Atlas · Referenzindex SME-2026</span>
-        <h1 class="ax-h1">SOLAR-ATLAS DEUTSCHLAND 2026: ALLE 16 BUNDESLÄNDER & 51 STÄDTE</h1>
+        <h1 class="ax-h1">SOLAR-ATLAS DEUTSCHLAND 2026: ALLE 16 BUNDESLÄNDER & 100 STÄDTE</h1>
         <p class="ax-sub">
           Vergleichen Sie regionale Sonneneinstrahlung nach DWD/PVGIS, spezifische Erträge in
           kWh pro kWp, aktuelle Montagepreise (inkl. 0 % MwSt.), die gesetzliche Solarpflicht
-          sowie die Förderprogramme aller 16 Bundesländer und 51 Großstädte.
+          sowie die Förderprogramme aller 16 Bundesländer und 100 Großstädte.
         </p>
       </div>
 
@@ -125,10 +125,10 @@ const datasetSchema = {
         </div>
       </div>
 
-      <!-- COMPLETE DIRECTORY OF ALL 51 CITIES GROUPED BY STATE -->
+      <!-- COMPLETE DIRECTORY OF ALL 100 CITIES GROUPED BY STATE -->
       <div style="margin-top: 72px;">
         <span class="ax-eyebrow">Städteverzeichnis · Lokale Stadtwerke, PLZ & Kommunalförderung</span>
-        <h2 class="ax-h2">ALLE 51 GEPRÜFTEN STÄDTE NACH BUNDESLAND</h2>
+        <h2 class="ax-h2">ALLE 100 GEPRÜFTEN STÄDTE NACH BUNDESLAND</h2>
         <p class="ax-sub" style="margin-bottom: 36px;">
           Jede Stadtanalyse enthält den zuständigen Verteilnetzbetreiber (Stadtwerke), den
           tagesaktuellen Status städtischer Zuschussprogramme im Herbst 2026 sowie lokale
