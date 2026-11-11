@@ -6,11 +6,13 @@ const corePaths = [
   { path: '/speicher-rechner', priority: '0.9' },
   { path: '/foerderung-check', priority: '0.9' },
   { path: '/solaratlas', priority: '0.95' },
+  { path: '/aktuelles', priority: '0.9' },
   { path: '/ratgeber', priority: '0.9' },
   { path: '/methodik', priority: '0.8' },
   { path: '/ueber-uns', priority: '0.7' },
   { path: '/impressum', priority: '0.4' },
   { path: '/datenschutz', priority: '0.4' },
+  { path: '/rss.xml', priority: '0.8' },
   { path: '/llms.txt', priority: '0.8' },
   { path: '/llms-full.txt', priority: '0.8' },
   { path: '/api/solaratlas-2026.json', priority: '0.8' }

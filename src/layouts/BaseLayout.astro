@@ -10,7 +10,7 @@ interface Props {
   description: string;
   canonicalPath?: string;
   isHero?: boolean;
-  activeSection?: 'atlas' | 'rechner' | 'ratgeber' | 'methodik' | 'home';
+  activeSection?: 'atlas' | 'rechner' | 'ratgeber' | 'aktuelles' | 'methodik' | 'home';
   ogImage?: string;
   schema?: Record<string, any> | Record<string, any>[];
 }
@@ -70,6 +70,7 @@ const schemas = Array.isArray(schema)
     <link rel="shortcut icon" href="/favicon.ico" />
     <link rel="canonical" href={canonicalUrl} />
     <link rel="sitemap" type="application/xml" href="https://solarmetrik.de/sitemap-index.xml" />
+    <link rel="alternate" type="application/rss+xml" title="SOLARMETRIK Photovoltaik Aktuelles & Studien (RSS)" href="https://solarmetrik.de/rss.xml" />
     <link rel="alternate" type="text/plain" title="LLMs Reference" href="https://solarmetrik.de/llms.txt" />
 
     <!-- Non-blocking Typography Preconnect & Stylesheet -->

@@ -1,0 +1,226 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import EeatVerifyBar from '../../components/EeatVerifyBar.astro';
+import { getAllNews, type NewsItem } from '../../lib/news';
+
+export function getStaticPaths() {
+  const all = getAllNews();
+  return all.map((item) => ({
+    params: { slug: item.slug },
+    props: { item }
+  }));
+}
+
+interface Props {
+  item: NewsItem;
+}
+
+const { item } = Astro.props;
+const otherNews = getAllNews()
+  .filter((n) => n.slug !== item.slug)
+  .slice(0, 3);
+
+const newsSchema = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'NewsArticle',
+    mainEntityOfPage: {
+      '@type': 'WebPage',
+      '@id': `https://solarmetrik.de/aktuelles/${item.slug}`
+    },
+    headline: item.title,
+    description: item.metaDescription,
+    image: [`https://solarmetrik.de${item.heroImage}`],
+    datePublished: item.datePublished,
+    dateModified: item.dateModified,
+    author: {
+      '@type': 'Person',
+      name: 'Lukas Hartmann',
+      jobTitle: 'Energieökonom (M.Sc.) — Leitung Fachredaktion',
+      url: 'https://solarmetrik.de/ueber-uns'
+    },
+    reviewedBy: {
+      '@type': 'Person',
+      name: 'Dipl.-Ing. Markus Weber',
+      jobTitle: 'Prüfingenieur für Photovoltaik-Systemtechnik'
+    },
+    publisher: {
+      '@type': 'Organization',
+      name: 'SOLARMETRIK Deutschland',
+      url: 'https://solarmetrik.de',
+      logo: {
+        '@type': 'ImageObject',
+        url: 'https://solarmetrik.de/favicon.svg'
+      }
+    }
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      {
+        '@type': 'ListItem',
+        position: 1,
+        name: 'Startseite',
+        item: 'https://solarmetrik.de/'
+      },
+      {
+        '@type': 'ListItem',
+        position: 2,
+        name: 'Aktuelles & Markt-Ticker',
+        item: 'https://solarmetrik.de/aktuelles'
+      },
+      {
+        '@type': 'ListItem',
+        position: 3,
+        name: item.title,
+        item: `https://solarmetrik.de/aktuelles/${item.slug}`
+      }
+    ]
+  }
+];
+---
+
+<BaseLayout
+  title={item.metaTitle}
+  description={item.metaDescription}
+  canonicalPath={`/aktuelles/${item.slug}`}
+  activeSection="aktuelles"
+  ogImage={`https://solarmetrik.de${item.heroImage}`}
+  schema={newsSchema}
+>
+  <article class="ax-section" style="padding-top: 44px;">
+    <div class="container--editorial">
+      <Breadcrumbs
+        items={[
+          { label: 'Startseite', href: '/' },
+          { label: 'Aktuelles & Markt-Ticker', href: '/aktuelles' },
+          { label: item.title }
+        ]}
+      />
+
+      <span class="ax-eyebrow">{item.displayDate} · {item.category}</span>
+      <h1 class="editorial-h1">{item.title}</h1>
+
+      <EeatVerifyBar updatedDate={item.displayDate} readingTimeMin={item.readingTimeMin} />
+
+      <div style="display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 28px;" class="no-print">
+        <a href={item.relatedToolHref} class="ax-btn ax-btn--primary">
+          {item.relatedToolLabel}
+        </a>
+        <a href="/rss.xml" class="ax-btn ax-btn--light">
+          RSS-Feed abonnieren
+        </a>
+      </div>
+
+      <!-- BLUF SUMMARY BOX FOR GOOGLE NEWS & AI SEARCH AGENTS -->
+      <div class="clean-summary-box">
+        <div
+          style="font-size: 12px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--accent-blue); font-weight: 700; margin-bottom: 8px;"
+        >
+          Kernmeldung & Einordnung (Stand: {item.displayDate})
+        </div>
+        <p style="font-size: 15.5px; line-height: 1.68; color: var(--text-primary);">
+          {item.summary}
+        </p>
+      </div>
+
+      <!-- 3 KEY METRICS BAR -->
+      <div class="ax-cards-3" style="margin: 28px 0 36px;">
+        {item.keyTakeaways.map((k) => (
+          <div class="kpi-card">
+            <div class="kpi-card__label">{k.label}</div>
+            <div class="kpi-card__value" style="font-size: 24px;">{k.value}</div>
+            <div class="kpi-card__note">{k.note}</div>
+          </div>
+        ))}
+      </div>
+
+      <!-- HERO IMAGE -->
+      <figure style="margin: 0 0 36px; border-radius: 12px; overflow: hidden; border: 1px solid var(--border-hairline);">
+        <img
+          src={item.heroImage}
+          alt={item.heroAlt}
+          width="1200"
+          height="675"
+          style="width: 100%; height: auto; display: block;"
+        />
+      </figure>
+
+      <!-- ARTICLE SECTIONS -->
+      {item.sections.map((sec) => (
+        <section id={sec.id} style="margin-bottom: 42px;">
+          <h2 class="editorial-h2">{sec.heading}</h2>
+          {sec.paragraphs.map((p) => (
+            <p class="editorial-p" set:html={p} />
+          ))}
+
+          {sec.bullets && (
+            <ul class="editorial-list">
+              {sec.bullets.map((b) => (
+                <li set:html={b} />
+              ))}
+            </ul>
+          )}
+
+          {sec.table && (
+            <div class="clean-table-wrap" style="margin-top: 22px;">
+              <table class="clean-table">
+                <thead>
+                  <tr>
+                    {sec.table.headers.map((h) => (
+                      <th>{h}</th>
+                    ))}
+                  </tr>
+                </thead>
+                <tbody>
+                  {sec.table.rows.map((row) => (
+                    <tr>
+                      {row.map((cell, idx) => (
+                        <td>{idx === 0 ? <strong>{cell}</strong> : cell}</td>
+                      ))}
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          )}
+        </section>
+      ))}
+
+      <!-- PRIMARY SOURCES BOX -->
+      <div class="clean-summary-box" style="margin-top: 40px;">
+        <div
+          style="font-size: 12px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-muted); font-weight: 700; margin-bottom: 10px;"
+        >
+          Primärquellen & Regulatorische Referenzen
+        </div>
+        <ul class="editorial-list" style="margin-bottom: 0;">
+          {item.sources.map((src) => (
+            <li>
+              <strong>{src.name}:</strong> {src.reference}
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <!-- OTHER RECENT NEWS -->
+      <div style="margin-top: 64px; padding-top: 40px; border-top: 1px solid var(--border-hairline);" class="no-print">
+        <span class="ax-eyebrow">Weitere aktuelle Meldungen · November 2026</span>
+        <h2 class="ax-h2" style="margin-bottom: 24px;">WEITERE PHOTOVOLTAIK-ANALYSEN IM TICKER</h2>
+        <div class="ax-cards-3">
+          {otherNews.map((other) => (
+            <a href={`/aktuelles/${other.slug}`} class="ax-photo-card">
+              <div class="ax-photo-card__meta">
+                {other.displayDate} · {other.category}
+              </div>
+              <div class="ax-photo-card__title" style="font-size: 18px;">{other.title}</div>
+              <span class="ax-photo-card__caption">Meldung lesen →</span>
+            </a>
+          ))}
+        </div>
+      </div>
+    </div>
+  </article>
+</BaseLayout>

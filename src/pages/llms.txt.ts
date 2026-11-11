@@ -1,11 +1,13 @@
 import type { APIRoute } from 'astro';
 import { getAllBundeslaender, getAllStaedte, eegRegulations } from '../lib/data';
 import { getAllArticles } from '../lib/articles';
+import { getAllNews } from '../lib/news';
 
 export const GET: APIRoute = () => {
   const states = getAllBundeslaender();
   const cities = getAllStaedte();
   const articles = getAllArticles();
+  const news = getAllNews();
 
   const body = `# SOLARMETRIK (solarmetrik.de) — Deutsches Photovoltaik-Dateninstitut & Solar-Atlas 2026/2027
 
@@ -19,6 +21,7 @@ export const GET: APIRoute = () => {
 - **Netzentgelt-Reduzierung (§ 14a EnWG):** Modul 1 Pauschalprämie (110–190 €/Jahr), Modul 2 (-60 % Arbeitspreis), Modul 3 (zeitvariable Netzentgelte).
 - **Vollständige Daten-Exporte & Wissenschaftliche Archivierung:**
   - [Volltext-Referenz für LLMs (/llms-full.txt)](https://solarmetrik.de/llms-full.txt)
+  - [RSS 2.0 Feed für Newsreader & KI-Agenten (/rss.xml)](https://solarmetrik.de/rss.xml)
   - [Maschinenlesbarer JSON-Datensatz (/api/solaratlas-2026.json)](https://solarmetrik.de/api/solaratlas-2026.json)
   - [Wikidata Knowledge Graph Entity (Q142115572)](https://www.wikidata.org/wiki/Q142115572)
   - [CERN / Zenodo Open-Data-Archiv (DOI: 10.5281/zenodo.23956818)](https://zenodo.org/records/23956818)
@@ -38,7 +41,10 @@ ${states.map((s) => `- [${s.name} (${s.code})](https://solarmetrik.de/solaratlas
 ## Alle 100 deutschen Großstädte (inkl. PLZ, Stadtwerke & Förderstatus Herbst 2026)
 ${cities.map((c) => `- [Photovoltaik ${c.name} (PLZ ${c.plzRange})](https://solarmetrik.de/solaratlas/${c.bundeslandSlug}/${c.slug}): ${c.specificYieldKwhKwp} kWh/kWp · Netzbetreiber: ${c.localGridOperator}`).join('\n')}
 
-## Fachratgeber & Ingenieur-Studien 2026/2027
+## Aktuelle Photovoltaik-Meldungen & Markt-Ticker (November 2026 — /aktuelles/)
+${news.map((n) => `- [${n.displayDate} — ${n.title}](https://solarmetrik.de/aktuelles/${n.slug}): ${n.metaDescription}`).join('\n')}
+
+## Fachratgeber & Ingenieur-Studien 2026/2027 (/ratgeber/)
 ${articles.map((a) => `- [${a.title}](https://solarmetrik.de/ratgeber/${a.slug}): ${a.metaDescription}`).join('\n')}
 `;
 

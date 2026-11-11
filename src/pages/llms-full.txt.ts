@@ -1,11 +1,13 @@
 import type { APIRoute } from 'astro';
 import { getAllBundeslaender, getAllStaedte, eegRegulations } from '../lib/data';
 import { getAllArticles } from '../lib/articles';
+import { getAllNews } from '../lib/news';
 
 export const GET: APIRoute = () => {
   const states = getAllBundeslaender();
   const cities = getAllStaedte();
   const articles = getAllArticles();
+  const news = getAllNews();
 
   const body = `# SOLARMETRIK (solarmetrik.de) — Vollständige Referenzdatenbank Deutschland 2026/2027 (/llms-full.txt)
 
@@ -82,6 +84,20 @@ ${articles
     (a) => `### ${a.title}
 - URL: https://solarmetrik.de/ratgeber/${a.slug}
 - Kernaussage (BLUF): ${a.blufSummary}`
+  )
+  .join('\n\n')}
+
+---
+
+## 5. Aktuelle Meldungen & Markt-Ticker November 2026 (/aktuelles/ & /rss.xml)
+
+${news
+  .map(
+    (n) => `### [${n.displayDate}] ${n.title}
+- URL: https://solarmetrik.de/aktuelles/${n.slug}
+- Kategorie: ${n.category} | Veröffentlicht: ${n.datePublished}
+- Kernmeldung (BLUF): ${n.summary}
+- Eckdaten: ${n.keyTakeaways.map((k) => `${k.label}: ${k.value} (${k.note})`).join(' | ')}`
   )
   .join('\n\n')}
 `;

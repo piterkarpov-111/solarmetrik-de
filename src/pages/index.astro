@@ -8,8 +8,10 @@ import {
   formatEur,
   formatNumber
 } from '../lib/data';
+import { getAllNews } from '../lib/news';
 
 const topCities = getAllStaedte().slice(0, 12);
+const latestNews = getAllNews().slice(0, 3);
 const monthlyDist = eegRegulations.roofOrientationTiltMatrix.monthlyYieldDistributionPercent;
 
 const priceRows = [
@@ -505,6 +507,36 @@ const homeSchema = [
           </p>
           <span class="ax-photo-card__caption">Kauf-vs.-Miete-Rechnung ansehen →</span>
         </a>
+      </div>
+
+      <!-- 6B. NOVEMBER 2026 MARKET & REGULATORY TICKER (/AKTUELLES/) -->
+      <div style="margin-top: 64px; padding-top: 44px; border-top: 1px solid var(--border-hairline);">
+        <div
+          style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 20px; margin-bottom: 32px;"
+        >
+          <div style="max-width: 680px;">
+            <span class="ax-eyebrow">Markt- & Regulierungs-Ticker · November 2026</span>
+            <h2 class="ax-h2">AKTUELLE MELDUNGEN ZU ZUBAU, EEG 2027 & PREISEN</h2>
+          </div>
+          <a href="/aktuelles" class="ax-btn ax-btn--light">
+            Alle 5 November-Meldungen & RSS →
+          </a>
+        </div>
+
+        <div class="ax-cards-3">
+          {latestNews.map((item) => (
+            <a href={`/aktuelles/${item.slug}`} class="ax-photo-card">
+              <div class="ax-photo-card__meta">
+                {item.displayDate} · {item.category}
+              </div>
+              <div class="ax-photo-card__title" style="font-size: 19px;">{item.title}</div>
+              <p class="ax-photo-card__desc">
+                {item.summary.slice(0, 145)}…
+              </p>
+              <span class="ax-photo-card__caption">Meldung & Datenanalyse lesen →</span>
+            </a>
+          ))}
+        </div>
       </div>
     </div>
   </section>

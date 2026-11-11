@@ -127,6 +127,15 @@ const allStaedteSearch = getAllStaedte().map((s) => ({
 
       <div class="ax-nav__item">
         <a
+          href="/aktuelles"
+          class:list={['ax-nav__link', { active: activeSection === 'aktuelles' }]}
+        >
+          Aktuelles
+        </a>
+      </div>
+
+      <div class="ax-nav__item">
+        <a
           href="/methodik"
           class:list={['ax-nav__link', { active: activeSection === 'methodik' }]}
         >
@@ -258,7 +267,15 @@ const allStaedteSearch = getAllStaedte().map((s) => ({
 
         <!-- Group 3: Wissen & Methodik -->
         <div class="ax-mobile-nav__group">
-          <div class="ax-mobile-nav__heading">Wissen & Methodik</div>
+          <div class="ax-mobile-nav__heading">Wissen, Ticker & Methodik</div>
+          <a href="/aktuelles" class:list={['ax-mobile-nav__link', { active: activeSection === 'aktuelles' }]}>
+            <div class="ax-mobile-nav__text">
+              <span class="ax-mobile-nav__primary">Aktuelles & Markt-Ticker (11/2026)</span>
+              <span class="ax-mobile-nav__secondary">130-GW-Bilanz, EEG-Frist 31.12. & Q4-Preise</span>
+            </div>
+            <span class="ax-mobile-nav__arrow">→</span>
+          </a>
+
           <a href="/ratgeber" class:list={['ax-mobile-nav__link', { active: activeSection === 'ratgeber' }]}>
             <div class="ax-mobile-nav__text">
               <span class="ax-mobile-nav__primary">Ratgeber & EEG 2027</span>
