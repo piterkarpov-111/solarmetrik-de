@@ -34,10 +34,10 @@ export const articles: ArticleData[] = [
     slug: 'photovoltaik-kosten-2026',
     category: 'Preisanalyse & Wirtschaftlichkeit',
     title: 'Photovoltaik Kosten 2026: Preistabellen für 5 bis 20 kWp, Speicher & Montage',
-    metaTitle: 'Photovoltaik Kosten 2026: Preise pro kWp & Speicher',
+    metaTitle: 'Photovoltaik Kosten 2026: 10 kWp ab 12.900 € (Preistabelle)',
     metaDescription:
-      'Was kostet eine Solaranlage 2026? Verifizierte Preistabelle für 5, 8, 10, 12, 15 & 20 kWp inkl. Speicher, Montage & 0 % MwSt. im Vergleich zur Finanztip-Faustregel.',
-    updatedDate: '04. November 2026',
+      'Photovoltaik & Stromspeicher Preise 2026: 10 kWp ab 12.900 € (mit 10-kWh-Speicher Ø 18.600 €). Regionale Preisentwicklung, 0 % MwSt. & Amortisation im Check.',
+    updatedDate: '12. November 2026',
     readingTimeMin: 7,
     heroImage:
       '/images/photovoltaik-kosten-2026-solarmetrik.webp',
@@ -125,10 +125,10 @@ export const articles: ArticleData[] = [
     slug: 'eeg-2026-vs-2027-einspeiseverguetung',
     category: 'Gesetzgebung & Förderung',
     title: 'EEG-Einspeisevergütung 2026 vs. 2027: Kabinettsbeschluss & Bestandsschutz bis 31.12.2026',
-    metaTitle: 'Einspeisevergütung 2026 vs. EEG 2027: Stichtag 31.12.',
+    metaTitle: 'EEG Reform 2027 & Einspeisevergütung 2026: Stichtag 31.12.',
     metaDescription:
-      'Aktuelle EEG-Einspeisevergütung ab August 2026 (7,70 / 12,22 ct/kWh) und Ausblick auf die EEG-Reform 2027 (Wegfall der Festvergütung unter 25 kWp). So sichern Sie den Bestandsschutz.',
-    updatedDate: '04. November 2026',
+      'EEG 2026 vs. 2027: Aktuell 7,70 / 12,22 ct/kWh Einspeisevergütung sichern! Was die EEG-Reform 2027 unter 25 kWp ändert & wie der 31.12.-Bestandsschutz greift.',
+    updatedDate: '12. November 2026',
     readingTimeMin: 6,
     heroImage:
       '/images/eeg-2026-2027-einspeiseverguetung.webp',

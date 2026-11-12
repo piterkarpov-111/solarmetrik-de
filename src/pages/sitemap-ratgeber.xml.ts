@@ -21,7 +21,7 @@ ${articles
   .map(
     (a) => `  <url>
     <loc>https://solarmetrik.de/ratgeber/${a.slug}</loc>
-    <lastmod>2026-11-11</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
   </url>`

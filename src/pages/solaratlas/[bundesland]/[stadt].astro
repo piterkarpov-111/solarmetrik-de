@@ -65,7 +65,7 @@ const cityScenarios = [
 const cityFaqs = [
   {
     q: `Wie viel Strom erzeugt eine 10-kWp-Solaranlage in ${stadt.name} (${stadt.plzRange}) pro Jahr?`,
-    a: `In ${stadt.name} beträgt die mittlere jährliche Globalstrahlung laut DWD/PVGIS ${formatNumber(stadt.globalRadiationKwhM2)} kWh/m² bei rund ${formatNumber(stadt.sunHoursPerYear)} Sonnenstunden. Bei einem optimalen Dachneigungswinkel von ${stadt.optimalTiltDeg}° Süd erzielt eine Photovoltaikanlage durchschnittlich ${formatNumber(stadt.specificYieldKwhKwp)} kWh pro kWp — eine 10-kWp-Anlage liefert somit rund ${formatNumber(stadt.specificYieldKwhKwp * 10)} kWh Solarstrom pro Jahr.`
+    a: `Laut Solarkataster- und DWD/PVGIS-Standortanalyse beträgt die mittlere jährliche Globalstrahlung in ${stadt.name} ${formatNumber(stadt.globalRadiationKwhM2)} kWh/m² bei rund ${formatNumber(stadt.sunHoursPerYear)} Sonnenstunden. Bei einem optimalen Dachneigungswinkel von ${stadt.optimalTiltDeg}° Süd erzielt eine Photovoltaikanlage durchschnittlich ${formatNumber(stadt.specificYieldKwhKwp)} kWh pro kWp — eine 10-kWp-Anlage liefert somit rund ${formatNumber(stadt.specificYieldKwhKwp * 10)} kWh Solarstrom pro Jahr.`
   },
   {
     q: `Welche Photovoltaik-Förderung gibt es 2026 in ${stadt.name}?`,
@@ -100,8 +100,8 @@ const citySchema = [
 ---
 
 <BaseLayout
-  title={`Photovoltaik ${stadt.name} 2026: Ertrag & Kosten`}
-  description={`Unabhängige PV-Analyse für ${stadt.name} (PLZ ${stadt.plzRange}): ${stadt.specificYieldKwhKwp} kWh/kWp Ertrag, Förderstatus "${stadt.kommunaleFoerderung2026.programName}", ${stadt.localGridOperator} & Preise.`}
+  title={`${stadt.name.length > 18 ? 'PV' : 'Photovoltaik'} ${stadt.name} 2026: Solarkataster & Förderung`}
+  description={`Solarkataster & PV-Analyse ${stadt.name} (PLZ ${stadt.plzRange}): ${stadt.specificYieldKwhKwp} kWh/kWp Ertrag, Förderung („${stadt.kommunaleFoerderung2026.programName}“), ${stadt.localGridOperator} & Preise 2026.`}
   canonicalPath={`/solaratlas/${stadt.bundeslandSlug}/${stadt.slug}`}
   activeSection="atlas"
   schema={citySchema}
@@ -118,13 +118,13 @@ const citySchema = [
       />
 
       <span class="ax-eyebrow">
-        Standort-Dossier · PLZ {stadt.plzRange} · Koordinaten {stadt.lat.toFixed(2)}° N, {stadt.lon.toFixed(2)}° O · SME-2026: {stadt.solarmetrikScore}/100
+        Standort-Dossier & Solarkataster · PLZ {stadt.plzRange} · Koordinaten {stadt.lat.toFixed(2)}° N, {stadt.lon.toFixed(2)}° O · SME-2026: {stadt.solarmetrikScore}/100
       </span>
       <h1 class="editorial-h1">
-        PHOTOVOLTAIK IN {stadt.name.toUpperCase()} 2026: SOLARERTRAG, FÖRDERUNG & KOSTENANALYSE
+        PHOTOVOLTAIK & SOLARKATASTER {stadt.name.toUpperCase()} 2026: ERTRAG, FÖRDERUNG & KOSTEN
       </h1>
 
-      <EeatVerifyBar updatedDate="04. November 2026" readingTimeMin={4} />
+      <EeatVerifyBar updatedDate="12. November 2026" readingTimeMin={4} />
 
       <div style="display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 28px;" class="no-print">
         <a href={`/rechner?city=${stadt.slug}`} class="ax-btn ax-btn--primary">
@@ -138,10 +138,10 @@ const citySchema = [
       <!-- 1. BLUF SUMMARY BLOCK (RAG CHUNK #1) -->
       <div class="clean-summary-box">
         <div style="font-size: 12px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--accent-blue); font-weight: 700; margin-bottom: 8px;">
-          Kernaussage & Standort-Metrik {stadt.name} (Stand November 2026)
+          Solarkataster & Standort-Metrik {stadt.name} (Stand November 2026)
         </div>
         <p style="font-size: 15.5px; line-height: 1.65; color: var(--text-primary);">
-          Im Postleitzahlengebiet <strong>{stadt.plzRange} ({stadt.name}, {stadt.bundeslandName})</strong>
+          Im Solarkataster-Check für das Postleitzahlengebiet <strong>{stadt.plzRange} ({stadt.name}, {stadt.bundeslandName})</strong>
           erreicht die jährliche Globalstrahlung laut DWD/PVGIS{' '}
           <strong>{formatNumber(stadt.globalRadiationKwhM2)} kWh/m²</strong> bei durchschnittlich{' '}
           <strong>{formatNumber(stadt.sunHoursPerYear)} Sonnenstunden</strong>. Eine im optimalen

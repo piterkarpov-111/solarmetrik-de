@@ -9,7 +9,7 @@ ${cities
   .map(
     (c) => `  <url>
     <loc>https://solarmetrik.de/solaratlas/${c.bundeslandSlug}/${c.slug}</loc>
-    <lastmod>2026-11-04</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>`

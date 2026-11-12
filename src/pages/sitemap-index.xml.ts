@@ -5,19 +5,19 @@ export const GET: APIRoute = () => {
 <sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <sitemap>
     <loc>https://solarmetrik.de/sitemap-core.xml</loc>
-    <lastmod>2026-11-04</lastmod>
+    <lastmod>2026-11-12</lastmod>
   </sitemap>
   <sitemap>
     <loc>https://solarmetrik.de/sitemap-bundeslaender.xml</loc>
-    <lastmod>2026-11-04</lastmod>
+    <lastmod>2026-11-12</lastmod>
   </sitemap>
   <sitemap>
     <loc>https://solarmetrik.de/sitemap-staedte.xml</loc>
-    <lastmod>2026-11-04</lastmod>
+    <lastmod>2026-11-12</lastmod>
   </sitemap>
   <sitemap>
     <loc>https://solarmetrik.de/sitemap-ratgeber.xml</loc>
-    <lastmod>2026-11-04</lastmod>
+    <lastmod>2026-11-12</lastmod>
   </sitemap>
 </sitemapindex>`;
 

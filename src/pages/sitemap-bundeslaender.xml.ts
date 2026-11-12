@@ -9,7 +9,7 @@ ${states
   .map(
     (s) => `  <url>
     <loc>https://solarmetrik.de/solaratlas/${s.slug}</loc>
-    <lastmod>2026-11-04</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
   </url>`

@@ -25,7 +25,7 @@ ${corePaths
   .map(
     (p) => `  <url>
     <loc>https://solarmetrik.de${p.path}</loc>
-    <lastmod>2026-11-04</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>${p.priority}</priority>
   </url>`
