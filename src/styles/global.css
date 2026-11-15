@@ -3,6 +3,15 @@
    100% Scandi-European Light Aesthetic · Zero Black · Zero Clutter
    ========================================================================== */
 
+@font-face {
+  font-family: 'Barlow Condensed Fallback';
+  src: local('Arial Narrow'), local('HelveticaNeue-CondensedBold'), local('Roboto Condensed'), local('Arial'), local('sans-serif');
+  size-adjust: 83%;
+  ascent-override: 102%;
+  descent-override: 22%;
+  line-gap-override: 0%;
+}
+
 :root {
   --bg-white: #ffffff;
   --bg-soft: #f6f7f9;
@@ -23,7 +32,7 @@
   --border-hairline: #e6e8ec;
   --border-button: #cfd4dc;
 
-  --font-condensed: 'Barlow Condensed', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-condensed: 'Barlow Condensed', 'Barlow Condensed Fallback', -apple-system, BlinkMacSystemFont, sans-serif;
   --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
 
   --container-wide: 1380px;
@@ -1112,6 +1121,14 @@ button, input, select, textarea {
   overflow: hidden;
   margin: 32px 0;
   background: var(--bg-soft);
+}
+
+.editorial-photo img {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  display: block;
 }
 
 .editorial-photo figcaption {

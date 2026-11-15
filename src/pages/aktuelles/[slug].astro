@@ -135,13 +135,15 @@ const newsSchema = [
       </div>
 
       <!-- HERO IMAGE -->
-      <figure style="margin: 0 0 36px; border-radius: 12px; overflow: hidden; border: 1px solid var(--border-hairline);">
+      <figure class="editorial-photo" style="margin: 0 0 36px; border-radius: 12px; overflow: hidden; border: 1px solid var(--border-hairline);">
         <img
           src={item.heroImage}
           alt={item.heroAlt}
           width="1200"
           height="675"
-          style="width: 100%; height: auto; display: block;"
+          fetchpriority="high"
+          decoding="async"
+          style="width: 100%; height: auto; aspect-ratio: 16 / 9; object-fit: cover; display: block;"
         />
       </figure>
 
