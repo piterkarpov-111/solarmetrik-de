@@ -37,7 +37,7 @@ export const newsItems: NewsItem[] = [
       'Bundesnetzagentur-Bilanz November 2026: Deutschland überschreitet 130 GW Photovoltaik-Leistung — Speicherquote bei 79 %',
     metaTitle: 'PV-Zubau November 2026: 130 GW Marke & Speicher-Statistik',
     metaDescription:
-      'Aktuelle Marktstammdatenregister-Auswertung (November 2026): Über 130 GW installierte PV-Leistung in Deutschland, 79 % Heimspeicher-Quote & Boom bei Steckersolargeräten.',
+      'Marktstammdatenregister-Auswertung (November 2026): Über 130 GW PV-Leistung in Deutschland, 79 % Heimspeicher-Quote und Boom bei Steckersolargeräten.',
     datePublished: '2026-11-11T09:30:00+01:00',
     dateModified: '2026-11-11T09:30:00+01:00',
     displayDate: '11. November 2026',
@@ -106,7 +106,7 @@ export const newsItems: NewsItem[] = [
       'Endspurt vor dem EEG-Systemwechsel 2027: Warum das Inbetriebnahmeprotokoll (E.8) bis 31.12.2026 über 20 Jahre Festvergütung entscheidet',
     metaTitle: 'EEG 2027 Countdown: Frist 31.12.2026 & E.8 Inbetriebnahme',
     metaDescription:
-      'So sichern Sie sich die 20-jährige EEG-Festvergütung (7,70 / 12,22 ct/kWh) vor dem 31.12.2026: Was rechtlich nach § 3 Nr. 30 EEG als Inbetriebnahme zählt — auch ohne Zählerwechsel.',
+      '20 Jahre EEG-Festvergütung (7,70 / 12,22 ct/kWh) vor dem 31.12.2026 sichern: Was nach § 3 Nr. 30 EEG als Inbetriebnahme zählt — auch ohne Zählerwechsel.',
     datePublished: '2026-11-09T11:15:00+01:00',
     dateModified: '2026-11-11T08:00:00+01:00',
     displayDate: '09. November 2026',
@@ -177,7 +177,7 @@ export const newsItems: NewsItem[] = [
       'Solarspitzengesetz (§ 9 EEG) in der Praxis: Wann die 60-%-Einspeisedrosselung nach Smart-Meter-Einbau entfällt',
     metaTitle: 'Solarspitzengesetz 60%-Regel: Smart Meter & Steuerbox 2026',
     metaDescription:
-      'Wichtiges Praxis-Update zum Solarspitzengesetz (§ 9 EEG) im Herbst 2026: Warum die 60-%-Einspeisegrenze nur die Netzeinspeisung betrifft und wann das Smart Meter sie aufhebt.',
+      'Praxis-Update zum Solarspitzengesetz (§ 9 EEG) 2026: Warum die 60-%-Grenze nur die Netzeinspeisung betrifft und wann das Smart Meter sie aufhebt.',
     datePublished: '2026-11-06T14:00:00+01:00',
     dateModified: '2026-11-06T14:00:00+01:00',
     displayDate: '06. November 2026',
@@ -311,7 +311,7 @@ export const newsItems: NewsItem[] = [
       'Neue Netzentgelte & § 14a EnWG Modul 3 ab Winter 2026/2027: Wie PV-Betreiber mit Speicher und Wärmepumpe bis zu 380 € sparen',
     metaTitle: 'Netzentgelte 2026/2027 & § 14a EnWG Modul 3 für PV-Kunden',
     metaDescription:
-      'Vorläufige Netzentgelte 2027 & zeitvariable Tarife nach § 14a EnWG Modul 3: Wie Sie im Winter nachts bis zu 80 % Netzentgelt beim Laden von Speicher, E-Auto & Wärmepumpe sparen.',
+      'Netzentgelte 2027 und zeitvariable Tarife nach § 14a EnWG Modul 3: Wie Sie im Winter nachts bis zu 80 % Netzentgelt für Speicher, E-Auto und WP sparen.',
     datePublished: '2026-11-02T08:45:00+01:00',
     dateModified: '2026-11-08T12:00:00+01:00',
     displayDate: '02. November 2026',

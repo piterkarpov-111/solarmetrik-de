@@ -36,7 +36,7 @@ export const articles: ArticleData[] = [
     title: 'Photovoltaik Kosten 2026: Preistabellen für 5 bis 20 kWp, Speicher & Montage',
     metaTitle: 'Photovoltaik Kosten 2026: 10 kWp ab 12.900 € (Preistabelle)',
     metaDescription:
-      'Photovoltaik & Stromspeicher Preise 2026: 10 kWp ab 12.900 € (mit 10-kWh-Speicher Ø 18.600 €). Regionale Preisentwicklung, 0 % MwSt. & Amortisation im Check.',
+      'Photovoltaik und Speicher Preise 2026: 10 kWp ab 12.900 € (mit 10-kWh-Speicher Ø 18.600 €). Regionale Kosten, 0 % MwSt. und Amortisation im Check.',
     updatedDate: '12. November 2026',
     readingTimeMin: 7,
     heroImage:
@@ -127,7 +127,7 @@ export const articles: ArticleData[] = [
     title: 'EEG-Einspeisevergütung 2026 vs. 2027: Kabinettsbeschluss & Bestandsschutz bis 31.12.2026',
     metaTitle: 'EEG Reform 2027 & Einspeisevergütung 2026: Stichtag 31.12.',
     metaDescription:
-      'EEG 2026 vs. 2027: Aktuell 7,70 / 12,22 ct/kWh Einspeisevergütung sichern! Was die EEG-Reform 2027 unter 25 kWp ändert & wie der 31.12.-Bestandsschutz greift.',
+      'EEG 2026 vs. 2027: 7,70 / 12,22 ct/kWh Einspeisevergütung sichern! Was die EEG-Reform 2027 unter 25 kWp ändert und wie der 31.12.-Bestandsschutz greift.',
     updatedDate: '12. November 2026',
     readingTimeMin: 6,
     heroImage:
@@ -199,7 +199,7 @@ export const articles: ArticleData[] = [
     title: 'Solarspitzengesetz (§ 51 EEG): Negative Strompreise, 60-%-Begrenzung & Kompensationsformel',
     metaTitle: 'Solarspitzengesetz (§ 51 EEG) 2026: Negative Strompreise',
     metaDescription:
-      'Alles zum Solarspitzengesetz (§ 51 EEG) 2026: Wegfall der Vergütung bei negativen Börsenstrompreisen, 60-%-Abregelung ohne Smart Meter und die 20-Jahre-Verlängerungsformel.',
+      'Solarspitzengesetz (§ 51 EEG) 2026: Wegfall der Vergütung bei negativen Strompreisen, 60-%-Abregelung ohne Smart Meter und 20-Jahre-Verlängerungsformel.',
     updatedDate: '04. November 2026',
     readingTimeMin: 6,
     heroImage:
@@ -263,7 +263,7 @@ export const articles: ArticleData[] = [
     title: 'Solarpflicht Deutschland 2026: Alle 16 Bundesländer bei Neubau & Dachsanierung',
     metaTitle: 'Solarpflicht Deutschland 2026: Alle 16 Bundesländer',
     metaDescription:
-      'Wo gilt 2026 die Solarpflicht für private Wohnhäuser? Vollständige Übersicht aller 16 Bundesländer für Neubau und Dachsanierung inklusive NRW-Pflicht seit 01.01.2026.',
+      'Wo gilt 2026 die Solarpflicht für Wohnhäuser? Übersicht aller 16 Bundesländer für Neubau und Dachsanierung inklusive NRW-Pflicht seit 01.01.2026.',
     updatedDate: '04. November 2026',
     readingTimeMin: 6,
     heroImage:
@@ -386,7 +386,7 @@ export const articles: ArticleData[] = [
     title: 'Photovoltaik Steuern 2026: 0 % MwSt. (§ 12 Abs. 3 UStG) & Einkommensteuer (§ 3 Nr. 72 EStG)',
     metaTitle: 'Photovoltaik Steuern 2026: 0 % MwSt & Steuerbefreiung',
     metaDescription:
-      'Steuerleitfaden 2026 für private Solaranlagen: Nullsteuersatz (0 % MwSt. nach § 12 Abs. 3 UStG), Einkommensteuerbefreiung (§ 3 Nr. 72 EStG) bis 30 kWp und Wegfall der EÜR.',
+      'Steuerleitfaden 2026 für Solaranlagen: Nullsteuersatz (0 % MwSt. nach § 12 Abs. 3 UStG), Steuerbefreiung (§ 3 Nr. 72 EStG) bis 30 kWp und Wegfall der EÜR.',
     updatedDate: '04. November 2026',
     readingTimeMin: 5,
     heroImage:
@@ -443,7 +443,7 @@ export const articles: ArticleData[] = [
     title: 'Stromspeicher-Test & Dimensionierung 2026: Erkenntnisse der HTW Berlin Stromspeicher-Inspektion',
     metaTitle: 'Stromspeicher Test 2026: HTW Inspektion & Dimensionierung',
     metaDescription:
-      'Welche Batteriespeicher führen in der HTW Berlin Stromspeicher-Inspektion 2026? Vergleich von System Performance Index (SPI), Effizienzklasse A und optimaler Speichergröße.',
+      'Welche Batteriespeicher führen in der HTW Berlin Stromspeicher-Inspektion 2026? Vergleich von System Performance Index (SPI), Klasse A und Speichergröße.',
     updatedDate: '04. November 2026',
     readingTimeMin: 7,
     heroImage:
@@ -508,7 +508,7 @@ export const articles: ArticleData[] = [
     title: 'Photovoltaik mit Wärmepumpe & Wallbox kombinieren: SG-Ready & § 14a EnWG Netzentgelte',
     metaTitle: 'Photovoltaik & Wärmepumpe 2026: § 14a EnWG & Optimierung',
     metaDescription:
-      'So kombinieren Sie Photovoltaik, Wärmepumpe (SG-Ready) und Wallbox optimal: Eigenverbrauch bis 82 % steigern und bis zu 190 €/Jahr Netzentgelte nach § 14a EnWG (Modul 1–3) sparen.',
+      'Photovoltaik, Wärmepumpe (SG-Ready) und Wallbox kombinieren: Eigenverbrauch bis 82 % steigern und bis zu 190 €/Jahr Netzentgelt nach § 14a EnWG sparen.',
     updatedDate: '04. November 2026',
     readingTimeMin: 6,
     heroImage:
@@ -564,7 +564,7 @@ export const articles: ArticleData[] = [
     title: 'Balkonkraftwerk 2026 mit Speicher: 800W / 2000W Regeln (Solarpaket I) & VDE-Norm',
     metaTitle: 'Balkonkraftwerk 2026 mit Speicher: 800W & 2000Wp Norm',
     metaDescription:
-      'Balkonkraftwerk 2026 Ratgeber: 2.000 Watt Modulleistung, 800 Watt Wechselrichter (Solarpaket I), Produktnorm DIN VDE V 0126-95, 2-kWh-Speicher und Anmeldung im MaStR.',
+      'Balkonkraftwerk 2026: 2.000 W Modulleistung, 800 W Wechselrichter (Solarpaket I), Produktnorm DIN VDE V 0126-95, 2-kWh-Speicher und Anmeldung im MaStR.',
     updatedDate: '04. November 2026',
     readingTimeMin: 6,
     heroImage:
@@ -620,7 +620,7 @@ export const articles: ArticleData[] = [
     title: 'Dynamische Stromtarife & Smart-Meter-Pflicht (iMSys) 2026: Lohnt das Netz-Laden im Winter?',
     metaTitle: 'Dynamische Stromtarife & Photovoltaik 2026: Smart Meter',
     metaDescription:
-      'Lohnt sich ein dynamischer Stromtarif (Tibber, Octopus, Awattar) mit PV-Anlage und Speicher 2026? Smart-Meter-Pflicht (iMSys), Preisobergrenzen & Winter-Netzladen.',
+      'Lohnt sich ein dynamischer Stromtarif (Tibber, Octopus, Awattar) mit PV und Speicher 2026? Smart-Meter-Pflicht (iMSys), Preisgrenzen und Winter-Netzladen.',
     updatedDate: '04. November 2026',
     readingTimeMin: 6,
     heroImage:
@@ -676,7 +676,7 @@ export const articles: ArticleData[] = [
     title: 'Solarthermie durch Photovoltaik ersetzen 2026: Kosten, Wärmepumpen-Kopplung & Winterertrag im Vergleich',
     metaTitle: 'Solarthermie durch Photovoltaik ersetzen: Kosten & WP 2026',
     metaDescription:
-      'Alte Solarthermie abbauen und durch Photovoltaik ersetzen? Ingenieur-Vergleich 2026: Flächenertrag pro m², Wärmepumpe, Rückbaukosten, Brauchwasser-WP & 0 % MwSt.',
+      'Alte Solarthermie abbauen und durch Photovoltaik ersetzen? Ingenieur-Vergleich 2026: Flächenertrag pro m², Wärmepumpe, Rückbaukosten und 0 % MwSt.',
     updatedDate: '11. November 2026',
     readingTimeMin: 9,
     heroImage: '/images/solarthermie-ersetzen-photovoltaik-2026.webp',
@@ -776,7 +776,7 @@ export const articles: ArticleData[] = [
     title: 'Ost-West- & Norddach Photovoltaik 2026: Ertrag, String-Planung & Wechselrichter-Teillastwirkungsgrad',
     metaTitle: 'Ost-West- & Norddach PV 2026: Ertrag & Wechselrichter',
     metaDescription:
-      'Lohnt sich eine Ost-West- oder Norddach-Photovoltaikanlage 2026? Spezifischer Ertrag nach Dachneigung, Wechselrichter-Überdimensionierung (130–150 %) & Teillast-Verluste.',
+      'Lohnt sich eine Ost-West- oder Norddach-PV-Anlage 2026? Spezifischer Ertrag nach Dachneigung, Wechselrichter-Überdimensionierung und Teillast-Verluste.',
     updatedDate: '11. November 2026',
     readingTimeMin: 9,
     heroImage: '/images/photovoltaik-ost-west-norddach-2026.webp',
@@ -861,7 +861,7 @@ export const articles: ArticleData[] = [
     title: 'Photovoltaik im Winter (Nov–Feb): Realer Ertrag bei diffusem Licht, Wärmepumpe & Speicher-Standby',
     metaTitle: 'Photovoltaik Ertrag im Winter: Strom für Wärmepumpe & Haus',
     metaDescription:
-      'Wie viel Strom erzeugt eine 10 kWp oder 15 kWp Photovoltaikanlage im Winter (November, Dezember, Januar, Februar) wirklich? Monats-Tabelle, Wärmepumpe & Speicher-Ruhemodus.',
+      'Wie viel Strom erzeugt eine 10 oder 15 kWp PV-Anlage im Winter (Nov.–Feb.) wirklich? Monats-Ertragstabelle, Wärmepumpe und Speicher-Ruhemodus.',
     updatedDate: '11. November 2026',
     readingTimeMin: 8,
     heroImage: '/images/photovoltaik-winterertrag-schnee-2026.webp',
@@ -941,7 +941,7 @@ export const articles: ArticleData[] = [
     title: 'Zählerschrank für Photovoltaik erneuern 2026: VDE-AR-N 4100 Pflichten (ÜSS, SLS, APZ) & reale Kosten',
     metaTitle: 'Zählerschrank für PV erneuern 2026: VDE-Pflicht & Kosten',
     metaDescription:
-      'Muss der Zählerschrank für die Photovoltaikanlage 2026 erneuert werden? VDE-AR-N 4100 Anforderungen (SLS-Schalter, Überspannungsschutz, APZ-Feld) & Kosten mit 0 % MwSt.',
+      'Muss der Zählerschrank für die PV-Anlage 2026 erneuert werden? VDE-AR-N 4100 Vorgaben (SLS-Schalter, Überspannungsschutz, APZ-Feld) und Kosten mit 0 % MwSt.',
     updatedDate: '11. November 2026',
     readingTimeMin: 8,
     heroImage: '/images/zaehlerschrank-vde-4100-photovoltaik-2026.webp',
@@ -1019,7 +1019,7 @@ export const articles: ArticleData[] = [
     title: 'Photovoltaik Finanzierung & KfW 270 Kredit 2026/2027: Effektivzins, Steuer-Hebel & Banken-Vergleich',
     metaTitle: 'Photovoltaik Finanzierung & KfW 270 Kredit 2026 im Vergleich',
     metaDescription:
-      'Lohnt sich der KfW-Kredit 270 für Photovoltaik und Speicher 2026? Aktuelle Zinssätze nach Bonität, Hausbank-Hürden, Modernisierungskredit-Alternativen & Cashflow-Rechnung.',
+      'Lohnt sich der KfW-Kredit 270 für Photovoltaik und Speicher 2026? Aktuelle Zinssätze nach Bonität, Hausbank-Hürden, Alternativen und Cashflow-Rechnung.',
     updatedDate: '11. November 2026',
     readingTimeMin: 8,
     heroImage: '/images/kfw-270-photovoltaik-finanzierung-2026.webp',

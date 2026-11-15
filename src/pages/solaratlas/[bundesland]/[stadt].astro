@@ -97,11 +97,15 @@ const citySchema = [
     }))
   }
 ];
+const isStadtstaatCity = stadt.slug.endsWith('-stadt');
+const pageTitle = isStadtstaatCity
+  ? `Photovoltaik ${stadt.name}-Stadt 2026: Solarkataster & PLZ`
+  : `${stadt.name.length > 18 ? 'PV' : 'Photovoltaik'} ${stadt.name} 2026: Solarkataster & Förderung`;
 ---
 
 <BaseLayout
-  title={`${stadt.name.length > 18 ? 'PV' : 'Photovoltaik'} ${stadt.name} 2026: Solarkataster & Förderung`}
-  description={`Solarkataster & PV-Analyse ${stadt.name} (PLZ ${stadt.plzRange}): ${stadt.specificYieldKwhKwp} kWh/kWp Ertrag, Förderung („${stadt.kommunaleFoerderung2026.programName}“), ${stadt.localGridOperator} & Preise 2026.`}
+  title={pageTitle}
+  description={`Solarkataster & PV ${stadt.name} (PLZ ${stadt.plzRange}): ${stadt.specificYieldKwhKwp} kWh/kWp Ertrag, Förderung, ${stadt.localGridOperator.split(' ')[0]} & Preise 2026 (0 % MwSt.).`}
   canonicalPath={`/solaratlas/${stadt.bundeslandSlug}/${stadt.slug}`}
   activeSection="atlas"
   schema={citySchema}

@@ -19,10 +19,12 @@ import { bundeslaender } from '../lib/data';
         Die aufgerufene URL ist im <strong>SOLARMETRIK Dateninstitut (Stand: November 2026)</strong> nicht hinterlegt. Wählen Sie direkt Ihr Bundesland oder starten Sie unseren kostenfreien Wirtschaftlichkeitsrechner:
       </p>
 
-      <div style="display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; margin-bottom: 48px;">
-        <a href="/" class="btn-solid-blue">Zurück zur Startseite →</a>
-        <a href="/rechner" class="btn-outline-clean">Zum PV-Ertragsrechner 2026 →</a>
-        <a href="/solaratlas" class="btn-outline-clean">Deutscher Solar-Atlas (16 Länder) →</a>
+      <div style="display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; margin-bottom: 32px;">
+        <a href="/" class="ax-btn ax-btn--primary">Zurück zur Startseite →</a>
+        <a href="/rechner" class="ax-btn ax-btn--light">Zum PV-Ertragsrechner 2026 →</a>
+        <a href="/solaratlas" class="ax-btn ax-btn--light">Deutscher Solar-Atlas (16 Länder) →</a>
+        <a href="/llms.txt" class="ax-btn ax-btn--light">LLMs.txt Index →</a>
+        <a href="/sitemap-index.xml" class="ax-btn ax-btn--light">XML-Sitemap →</a>
       </div>
 
       <div style="text-align: left; background: var(--bg-soft); border: 1px solid var(--border-hairline); border-radius: 10px; padding: 28px;">
@@ -30,7 +32,7 @@ import { bundeslaender } from '../lib/data';
         <div style="display: flex; flex-wrap: wrap; gap: 8px;">
           {bundeslaender.map((b) => (
             <a href={`/solaratlas/${b.slug}`} class="city-pill-link">
-              {b.name} ({b.specificYieldKwhPerKwp} kWh/kWp) →
+              {b.name} ({b.specificYieldKwhKwp} kWh/kWp) →
             </a>
           ))}
         </div>

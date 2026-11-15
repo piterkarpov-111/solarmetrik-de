@@ -8,7 +8,7 @@ export const GET: APIRoute = () => {
     name: 'SOLARMETRIK Deutscher Solar-Atlas & Photovoltaik-Referenzdatensatz 2026/2027 (SME-2026)',
     url: 'https://solarmetrik.de/api/solaratlas-2026.json',
     license: 'https://creativecommons.org/licenses/by/4.0/',
-    dateModified: '2026-11-04',
+    dateModified: '2026-11-12',
     creator: {
       '@type': 'Organization',
       name: 'SOLARMETRIK Deutschland',

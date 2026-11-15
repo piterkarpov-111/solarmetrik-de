@@ -95,7 +95,7 @@ const stateSchema = [
 
 <BaseLayout
   title={`${land.name.length > 18 ? 'PV' : 'Photovoltaik'} ${land.name} 2026: Solarkataster & Förderung`}
-  description={`Solarkataster & Photovoltaik-Analyse ${land.name} (${land.code}) 2026: ${land.specificYieldKwhKwp} kWh/kWp Ertrag, Förderung (${land.landesfoerderung.programName}), Solarpflicht & Preise für ${cities.length} Städte.`}
+  description={`Solarkataster & Photovoltaik ${land.name} (${land.code}) 2026: ${land.specificYieldKwhKwp} kWh/kWp Ertrag, Landesförderung, Solarpflicht & Preise für ${cities.length} Städte.`}
   canonicalPath={`/solaratlas/${land.slug}`}
   activeSection="atlas"
   schema={stateSchema}
