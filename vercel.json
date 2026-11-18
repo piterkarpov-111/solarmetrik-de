@@ -69,6 +69,15 @@
       ]
     },
     {
+      "source": "/(admin/.*|foerder-portal|bericht|en/vip-audit|en/summary|unsubscribe)",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, nofollow, noarchive"
+        }
+      ]
+    },
+    {
       "source": "/(.*)",
       "headers": [
         {

@@ -1,7 +1,5 @@
 ---
-import '../../styles/global.css';
-
-const title = 'SOLARMETRIK — Email Campaign & Affiliate Analytics Dashboard';
+const title = 'SOLARMETRIK — Campaign Telemetry (Protected)';
 ---
 
 <!doctype html>
@@ -10,210 +8,240 @@ const title = 'SOLARMETRIK — Email Campaign & Affiliate Analytics Dashboard';
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{title}</title>
-    <meta name="robots" content="noindex, nofollow" />
+    <meta name="robots" content="noindex, nofollow, noarchive" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link
       rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=Inter:wght@300;400;500;600&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=Inter:wght@400;500;600;700&display=swap"
     />
     <style>
+      *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+      body {
+        font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        background: #f4f7fb;
+        color: #0f172a;
+        min-height: 100vh;
+      }
+      .container { max-width: 1320px; margin: 0 auto; padding: 0 24px; }
+      .topbar {
+        background: #ffffff;
+        border-bottom: 1px solid #e2e8f0;
+        padding: 14px 24px;
+      }
+      .topbar__inner {
+        max-width: 1320px;
+        margin: 0 auto;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 16px;
+        flex-wrap: wrap;
+      }
+      .logo { font-weight: 800; font-size: 19px; color: #0f172a; text-decoration: none; }
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 9px 16px;
+        border-radius: 8px;
+        font-size: 13px;
+        font-weight: 600;
+        cursor: pointer;
+        border: 1px solid #cbd5e1;
+        background: #ffffff;
+        color: #0f172a;
+        text-decoration: none;
+      }
+      .btn-primary {
+        background: #0284c7;
+        border-color: #0284c7;
+        color: #ffffff;
+      }
+      .btn-primary:hover { background: #0369a1; }
+      .login-wrap {
+        max-width: 440px;
+        margin: 80px auto;
+        background: #ffffff;
+        border: 1px solid #e2e8f0;
+        border-radius: 14px;
+        padding: 36px;
+        box-shadow: 0 12px 32px rgba(15, 23, 42, 0.06);
+      }
+      .input {
+        width: 100%;
+        padding: 10px 12px;
+        border: 1px solid #cbd5e1;
+        border-radius: 8px;
+        font-size: 14px;
+        font-family: inherit;
+      }
       .stat-grid {
         display: grid;
         grid-template-columns: repeat(5, 1fr);
-        gap: 18px;
-        margin-bottom: 32px;
+        gap: 16px;
+        margin-bottom: 24px;
       }
       .stat-card {
         background: #ffffff;
-        border: 1px solid var(--border-hairline);
-        border-radius: 10px;
-        padding: 22px;
+        border: 1px solid #e2e8f0;
+        border-radius: 12px;
+        padding: 20px;
       }
       .stat-val {
-        font-family: var(--font-condensed);
+        font-family: 'Barlow Condensed', sans-serif;
         font-size: 36px;
         font-weight: 700;
-        line-height: 1.05;
         margin: 6px 0;
       }
-      .admin-table {
-        width: 100%;
-        border-collapse: collapse;
-        font-size: 13.5px;
+      .panel {
+        background: #ffffff;
+        border: 1px solid #e2e8f0;
+        border-radius: 12px;
+        padding: 24px;
       }
+      .admin-table { width: 100%; border-collapse: collapse; font-size: 13px; }
       .admin-table th {
-        background: #f6f7f9;
-        padding: 12px 14px;
+        background: #f8fafc;
+        padding: 10px 12px;
         text-align: left;
-        font-weight: 600;
-        border-bottom: 1.5px solid var(--text-primary);
+        border-bottom: 1.5px solid #0f172a;
       }
-      .admin-table td {
-        padding: 11px 14px;
-        border-bottom: 1px solid var(--border-hairline);
-        color: var(--text-secondary);
-      }
+      .admin-table td { padding: 10px 12px; border-bottom: 1px solid #e2e8f0; color: #475569; }
       .badge-type {
         display: inline-block;
         padding: 3px 8px;
         border-radius: 4px;
-        font-size: 11.5px;
+        font-size: 11px;
         font-weight: 700;
         text-transform: uppercase;
       }
-      .badge-visit {
-        background: var(--accent-blue-light);
-        color: var(--accent-blue);
-      }
-      .badge-click {
-        background: var(--accent-green-light);
-        color: var(--accent-green);
-      }
-      .badge-unsub {
-        background: var(--accent-red-light);
-        color: var(--accent-red);
-      }
+      .badge-visit { background: #e0f2fe; color: #0369a1; }
+      .badge-click { background: #dcfce7; color: #15803d; }
+      .badge-unsub { background: #fee2e2; color: #b91c1c; }
       @media (max-width: 1024px) {
-        .stat-grid {
-          grid-template-columns: repeat(2, 1fr);
-        }
+        .stat-grid { grid-template-columns: repeat(2, 1fr); }
+        .main-grid { grid-template-columns: 1fr !important; }
       }
     </style>
   </head>
-  <body style="background: var(--bg-soft); min-height: 100vh;">
-    <header class="ax-header">
-      <div class="ax-header__main">
-        <a href="/" class="ax-logo">
-          SOLARMETRIK<span class="ax-logo__fin"></span> <span style="font-size: 14px; font-weight: 500; color: var(--text-muted); margin-left: 8px;">ADMIN TELEMETRY</span>
-        </a>
-        <div style="display: flex; gap: 12px; align-items: center;">
-          <a href="/foerder-portal?u=test@solarmetrik.de&plz=80331+M%C3%BCnchen" target="_blank" class="ax-btn ax-btn--light" style="padding: 8px 14px; font-size: 12.5px;">
-            🇩🇪 Preview DE VIP Portal ↗
-          </a>
-          <a href="/en/vip-audit?u=test@solarmetrik.de&addr=411+Rock+Lake+Dr,+Orlando,+FL" target="_blank" class="ax-btn ax-btn--light" style="padding: 8px 14px; font-size: 12.5px;">
-            🇺🇸 Preview US VIP Portal ↗
-          </a>
-          <button type="button" id="btn-refresh" class="ax-btn ax-btn--primary" style="padding: 8px 16px; font-size: 12.5px;">
-            ↻ Refresh Live Stats
-          </button>
+  <body>
+    <header class="topbar">
+      <div class="topbar__inner">
+        <a href="/" class="logo">SOLARMETRIK <span style="font-size: 12.5px; font-weight: 500; color: #64748b;">· PROTECTED TELEMETRY</span></a>
+        <div id="topbar-actions" style="display: none; gap: 10px; align-items: center;">
+          <a href="/bericht" target="_blank" class="btn">🇩🇪 DE Promo Preview ↗</a>
+          <a href="/en/summary" target="_blank" class="btn">🇺🇸 US Promo Preview ↗</a>
+          <button type="button" id="btn-refresh" class="btn btn-primary">↻ Refresh</button>
+          <button type="button" id="btn-logout" class="btn">Lock</button>
         </div>
       </div>
     </header>
 
-    <main style="padding: 36px 0 80px;">
-      <div class="container">
-        <!-- AUTH BAR -->
-        <div id="auth-box" style="background: #ffffff; border: 1px solid var(--border-hairline); border-radius: 10px; padding: 20px 24px; margin-bottom: 24px; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px;">
-          <div>
-            <strong style="font-size: 15px;">Campaign Telemetry & Affiliate Control Center</strong>
-            <span id="last-sync-text" style="font-size: 13px; color: var(--text-muted); margin-left: 12px;">Connected to track.solarmetrik.de</span>
-          </div>
-          <div style="display: flex; gap: 10px; align-items: center;">
-            <input type="password" id="secret-input" value="solar2026" placeholder="Admin Secret" class="form-input" style="width: 180px; padding: 7px 12px;" />
-            <button type="button" id="btn-login" class="ax-btn ax-btn--primary" style="padding: 8px 16px; font-size: 13px;">Unlock</button>
-          </div>
-        </div>
+    <main class="container">
+      <!-- LOGIN GATE (Visible by default until verified against Cloudflare Worker) -->
+      <div id="login-gate" class="login-wrap">
+        <h1 style="font-size: 22px; font-weight: 800; margin-bottom: 8px;">Protected Campaign Panel</h1>
+        <p style="font-size: 13.5px; color: #64748b; margin-bottom: 20px;">
+          Enter your admin access key to unlock campaign telemetry, recipient logs, and affiliate link controls.
+        </p>
+        <form id="login-form" style="display: flex; flex-direction: column; gap: 12px;">
+          <input type="password" id="secret-input" class="input" placeholder="Enter Admin Secret Key" required />
+          <button type="submit" class="btn btn-primary" style="justify-content: center; padding: 11px;">
+            Unlock Dashboard
+          </button>
+          <div id="login-error" style="font-size: 13px; color: #b91c1c; font-weight: 600;"></div>
+        </form>
+      </div>
 
-        <!-- 5 KPI CARDS -->
+      <!-- DASHBOARD CONTENT (Hidden until authenticated) -->
+      <div id="dashboard-content" style="display: none; padding: 32px 0 64px;">
         <div class="stat-grid">
           <div class="stat-card">
-            <div style="font-size: 12px; color: var(--text-muted); font-weight: 600; text-transform: uppercase;">Emails Sent (DE + US)</div>
+            <div style="font-size: 11.5px; color: #64748b; font-weight: 700; text-transform: uppercase;">Emails Sent (DE + US)</div>
             <div class="stat-val" id="kpi-sent">0</div>
-            <div style="font-size: 12.5px; color: var(--text-secondary);" id="kpi-queue">Queue: 3,636 DE · 21,478 US</div>
+            <div style="font-size: 12px; color: #475569;" id="kpi-queue">Queue: 3,636 DE · 21,478 US</div>
           </div>
-
           <div class="stat-card">
-            <div style="font-size: 12px; color: var(--text-muted); font-weight: 600; text-transform: uppercase;">Resend Delivery Status</div>
-            <div class="stat-val" style="color: var(--accent-green);" id="kpi-delivery">100%</div>
-            <div style="font-size: 12.5px; color: var(--text-secondary);" id="kpi-resend-count">Recent API Logs: 0</div>
+            <div style="font-size: 11.5px; color: #64748b; font-weight: 700; text-transform: uppercase;">Resend Delivery Rate</div>
+            <div class="stat-val" style="color: #15803d;" id="kpi-delivery">100%</div>
+            <div style="font-size: 12px; color: #475569;" id="kpi-resend-count">Recent API logs: 0</div>
           </div>
-
           <div class="stat-card">
-            <div style="font-size: 12px; color: var(--text-muted); font-weight: 600; text-transform: uppercase;">Opened VIP Showcase</div>
-            <div class="stat-val" style="color: var(--accent-blue);" id="kpi-visits">0</div>
-            <div style="font-size: 12.5px; color: var(--text-secondary);" id="kpi-unique-visits">Unique: 0 emails</div>
+            <div style="font-size: 11.5px; color: #64748b; font-weight: 700; text-transform: uppercase;">Opened Showcase</div>
+            <div class="stat-val" style="color: #0369a1;" id="kpi-visits">0</div>
+            <div style="font-size: 12px; color: #475569;" id="kpi-unique-visits">Unique: 0</div>
           </div>
-
           <div class="stat-card">
-            <div style="font-size: 12px; color: var(--text-muted); font-weight: 600; text-transform: uppercase;">Affiliate Offer Clicks</div>
-            <div class="stat-val" style="color: var(--accent-green);" id="kpi-clicks">0</div>
-            <div style="font-size: 12.5px; color: var(--text-secondary);" id="kpi-ctr">Unique Clickers: 0 (CTR: 0%)</div>
+            <div style="font-size: 11.5px; color: #64748b; font-weight: 700; text-transform: uppercase;">Affiliate Clicks</div>
+            <div class="stat-val" style="color: #15803d;" id="kpi-clicks">0</div>
+            <div style="font-size: 12px; color: #475569;" id="kpi-ctr">CTR: 0%</div>
           </div>
-
           <div class="stat-card">
-            <div style="font-size: 12px; color: var(--text-muted); font-weight: 600; text-transform: uppercase;">Unsubscribed (/unsubscribe)</div>
-            <div class="stat-val" style="color: var(--accent-red);" id="kpi-unsub">0</div>
-            <div style="font-size: 12.5px; color: var(--text-secondary);">Auto-excluded from mailer</div>
+            <div style="font-size: 11.5px; color: #64748b; font-weight: 700; text-transform: uppercase;">Unsubscribed</div>
+            <div class="stat-val" style="color: #b91c1c;" id="kpi-unsub">0</div>
+            <div style="font-size: 12px; color: #475569;">Auto-excluded</div>
           </div>
         </div>
 
-        <!-- LIVE ACTIVITY LOG + AFFILIATE LINK MANAGER -->
-        <div style="display: grid; grid-template-columns: 1.45fr 0.85fr; gap: 24px; align-items: start;">
-          <!-- Activity Table -->
-          <div style="background: #ffffff; border: 1px solid var(--border-hairline); border-radius: 10px; padding: 24px; overflow-x: auto;">
-            <h2 class="ax-h3" style="margin-bottom: 14px;">LIVE RECIPIENT ACTIVITY (VISITS, AFFILIATE CLICKS & UNSUBSCRIBES)</h2>
+        <div class="main-grid" style="display: grid; grid-template-columns: 1.45fr 0.85fr; gap: 24px; align-items: start;">
+          <div class="panel" style="overflow-x: auto;">
+            <h2 style="font-size: 16px; font-weight: 700; margin-bottom: 14px;">Live Recipient Activity</h2>
             <table class="admin-table">
               <thead>
                 <tr>
                   <th>Time (UTC)</th>
                   <th>Event</th>
-                  <th>Recipient Email</th>
-                  <th>Region / Location</th>
+                  <th>Email / Visitor</th>
+                  <th>Region</th>
                   <th>Offer / Page</th>
                 </tr>
               </thead>
-              <tbody id="events-tbody">
-                <tr><td colspan="5">Loading telemetry...</td></tr>
-              </tbody>
+              <tbody id="events-tbody"></tbody>
             </table>
           </div>
 
-          <!-- Instant Affiliate Links & Promo Code Editor -->
-          <div style="background: #ffffff; border: 1px solid var(--border-hairline); border-radius: 10px; padding: 24px;">
-            <h2 class="ax-h3" style="margin-bottom: 8px;">INSTANT AFFILIATE URL & PROMO CODE MANAGER</h2>
-            <p style="font-size: 13px; color: var(--text-secondary); margin-bottom: 16px;">
-              Update your partner tracking links here as soon as ADCELL, FinanceAds, Marketcall, Profitise, or CJ approve your account. Changes apply live to <code>/foerder-portal</code> and <code>/en/vip-audit</code> immediately!
+          <div class="panel">
+            <h2 style="font-size: 16px; font-weight: 700; margin-bottom: 6px;">Affiliate URL & Promo Manager</h2>
+            <p style="font-size: 12.5px; color: #64748b; margin-bottom: 16px;">
+              Update partner tracking URLs live without redeploying the site.
             </p>
-
-            <form id="offers-form" style="display: flex; flex-direction: column; gap: 12px;">
+            <form id="offers-form" style="display: flex; flex-direction: column; gap: 10px;">
               <div>
-                <label style="font-size: 12px; font-weight: 600; display: block; margin-bottom: 4px;">🇩🇪 DE Primary CPL URL (Enpal / Solar Lead):</label>
-                <input type="url" id="cfg-de-cpl1" class="form-input" style="font-size: 13px; padding: 8px 10px;" />
+                <label style="font-size: 11.5px; font-weight: 600; display: block; margin-bottom: 3px;">🇩🇪 DE Primary CPL URL (Enpal / Solar):</label>
+                <input type="url" id="cfg-de-cpl1" class="input" />
               </div>
               <div>
-                <label style="font-size: 12px; font-weight: 600; display: block; margin-bottom: 4px;">🇩🇪 DE Secondary CPL URL (Aroundhome / 3 Quotes):</label>
-                <input type="url" id="cfg-de-cpl2" class="form-input" style="font-size: 13px; padding: 8px 10px;" />
+                <label style="font-size: 11.5px; font-weight: 600; display: block; margin-bottom: 3px;">🇩🇪 DE Secondary CPL URL (Aroundhome):</label>
+                <input type="url" id="cfg-de-cpl2" class="input" />
               </div>
               <div>
-                <label style="font-size: 12px; font-weight: 600; display: block; margin-bottom: 4px;">🇩🇪 DE EcoFlow / Balkonkraftwerk Affiliate URL:</label>
-                <input type="url" id="cfg-de-ecoflow" class="form-input" style="font-size: 13px; padding: 8px 10px;" />
+                <label style="font-size: 11.5px; font-weight: 600; display: block; margin-bottom: 3px;">🇩🇪 DE EcoFlow / Balkonkraftwerk URL:</label>
+                <input type="url" id="cfg-de-ecoflow" class="input" />
               </div>
               <div>
-                <label style="font-size: 12px; font-weight: 600; display: block; margin-bottom: 4px;">🇺🇸 US Primary CPL URL (Marketcall / Profitise Solar Quote):</label>
-                <input type="url" id="cfg-us-cpl1" class="form-input" style="font-size: 13px; padding: 8px 10px;" />
+                <label style="font-size: 11.5px; font-weight: 600; display: block; margin-bottom: 3px;">🇺🇸 US Primary CPL URL (Marketcall / Profitise):</label>
+                <input type="url" id="cfg-us-cpl1" class="input" />
               </div>
               <div>
-                <label style="font-size: 12px; font-weight: 600; display: block; margin-bottom: 4px;">🇺🇸 US EcoFlow / Whole-Home Battery Affiliate URL:</label>
-                <input type="url" id="cfg-us-ecoflow" class="form-input" style="font-size: 13px; padding: 8px 10px;" />
+                <label style="font-size: 11.5px; font-weight: 600; display: block; margin-bottom: 3px;">🇺🇸 US EcoFlow Backup URL:</label>
+                <input type="url" id="cfg-us-ecoflow" class="input" />
               </div>
               <div>
-                <label style="font-size: 12px; font-weight: 600; display: block; margin-bottom: 4px;">🇺🇸 US A1 SolarStore / BLUETTI Affiliate URL:</label>
-                <input type="url" id="cfg-us-a1solar" class="form-input" style="font-size: 13px; padding: 8px 10px;" />
+                <label style="font-size: 11.5px; font-weight: 600; display: block; margin-bottom: 3px;">🇺🇸 US A1 SolarStore / BLUETTI URL:</label>
+                <input type="url" id="cfg-us-a1solar" class="input" />
               </div>
               <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
                 <div>
-                  <label style="font-size: 12px; font-weight: 600; display: block; margin-bottom: 4px;">DE Promo Code:</label>
-                  <input type="text" id="cfg-code-de" class="form-input" style="font-size: 13px; padding: 8px 10px;" />
+                  <label style="font-size: 11.5px; font-weight: 600; display: block; margin-bottom: 3px;">DE Promo Code:</label>
+                  <input type="text" id="cfg-code-de" class="input" />
                 </div>
                 <div>
-                  <label style="font-size: 12px; font-weight: 600; display: block; margin-bottom: 4px;">US Promo Code:</label>
-                  <input type="text" id="cfg-code-us" class="form-input" style="font-size: 13px; padding: 8px 10px;" />
+                  <label style="font-size: 11.5px; font-weight: 600; display: block; margin-bottom: 3px;">US Promo Code:</label>
+                  <input type="text" id="cfg-code-us" class="input" />
                 </div>
               </div>
-              <button type="submit" class="ax-btn ax-btn--primary" style="margin-top: 6px; width: 100%; justify-content: center;">
-                Save Affiliate Links to Edge KV
-              </button>
-              <div id="save-offers-msg" style="font-size: 12.5px; color: var(--accent-green); font-weight: 600; text-align: center;"></div>
+              <button type="submit" class="btn btn-primary" style="justify-content: center; margin-top: 6px;">Save Affiliate Links</button>
+              <div id="save-offers-msg" style="font-size: 12.5px; color: #15803d; font-weight: 600; text-align: center;"></div>
             </form>
           </div>
         </div>
@@ -222,26 +250,37 @@ const title = 'SOLARMETRIK — Email Campaign & Affiliate Analytics Dashboard';
 
     <script is:inline>
       (function () {
+        const loginGate = document.getElementById('login-gate');
+        const dashContent = document.getElementById('dashboard-content');
+        const topbarActions = document.getElementById('topbar-actions');
+        const loginForm = document.getElementById('login-form');
         const secretInput = document.getElementById('secret-input');
-        const btnRefresh = document.getElementById('btn-refresh');
-        const btnLogin = document.getElementById('btn-login');
+        const loginError = document.getElementById('login-error');
         const eventsTbody = document.getElementById('events-tbody');
         const offersForm = document.getElementById('offers-form');
         const saveMsg = document.getElementById('save-offers-msg');
 
-        function loadStats() {
-          const sec = secretInput ? secretInput.value.trim() : 'solar2026';
+        let activeSecret = sessionStorage.getItem('sm_admin_secret') || '';
+
+        function loadStats(sec) {
+          if (!sec) return;
           fetch('https://track.solarmetrik.de/stats?secret=' + encodeURIComponent(sec))
-            .then(function (r) { return r.json(); })
+            .then(function (r) {
+              if (!r.ok) throw new Error('Invalid access key');
+              return r.json();
+            })
             .then(function (data) {
-              if (!data.ok) {
-                eventsTbody.innerHTML = '<tr><td colspan="5" style="color:red;">Unauthorized: Check Admin Secret</td></tr>';
-                return;
-              }
+              if (!data.ok) throw new Error('Invalid access key');
+              activeSecret = sec;
+              sessionStorage.setItem('sm_admin_secret', sec);
+              loginGate.style.display = 'none';
+              dashContent.style.display = 'block';
+              topbarActions.style.display = 'flex';
+              loginError.textContent = '';
+
               const s = data.summary || {};
               document.getElementById('kpi-sent').textContent = (s.sent_total || 0).toLocaleString();
-              document.getElementById('kpi-queue').textContent =
-                'Sent DE: ' + (s.sent_de || 0) + ' / 3,636 · US: ' + (s.sent_us || 0) + ' / 21,478';
+              document.getElementById('kpi-queue').textContent = 'Sent DE: ' + (s.sent_de || 0) + ' / 3,636 · US: ' + (s.sent_us || 0) + ' / 21,478';
 
               const recentList = data.resend_recent || [];
               const deliveredCount = recentList.filter(function (x) {
@@ -253,37 +292,22 @@ const title = 'SOLARMETRIK — Email Campaign & Affiliate Analytics Dashboard';
 
               document.getElementById('kpi-visits').textContent = (s.visits_total || 0).toLocaleString();
               document.getElementById('kpi-unique-visits').textContent = 'Unique emails: ' + (s.unique_visitors_count || 0);
-
               document.getElementById('kpi-clicks').textContent = (s.clicks_total || 0).toLocaleString();
-              const conv = s.unique_visitors_count > 0
-                ? Math.round(((s.unique_clickers_count || 0) / s.unique_visitors_count) * 100)
-                : 0;
-              document.getElementById('kpi-ctr').textContent =
-                'Unique clickers: ' + (s.unique_clickers_count || 0) + ' (Showcase CTR: ' + conv + '%)';
-
+              const conv = s.unique_visitors_count > 0 ? Math.round(((s.unique_clickers_count || 0) / s.unique_visitors_count) * 100) : 0;
+              document.getElementById('kpi-ctr').textContent = 'Unique clickers: ' + (s.unique_clickers_count || 0) + ' (CTR: ' + conv + '%)';
               document.getElementById('kpi-unsub').textContent = (s.unsub_total || 0).toLocaleString();
 
-              // Populate events table
               const evs = data.events || [];
               if (evs.length === 0) {
-                eventsTbody.innerHTML = '<tr><td colspan="5">No recipient visits or clicks recorded yet. Click Preview buttons above to test!</td></tr>';
+                eventsTbody.innerHTML = '<tr><td colspan="5">No visits or clicks logged yet.</td></tr>';
               } else {
                 eventsTbody.innerHTML = evs.slice(0, 60).map(function (ev) {
                   const badgeClass = ev.type === 'click' ? 'badge-click' : ev.type === 'unsubscribe' ? 'badge-unsub' : 'badge-visit';
                   const timeStr = (ev.ts || '').replace('T', ' ').slice(0, 19);
-                  return (
-                    '<tr>' +
-                    '<td>' + timeStr + '</td>' +
-                    '<td><span class="badge-type ' + badgeClass + '">' + (ev.type || 'visit') + '</span></td>' +
-                    '<td><strong style="color:var(--text-primary);">' + (ev.email || '') + '</strong></td>' +
-                    '<td>' + (ev.region || '') + (ev.extra ? ' · ' + ev.extra : '') + ' (' + (ev.country || '') + ')</td>' +
-                    '<td>' + (ev.offer || ev.page || '') + '</td>' +
-                    '</tr>'
-                  );
+                  return '<tr><td>' + timeStr + '</td><td><span class="badge-type ' + badgeClass + '">' + (ev.type || 'visit') + '</span></td><td><strong>' + (ev.email || '') + '</strong></td><td>' + (ev.region || '') + ' (' + (ev.country || '') + ')</td><td>' + (ev.offer || ev.page || '') + '</td></tr>';
                 }).join('');
               }
 
-              // Populate offers form
               const o = data.offers || {};
               if (o.de_cpl_primary_url) document.getElementById('cfg-de-cpl1').value = o.de_cpl_primary_url;
               if (o.de_cpl_secondary_url) document.getElementById('cfg-de-cpl2').value = o.de_cpl_secondary_url;
@@ -294,16 +318,38 @@ const title = 'SOLARMETRIK — Email Campaign & Affiliate Analytics Dashboard';
               if (o.promo_code_de) document.getElementById('cfg-code-de').value = o.promo_code_de;
               if (o.promo_code_us) document.getElementById('cfg-code-us').value = o.promo_code_us;
             })
-            .catch(function () {});
+            .catch(function () {
+              sessionStorage.removeItem('sm_admin_secret');
+              loginGate.style.display = 'block';
+              dashContent.style.display = 'none';
+              topbarActions.style.display = 'none';
+              loginError.textContent = 'Invalid Admin Secret Key';
+            });
         }
 
-        if (btnRefresh) btnRefresh.addEventListener('click', loadStats);
-        if (btnLogin) btnLogin.addEventListener('click', loadStats);
+        if (loginForm) {
+          loginForm.addEventListener('submit', function (e) {
+            e.preventDefault();
+            loadStats(secretInput.value.trim());
+          });
+        }
+
+        document.getElementById('btn-refresh').addEventListener('click', function () {
+          loadStats(activeSecret);
+        });
+
+        document.getElementById('btn-logout').addEventListener('click', function () {
+          sessionStorage.removeItem('sm_admin_secret');
+          activeSecret = '';
+          secretInput.value = '';
+          dashContent.style.display = 'none';
+          topbarActions.style.display = 'none';
+          loginGate.style.display = 'block';
+        });
 
         if (offersForm) {
           offersForm.addEventListener('submit', function (e) {
             e.preventDefault();
-            const sec = secretInput ? secretInput.value.trim() : 'solar2026';
             const body = {
               de_cpl_primary_url: document.getElementById('cfg-de-cpl1').value.trim(),
               de_cpl_secondary_url: document.getElementById('cfg-de-cpl2').value.trim(),
@@ -314,22 +360,24 @@ const title = 'SOLARMETRIK — Email Campaign & Affiliate Analytics Dashboard';
               promo_code_de: document.getElementById('cfg-code-de').value.trim(),
               promo_code_us: document.getElementById('cfg-code-us').value.trim()
             };
-            fetch('https://track.solarmetrik.de/offers?secret=' + encodeURIComponent(sec), {
+            fetch('https://track.solarmetrik.de/offers?secret=' + encodeURIComponent(activeSecret), {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
               body: JSON.stringify(body)
             })
               .then(function (r) { return r.json(); })
               .then(function (res) {
-                if (res.ok && saveMsg) {
-                  saveMsg.textContent = '✓ Saved! All VIP Showcase buttons updated globally.';
-                  setTimeout(function () { saveMsg.textContent = ''; }, 4000);
+                if (res.ok) {
+                  saveMsg.textContent = '✓ Saved!';
+                  setTimeout(function () { saveMsg.textContent = ''; }, 3500);
                 }
               });
           });
         }
 
-        loadStats();
+        if (activeSecret) {
+          loadStats(activeSecret);
+        }
       })();
     </script>
   </body>

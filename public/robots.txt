@@ -1,9 +1,13 @@
 User-agent: *
 Allow: /
+Disallow: /admin/
+Disallow: /unsubscribe
 
 # AI Search & RAG Crawlers (Explicitly Allowed for GEO Citations)
 User-agent: OAI-SearchBot
 Allow: /
+Disallow: /admin/
+Disallow: /unsubscribe
 
 User-agent: ChatGPT-User
 Allow: /
