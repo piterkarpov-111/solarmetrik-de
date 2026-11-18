@@ -1,66 +1,108 @@
 ---
-import '../../styles/global.css';
-
-const title = 'Verified Reader Access: 2026 Solar Tax Credit & Whole-Home Battery Partner Portal — SOLARMETRIK';
+const title = 'SOLARMETRIK Partner Showcase: Up to 40% Off Solar & Battery Systems + 30% Tax Credit';
 const description =
-  'Exclusive SOLARMETRIK reader portal: 30% Federal Solar Tax Credit (§ 25D) homeowner quotes and up to 40% off verified LFP whole-home solar backup systems.';
+  'Exclusive homeowner partner portal: 30% Federal Solar Tax Credit (§ 25D) quotes and up to 40% off verified whole-home LFP battery backup systems.';
 
 const usShowcaseProducts = [
   {
     id: 'us-rooftop-cpl-quote',
-    badge: '#1 Ranked Turnkey Solar + 30% Federal ITC',
-    category: 'Custom Rooftop Solar + 13.5 kWh LFP Battery Quote',
-    title: '2026 Homeowner Solar & Battery Rebate Match (3 Verified Local Installer Quotes)',
-    specs: 'Includes full 30% IRS § 25D Federal Tax Credit qualification, net-metering utility filing, and $0-down solar financing check for your property address.',
-    oldPrice: '$28,500 avg',
-    newPrice: '$17,640 Net (after 30% ITC)',
-    discountTag: '30% Federal Tax Credit + Utility Rebate',
-    ctaText: 'Check Your Roof & Claim 30% Tax Credit Quote →',
+    image: '/images/hero-solaranlage-deutschland-2026.webp',
+    badge: '#1 Ranked Rooftop Program',
+    discountTag: '30% Tax Credit + Rebates',
+    category: 'Turnkey Rooftop Solar + 13.5 kWh LFP Battery',
+    title: '2026 Homeowner Solar & Battery Rebate Match (3 Local Quotes)',
+    specs: [
+      'Full 30% IRS § 25D Federal Tax Credit qualification',
+      'Compare 3 certified local installers with $0-down options',
+      'Free 2-minute satellite roof & utility savings check'
+    ],
+    oldPrice: '$28,500',
+    newPrice: '$17,640',
+    subPrice: 'Net after 30% Federal Tax Credit',
+    ctaText: 'Check Eligibility & Get 3 Free Quotes →',
     offerKey: 'us_cpl_primary_url',
     defaultUrl: 'https://solarmetrik.de/en#us-calculator',
-    isPrimaryCpl: true
+    featured: true
   },
   {
     id: 'us-ecoflow-delta-pro-ultra',
-    badge: 'Lab Verified · 240V Whole-Home Backup',
-    category: 'Modular Whole-Home Solar Generator (6 kWh – 30 kWh)',
-    title: 'EcoFlow DELTA Pro Ultra + Smart Home Panel 2 + Solar Bundle',
-    specs: '7,200W–21,600W 120V/240V split-phase output · Runs central A/C, well pump & EV charger · Eligible for 30% Federal Tax Credit (§ 25D ≥ 3 kWh).',
+    image: '/images/stromspeicher-test-htw-berlin-2026.webp',
+    badge: '240V Whole-Home Backup',
+    discountTag: 'Save 37% + 30% ITC',
+    category: 'Modular Home Solar Generator (6 – 30 kWh)',
+    title: 'EcoFlow DELTA Pro Ultra + Smart Home Panel 2 Bundle',
+    specs: [
+      '7,200W–21,600W 120V/240V split-phase output (runs central A/C)',
+      'Plug-and-play LFP battery with zero permit delays',
+      'Qualifies for 30% Federal Tax Credit (§ 25D ≥ 3 kWh)'
+    ],
     oldPrice: '$7,499',
-    newPrice: '$4,699 (or $3,289 after 30% ITC)',
-    discountTag: 'Save 37% + 30% IRS Tax Credit Eligible',
-    ctaText: 'Claim Partner Discount at EcoFlow US →',
+    newPrice: '$4,699',
+    subPrice: 'or $3,289 net after 30% Tax Credit',
+    ctaText: 'Claim Partner Discount at EcoFlow →',
     offerKey: 'us_ecoflow_url',
     defaultUrl: 'https://us.ecoflow.com/?utm_source=solarmetrik&code=SOLAR26',
-    isPrimaryCpl: false
+    featured: true
   },
   {
     id: 'us-bluetti-ac500-ep900',
-    badge: 'Hurricane & Blackout Grade · LiFePO4',
-    category: 'Expandable Home Battery Backup (5,000W / 6,144Wh)',
-    title: 'BLUETTI AC500 + 2× B300S LFP Home Backup & 1200W Solar Kit',
-    specs: '6,000+ LiFePO4 charge cycles · 24/7 UPS grid-outage switchover in <20ms · Plug-and-play or sub-panel integration.',
+    image: '/images/photovoltaik-waermepumpe-14a-enwg-2026.webp',
+    badge: 'Blackout & Hurricane Grade',
+    discountTag: 'Save 40% ($2,500 Off)',
+    category: '5,000W / 6,144Wh LiFePO4 Backup System',
+    title: 'BLUETTI AC500 + 2× B300S Home Backup + 1200W Solar Kit',
+    specs: [
+      '6,000+ LiFePO4 battery cycles (15-year lifespan)',
+      'Automatic 24/7 UPS grid-outage switchover in <20ms',
+      'Expandable up to 18.4 kWh with free US shipping'
+    ],
     oldPrice: '$6,299',
-    newPrice: '$3,799 (with Partner Code)',
-    discountTag: 'Save 40% ($2,500 Off Bundle)',
-    ctaText: 'Claim 40% Off at BLUETTI Official Store →',
+    newPrice: '$3,799',
+    subPrice: 'With partner code SOLAR26 at checkout',
+    ctaText: 'Claim 40% Off at BLUETTI Store →',
     offerKey: 'us_bluetti_url',
     defaultUrl: 'https://www.bluettipower.com/?utm_source=solarmetrik&code=SOLAR26',
-    isPrimaryCpl: false
+    featured: false
   },
   {
     id: 'us-a1solar-bifacial-pallet',
-    badge: 'Wholesale Tier-1 Hardware · 90-Day Price Lock',
-    category: '10 kW N-Type Bifacial Solar Pallet + 48V Hybrid Inverter',
-    title: 'A1 SolarStore 10 kW Complete Hybrid Off-Grid / Grid-Tie Kit',
-    specs: '24× 430W N-Type TOPCon Bifacial Panels + 10kW Split-Phase Hybrid Inverter · Fast US domestic freight from regional warehouses.',
+    image: '/images/photovoltaik-kosten-2026-solarmetrik.webp',
+    badge: 'Wholesale Tier-1 Kit',
+    discountTag: 'Save 38% vs. Retail',
+    category: '10 kW N-Type Bifacial Pallet + 48V Hybrid Inverter',
+    title: 'A1 SolarStore 10 kW Complete Hybrid Solar & Inverter Kit',
+    specs: [
+      '24× 430W N-Type TOPCon Bifacial Solar Panels',
+      'Includes 10 kW UL1741 Split-Phase Hybrid Inverter',
+      'Fast domestic shipping from regional US warehouses'
+    ],
     oldPrice: '$14,800',
-    newPrice: '$9,250 ($6,475 after 30% ITC)',
-    discountTag: 'Save 38% vs. Retail Turnkey Markup',
+    newPrice: '$9,250',
+    subPrice: 'or $6,475 net after 30% Tax Credit',
     ctaText: 'View Wholesale Kit at A1 SolarStore →',
     offerKey: 'us_a1solar_url',
     defaultUrl: 'https://a1solarstore.com/?utm_source=solarmetrik',
-    isPrimaryCpl: false
+    featured: false
+  },
+  {
+    id: 'us-portable-2kw-bundle',
+    image: '/images/balkonkraftwerk-2000w-speicher-vde-2026.webp',
+    badge: 'Plug & Play Starter Kit',
+    discountTag: 'Save 35% Today',
+    category: '2,048Wh LFP Station + 400W Folding Solar',
+    title: 'EcoFlow DELTA 2 Max + 400W Bifacial Solar Generator Kit',
+    specs: [
+      '2,400W AC output (3,400W X-Boost) for home appliances & RVs',
+      '10-year LFP battery chemistry + 5-year full warranty',
+      'Ships free in 48 hours across the continental US'
+    ],
+    oldPrice: '$2,499',
+    newPrice: '$1,599',
+    subPrice: 'Extra partner discount with code SOLAR26',
+    ctaText: 'View Deal at EcoFlow US →',
+    offerKey: 'us_ecoflow_url',
+    defaultUrl: 'https://us.ecoflow.com/?utm_source=solarmetrik&code=SOLAR26',
+    featured: false
   }
 ];
 ---
@@ -74,246 +116,528 @@ const usShowcaseProducts = [
     <meta name="description" content={description} />
     <meta name="robots" content="noindex, nofollow" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=Inter:wght@300;400;500;600&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
     />
     <style>
-      .vip-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
-        gap: 24px;
+      *, *::before, *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
       }
-      .vip-card {
+      body {
+        font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        background-color: #f4f7fb;
+        color: #0f172a;
+        line-height: 1.55;
+        -webkit-font-smoothing: antialiased;
+      }
+      a {
+        text-decoration: none;
+        color: inherit;
+      }
+      .promo-topbar {
+        background: #0f172a;
+        color: #ffffff;
+        font-size: 13px;
+        padding: 10px 20px;
+        text-align: center;
+        font-weight: 500;
+      }
+      .promo-topbar strong {
+        color: #38bdf8;
+      }
+      .promo-nav {
         background: #ffffff;
-        border: 1.5px solid var(--border-hairline);
-        border-radius: 12px;
-        padding: 28px;
+        border-bottom: 1px solid #e2e8f0;
+        padding: 14px 24px;
+        position: sticky;
+        top: 0;
+        z-index: 100;
+      }
+      .promo-nav__inner {
+        max-width: 1240px;
+        margin: 0 auto;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+      .promo-logo {
+        font-weight: 800;
+        font-size: 20px;
+        letter-spacing: -0.02em;
+        color: #0f172a;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+      .promo-logo__dot {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background: #0284c7;
+        display: inline-block;
+      }
+      .promo-status {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        background: #ecfdf5;
+        color: #047857;
+        font-size: 12.5px;
+        font-weight: 600;
+        padding: 6px 12px;
+        border-radius: 999px;
+        border: 1px solid #a7f3d0;
+      }
+      .promo-container {
+        max-width: 1240px;
+        margin: 0 auto;
+        padding: 0 24px;
+      }
+      .promo-hero {
+        padding: 44px 0 32px;
+        text-align: center;
+      }
+      .promo-pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        background: #e0f2fe;
+        color: #0369a1;
+        font-size: 12.5px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        padding: 6px 14px;
+        border-radius: 999px;
+        margin-bottom: 16px;
+      }
+      .promo-h1 {
+        font-size: clamp(28px, 4vw, 44px);
+        font-weight: 800;
+        letter-spacing: -0.025em;
+        line-height: 1.15;
+        color: #0f172a;
+        max-width: 860px;
+        margin: 0 auto 14px;
+      }
+      .promo-h1 span {
+        color: #0284c7;
+      }
+      .promo-lead {
+        font-size: 16.5px;
+        color: #475569;
+        max-width: 720px;
+        margin: 0 auto 28px;
+      }
+      .coupon-banner {
+        max-width: 760px;
+        margin: 0 auto 36px;
+        background: #ffffff;
+        border: 2px dashed #0284c7;
+        border-radius: 16px;
+        padding: 16px 24px;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        box-shadow: 0 10px 25px rgba(2, 132, 199, 0.06);
+      }
+      .coupon-banner__left {
+        text-align: left;
+      }
+      .coupon-banner__title {
+        font-size: 14px;
+        font-weight: 700;
+        color: #0f172a;
+      }
+      .coupon-banner__sub {
+        font-size: 12.5px;
+        color: #64748b;
+      }
+      .coupon-banner__right {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+      .coupon-code {
+        background: #f0f9ff;
+        color: #0369a1;
+        font-weight: 800;
+        font-size: 18px;
+        letter-spacing: 0.08em;
+        padding: 8px 16px;
+        border-radius: 10px;
+        border: 1px solid #bae6fd;
+      }
+      .coupon-btn {
+        background: #0284c7;
+        color: #ffffff;
+        border: none;
+        border-radius: 10px;
+        padding: 10px 18px;
+        font-size: 13.5px;
+        font-weight: 700;
+        cursor: pointer;
+        transition: background 0.15s ease;
+      }
+      .coupon-btn:hover {
+        background: #0369a1;
+      }
+      .trust-strip {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 14px;
+        margin-bottom: 36px;
+      }
+      .trust-item {
+        background: #ffffff;
+        border: 1px solid #e2e8f0;
+        border-radius: 14px;
+        padding: 16px 18px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+      .trust-icon {
+        width: 38px;
+        height: 38px;
+        border-radius: 10px;
+        background: #f0f9ff;
+        color: #0284c7;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 800;
+        font-size: 16px;
+        flex-shrink: 0;
+      }
+      .trust-text strong {
+        display: block;
+        font-size: 14px;
+        color: #0f172a;
+      }
+      .trust-text span {
+        font-size: 12px;
+        color: #64748b;
+      }
+      .cards-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 24px;
+        margin-bottom: 56px;
+      }
+      .deal-card {
+        background: #ffffff;
+        border-radius: 18px;
+        border: 1px solid #e2e8f0;
+        overflow: hidden;
         display: flex;
         flex-direction: column;
         justify-content: space-between;
-        transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+        box-shadow: 0 4px 12px rgba(15, 23, 42, 0.04);
       }
-      .vip-card:hover {
-        transform: translateY(-3px);
-        box-shadow: 0 16px 36px rgba(15, 76, 129, 0.08);
-        border-color: var(--accent-blue);
+      .deal-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 18px 36px rgba(15, 23, 42, 0.09);
       }
-      .vip-card--featured {
-        border: 2px solid var(--accent-blue);
-        background: linear-gradient(180deg, #f7faff 0%, #ffffff 35%);
+      .deal-card--featured {
+        border: 2px solid #0284c7;
       }
-      .vip-trust-bar {
-        display: grid;
-        grid-template-columns: repeat(4, 1fr);
-        gap: 16px;
+      .deal-card__media {
+        position: relative;
+        height: 200px;
+        overflow: hidden;
+        background: #e2e8f0;
+      }
+      .deal-card__media img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.35s ease;
+      }
+      .deal-card:hover .deal-card__media img {
+        transform: scale(1.04);
+      }
+      .deal-card__badges {
+        position: absolute;
+        top: 12px;
+        left: 12px;
+        right: 12px;
+        display: flex;
+        justify-content: space-between;
+        gap: 8px;
+      }
+      .badge-left {
+        background: rgba(15, 23, 42, 0.85);
+        backdrop-filter: blur(6px);
+        color: #ffffff;
+        font-size: 11.5px;
+        font-weight: 700;
+        padding: 5px 10px;
+        border-radius: 8px;
+      }
+      .badge-right {
+        background: #10b981;
+        color: #ffffff;
+        font-size: 11.5px;
+        font-weight: 800;
+        padding: 5px 10px;
+        border-radius: 8px;
+        box-shadow: 0 4px 10px rgba(16, 185, 129, 0.3);
+      }
+      .deal-card__body {
+        padding: 22px 22px 16px;
+      }
+      .deal-card__cat {
+        font-size: 11.5px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.04em;
+        color: #0284c7;
+        margin-bottom: 6px;
+      }
+      .deal-card__title {
+        font-size: 19px;
+        font-weight: 800;
+        color: #0f172a;
+        line-height: 1.3;
+        margin-bottom: 12px;
+      }
+      .deal-card__list {
+        list-style: none;
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+        margin-bottom: 16px;
+      }
+      .deal-card__list li {
+        font-size: 13.5px;
+        color: #475569;
+        display: flex;
+        align-items: flex-start;
+        gap: 8px;
+      }
+      .deal-card__list li::before {
+        content: '✓';
+        color: #10b981;
+        font-weight: 800;
+      }
+      .deal-card__footer {
+        padding: 0 22px 22px;
+      }
+      .price-box {
+        background: #f8fafc;
+        border: 1px solid #e2e8f0;
+        border-radius: 12px;
+        padding: 12px 14px;
+        margin-bottom: 14px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+      .price-old {
+        font-size: 13px;
+        color: #94a3b8;
+        text-decoration: line-through;
+        display: block;
+      }
+      .price-label {
+        font-size: 11.5px;
+        color: #64748b;
+      }
+      .price-new {
+        font-size: 22px;
+        font-weight: 800;
+        color: #0f172a;
+        display: block;
+        text-align: right;
+      }
+      .price-sub {
+        font-size: 11px;
+        color: #059669;
+        font-weight: 600;
+        display: block;
+        text-align: right;
+      }
+      .cta-button {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        background: #0284c7;
+        color: #ffffff;
+        font-weight: 700;
+        font-size: 14.5px;
+        padding: 14px 18px;
+        border-radius: 12px;
+        transition: background 0.15s ease, transform 0.1s ease;
+        box-shadow: 0 4px 12px rgba(2, 132, 199, 0.22);
+      }
+      .cta-button:hover {
+        background: #0369a1;
+      }
+      .promo-footer {
         background: #ffffff;
-        border: 1px solid var(--border-hairline);
-        border-radius: 10px;
-        padding: 18px 24px;
-        margin-bottom: 40px;
+        border-top: 1px solid #e2e8f0;
+        padding: 28px 24px;
+        font-size: 13px;
+        color: #64748b;
       }
-      @media (max-width: 860px) {
-        .vip-trust-bar {
-          grid-template-columns: 1fr 1fr;
+      @media (max-width: 1024px) {
+        .cards-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+        .trust-strip {
+          grid-template-columns: repeat(2, 1fr);
+        }
+      }
+      @media (max-width: 640px) {
+        .cards-grid {
+          grid-template-columns: 1fr;
+        }
+        .trust-strip {
+          grid-template-columns: 1fr;
         }
       }
     </style>
   </head>
-  <body style="background: var(--bg-soft);">
-    <header class="ax-header">
-      <div class="ax-header__utility">
-        <span>Verified Homeowner Access · NREL PVWatts® & IRS Form 5695 (§ 25D) Update</span>
-        <a href="/en#us-calculator">US 30% Tax Credit Calculator →</a>
-        <a href="/en">SOLARMETRIK International →</a>
-      </div>
-      <div class="ax-header__main">
-        <a href="/en" class="ax-logo">
-          SOLARMETRIK<span class="ax-logo__fin"></span>
+  <body>
+    <div class="promo-topbar">
+      ⚡ <strong>November 2026 Partner Access:</strong> Up to 40% Off Verified Home Solar & Battery Backup + 30% Federal Tax Credit (§ 25D)
+    </div>
+
+    <header class="promo-nav">
+      <div class="promo-nav__inner">
+        <a href="/en" class="promo-logo">
+          <span class="promo-logo__dot"></span>
+          SOLARMETRIK
         </a>
-        <div style="font-size: 13px; color: var(--accent-green); font-weight: 600;">
-          ● November 2026 Homeowner Partner Terms Active
+        <div class="promo-status">
+          ● Verified Reader Discounts Active
         </div>
       </div>
     </header>
 
-    <main>
-      <section class="ax-section" style="padding-top: 44px; padding-bottom: 64px;">
-        <div class="container">
-          <!-- PERSONALIZED HERO BANNER -->
-          <div
-            style="background: #ffffff; border: 1px solid var(--border-hairline); border-radius: 14px; padding: 36px 40px; margin-bottom: 28px; box-shadow: 0 10px 30px rgba(15, 76, 129, 0.04);"
-          >
-            <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 12px; margin-bottom: 14px;">
-              <span
-                style="display: inline-block; padding: 5px 12px; border-radius: 6px; background: var(--accent-blue-light); color: var(--accent-blue); font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em;"
-              >
-                Verified Homeowner Access · November 2026 Report Update
-              </span>
-              <span id="us-property-badge" style="font-size: 13px; color: var(--text-secondary); font-weight: 600;">
-                Property Qualification: 30% Federal Residential Clean Energy Credit (§ 25D)
-              </span>
-            </div>
+    <main class="promo-container">
+      <section class="promo-hero">
+        <div class="promo-pill">2026 Homeowner Partner Showcase · NREL & UL9540 Verified</div>
+        <h1 class="promo-h1">
+          Save Up to <span>40% on Solar & Home Battery</span> Systems + Claim Your 30% Tax Credit
+        </h1>
+        <p class="promo-lead">
+          Compare top-rated local rooftop solar installers or lock in direct partner discounts on plug-and-play whole-home LiFePO4 backup bundles before year-end utility rate hikes.
+        </p>
 
-            <h1 class="ax-h1" style="margin-bottom: 16px;" id="us-hero-title">
-              EXCLUSIVE UP TO 40% OFF VERIFIED HOME SOLAR & LFP BATTERY SYSTEMS + 30% FEDERAL TAX CREDIT
-            </h1>
+        <div class="coupon-banner">
+          <div class="coupon-banner__left">
+            <div class="coupon-banner__title">🎁 Verified Reader Partner Code (Auto-Applied via Buttons Below)</div>
+            <div class="coupon-banner__sub">Stacks with the uncapped 30% IRS § 25D Federal Tax Credit on solar & battery storage ≥ 3 kWh</div>
+          </div>
+          <div class="coupon-banner__right">
+            <span class="coupon-code" id="us-promo-code">SOLAR26</span>
+            <button type="button" class="coupon-btn" id="us-copy-btn">Copy Code</button>
+          </div>
+        </div>
 
-            <p class="ax-sub" style="max-width: 920px; margin-bottom: 24px;">
-              Following our November 2026 NREL solar irradiance and LFP storage efficiency audit, verified homeowners gain direct access to pre-negotiated partner pricing on whole-home solar backup systems and priority local installer rebates in <strong>California, Florida, Arizona, Texas, and Louisiana</strong>.
-            </p>
-
-            <!-- INTERACTIVE PROMO CODE BAR -->
-            <div
-              style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px; background: var(--bg-soft); border: 1px dashed var(--accent-blue); border-radius: 10px; padding: 16px 22px;"
-            >
-              <div>
-                <div style="font-size: 12px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-muted); font-weight: 600;">
-                  Verified Reader Partner Code (Auto-Applied via Links Below):
-                </div>
-                <div style="font-size: 14px; color: var(--text-secondary); margin-top: 2px;">
-                  Stacks with the 30% IRS § 25D Federal Tax Credit on qualifying solar & battery bundles ≥ 3 kWh.
-                </div>
-              </div>
-              <div style="display: flex; align-items: center; gap: 12px;">
-                <code
-                  id="us-promo-code"
-                  style="font-family: var(--font-condensed); font-size: 24px; font-weight: 700; letter-spacing: 0.08em; background: #ffffff; padding: 6px 16px; border-radius: 6px; border: 1px solid var(--border-button); color: var(--accent-blue);"
-                >
-                  SOLAR26
-                </code>
-                <button
-                  type="button"
-                  id="us-copy-btn"
-                  class="ax-btn ax-btn--primary"
-                  style="padding: 10px 18px; font-size: 13.5px;"
-                >
-                  Copy Code
-                </button>
-              </div>
+        <div class="trust-strip">
+          <div class="trust-item">
+            <div class="trust-icon">30%</div>
+            <div class="trust-text">
+              <strong>30% Federal Tax Credit</strong>
+              <span>Uncapped IRS Form 5695 (§ 25D)</span>
             </div>
           </div>
-
-          <!-- TRUST BAR -->
-          <div class="vip-trust-bar">
-            <div>
-              <div style="font-family: var(--font-condensed); font-size: 22px; font-weight: 700; color: var(--accent-blue);">30% Federal ITC</div>
-              <div style="font-size: 12.5px; color: var(--text-secondary);">Uncapped IRS § 25D credit on rooftop PV & LFP batteries</div>
-            </div>
-            <div>
-              <div style="font-family: var(--font-condensed); font-size: 22px; font-weight: 700; color: var(--accent-green);">Up to 40% Partner Off</div>
-              <div style="font-size: 12.5px; color: var(--text-secondary);">Direct manufacturer & installer fleet pricing</div>
-            </div>
-            <div>
-              <div style="font-family: var(--font-condensed); font-size: 22px; font-weight: 700; color: var(--text-primary);">UL9540 & LFP Rated</div>
-              <div style="font-size: 12.5px; color: var(--text-secondary);">6,000+ cycle LiFePO4 whole-home backup safety</div>
-            </div>
-            <div>
-              <div style="font-family: var(--font-condensed); font-size: 22px; font-weight: 700; color: var(--accent-green);">Fast US Domestic</div>
-              <div style="font-size: 12.5px; color: var(--text-secondary);">Priority dispatch & certified local installation</div>
+          <div class="trust-item">
+            <div class="trust-icon">-40%</div>
+            <div class="trust-text">
+              <strong>Up to 40% Partner Off</strong>
+              <span>Direct fleet & manufacturer pricing</span>
             </div>
           </div>
-
-          <!-- PRODUCT & OFFER SHOWCASE GRID -->
-          <div class="vip-grid">
-            {usShowcaseProducts.map((item) => (
-              <div class:list={['vip-card', { 'vip-card--featured': item.isPrimaryCpl }]}>
-                <div>
-                  <div style="display: flex; justify-content: space-between; align-items: center; gap: 8px; margin-bottom: 12px;">
-                    <span
-                      style="display: inline-block; padding: 4px 10px; border-radius: 5px; background: var(--accent-blue-light); color: var(--accent-blue); font-size: 11.5px; font-weight: 700; text-transform: uppercase;"
-                    >
-                      {item.badge}
-                    </span>
-                    <span
-                      style="display: inline-block; padding: 4px 10px; border-radius: 5px; background: var(--accent-green-light); color: var(--accent-green); font-size: 11.5px; font-weight: 700;"
-                    >
-                      {item.discountTag}
-                    </span>
-                  </div>
-
-                  <div style="font-size: 12.5px; color: var(--text-muted); font-weight: 600; text-transform: uppercase; margin-bottom: 6px;">
-                    {item.category}
-                  </div>
-                  <h2 style="font-family: var(--font-condensed); font-size: 25px; font-weight: 700; line-height: 1.15; margin-bottom: 12px; color: var(--text-primary);">
-                    {item.title}
-                  </h2>
-                  <p style="font-size: 14px; color: var(--text-secondary); line-height: 1.55; margin-bottom: 20px;">
-                    {item.specs}
-                  </p>
-                </div>
-
-                <div>
-                  <div style="padding: 14px 0; border-top: 1px solid var(--border-hairline); border-bottom: 1px solid var(--border-hairline); margin-bottom: 18px; display: flex; align-items: baseline; justify-content: space-between;">
-                    <div>
-                      <span style="font-size: 12px; color: var(--text-muted); display: block;">Standard Retail Price:</span>
-                      <span style="font-size: 15px; color: var(--text-muted); text-decoration: line-through;">{item.oldPrice}</span>
-                    </div>
-                    <div style="text-align: right;">
-                      <span style="font-size: 12px; color: var(--accent-green); font-weight: 600; display: block;">Verified Reader Price:</span>
-                      <strong style="font-family: var(--font-condensed); font-size: 26px; color: var(--text-primary);">{item.newPrice}</strong>
-                    </div>
-                  </div>
-
-                  <a
-                    href={item.defaultUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    class="ax-btn ax-btn--primary js-offer-link"
-                    data-offer-id={item.id}
-                    data-offer-key={item.offerKey}
-                    style="width: 100%; justify-content: center; padding: 14px 20px; font-size: 14.5px; font-weight: 600;"
-                  >
-                    {item.ctaText}
-                  </a>
-                </div>
-              </div>
-            ))}
+          <div class="trust-item">
+            <div class="trust-icon">LFP</div>
+            <div class="trust-text">
+              <strong>UL9540 Safe Chemistry</strong>
+              <span>6,000+ cycle LiFePO4 home backup</span>
+            </div>
           </div>
-
-          <!-- 3 STEPS HOW TO CLAIM -->
-          <div
-            style="margin-top: 48px; background: #ffffff; border: 1px solid var(--border-hairline); border-radius: 12px; padding: 32px 36px;"
-          >
-            <h3 class="ax-h3" style="margin-bottom: 18px;">
-              HOW TO CLAIM YOUR READER DISCOUNT & 30% FEDERAL TAX CREDIT (3 STEPS)
-            </h3>
-            <div class="ax-cards-3">
-              <div>
-                <strong style="color: var(--accent-blue); font-size: 15px; display: block; margin-bottom: 6px;">Step 1: Select Your Solar or Battery Option</strong>
-                <p style="font-size: 14px; color: var(--text-secondary);">
-                  Click any verified installer quote or whole-home battery bundle above. Your SOLARMETRIK partner session is activated automatically.
-                </p>
-              </div>
-              <div>
-                <strong style="color: var(--accent-blue); font-size: 15px; display: block; margin-bottom: 6px;">Step 2: Apply Partner Code at Checkout</strong>
-                <p style="font-size: 14px; color: var(--text-secondary);">
-                  For hardware orders (EcoFlow, BLUETTI, A1 SolarStore), enter code <strong>SOLAR26</strong> at checkout for up to 40% off retail pricing.
-                </p>
-              </div>
-              <div>
-                <strong style="color: var(--accent-blue); font-size: 15px; display: block; margin-bottom: 6px;">Step 3: File IRS Form 5695 for 30% Back</strong>
-                <p style="font-size: 14px; color: var(--text-secondary);">
-                  Both rooftop installations and standalone home battery backup systems ≥ 3 kWh qualify for the uncapped 30% Federal Residential Clean Energy Credit.
-                </p>
-              </div>
+          <div class="trust-item">
+            <div class="trust-icon">US</div>
+            <div class="trust-text">
+              <strong>Fast US Dispatch</strong>
+              <span>Local warehouses & certified pros</span>
             </div>
           </div>
         </div>
       </section>
+
+      <section class="cards-grid">
+        {usShowcaseProducts.map((item) => (
+          <article class:list={['deal-card', { 'deal-card--featured': item.featured }]}>
+            <div>
+              <div class="deal-card__media">
+                <img src={item.image} alt={item.title} loading="lazy" />
+                <div class="deal-card__badges">
+                  <span class="badge-left">{item.badge}</span>
+                  <span class="badge-right">{item.discountTag}</span>
+                </div>
+              </div>
+
+              <div class="deal-card__body">
+                <div class="deal-card__cat">{item.category}</div>
+                <h2 class="deal-card__title">{item.title}</h2>
+                <ul class="deal-card__list">
+                  {item.specs.map((s) => (
+                    <li>{s}</li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+
+            <div class="deal-card__footer">
+              <div class="price-box">
+                <div>
+                  <span class="price-label">Standard Retail</span>
+                  <span class="price-old">{item.oldPrice}</span>
+                </div>
+                <div>
+                  <span class="price-new">{item.newPrice}</span>
+                  <span class="price-sub">{item.subPrice}</span>
+                </div>
+              </div>
+
+              <a
+                href={item.defaultUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="cta-button js-offer-link"
+                data-offer-id={item.id}
+                data-offer-key={item.offerKey}
+              >
+                {item.ctaText}
+              </a>
+            </div>
+          </article>
+        ))}
+      </section>
     </main>
 
-    <footer class="ax-footer">
-      <div class="container">
-        <div style="display: flex; flex-wrap: wrap; justify-content: space-between; gap: 16px; font-size: 12.5px; color: var(--text-muted);">
-          <span>© 2026 SOLARMETRIK International (solarmetrik.de/en) · Verified Homeowner Partner Portal</span>
-          <div style="display: flex; gap: 16px;">
-            <a href="/en">US & EU Calculator</a>
-            <a href="/">🇩🇪 German Portal</a>
-            <a href="/impressum">Legal Notice</a>
-            <a href="/datenschutz">Privacy Policy</a>
-            <a href="/unsubscribe" id="footer-unsub-link">Unsubscribe</a>
-          </div>
+    <footer class="promo-footer">
+      <div class="promo-container" style="display: flex; flex-wrap: wrap; justify-content: space-between; gap: 16px;">
+        <span>© 2026 SOLARMETRIK International (solarmetrik.de/en) · Homeowner Partner Showcase</span>
+        <div style="display: flex; gap: 18px; flex-wrap: wrap;">
+          <a href="/en">US & EU Calculator</a>
+          <a href="/">🇩🇪 German Portal</a>
+          <a href="/impressum">Legal Notice</a>
+          <a href="/datenschutz">Privacy Policy</a>
+          <a href="/unsubscribe" id="footer-unsub-link">Unsubscribe</a>
         </div>
       </div>
     </footer>
@@ -322,37 +646,23 @@ const usShowcaseProducts = [
       (function () {
         const params = new URLSearchParams(window.location.search);
         const userEmail = (params.get('u') || params.get('email') || '').trim();
-        const userAddr = (params.get('addr') || params.get('plz') || '').trim();
-        const userName = (params.get('name') || '').trim();
-
-        const badgeEl = document.getElementById('us-property-badge');
-        const titleEl = document.getElementById('us-hero-title');
         const unsubLink = document.getElementById('footer-unsub-link');
 
-        if (userAddr && badgeEl) {
-          badgeEl.textContent = 'Property Audit Unlocked for: ' + userAddr + ' (30% Federal ITC Eligible)';
-        }
-        if (userName && titleEl) {
-          titleEl.textContent = 'PREPARED FOR ' + userName.toUpperCase() + ': UP TO 40% OFF SOLAR & BATTERY BACKUP + 30% TAX CREDIT';
-        }
         if (userEmail && unsubLink) {
           unsubLink.href = '/unsubscribe?email=' + encodeURIComponent(userEmail);
         }
 
-        // 1. Log Visit to Cloudflare Tracker Worker
         fetch('https://track.solarmetrik.de/track', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
             type: 'visit',
-            email: userEmail || 'anonymous',
+            email: userEmail || 'direct_visitor',
             region: 'US',
-            page: '/en/vip-audit',
-            extra: userAddr
+            page: '/en/vip-audit'
           })
         }).catch(function () {});
 
-        // 2. Load Dynamic Affiliate Links from Worker Config
         fetch('https://track.solarmetrik.de/offers')
           .then(function (r) { return r.json(); })
           .then(function (cfg) {
@@ -369,17 +679,15 @@ const usShowcaseProducts = [
           })
           .catch(function () {});
 
-        // 3. Track Clicks on Offer Cards
         document.querySelectorAll('.js-offer-link').forEach(function (link) {
           link.addEventListener('click', function () {
             const offerId = link.getAttribute('data-offer-id') || 'unknown';
             const payload = JSON.stringify({
               type: 'click',
-              email: userEmail || 'anonymous',
+              email: userEmail || 'direct_visitor',
               region: 'US',
               offer: offerId,
-              page: '/en/vip-audit',
-              extra: userAddr
+              page: '/en/vip-audit'
             });
             if (navigator.sendBeacon) {
               navigator.sendBeacon('https://track.solarmetrik.de/track', payload);
@@ -394,13 +702,12 @@ const usShowcaseProducts = [
           });
         });
 
-        // 4. Copy Promo Code button
         const copyBtn = document.getElementById('us-copy-btn');
         const codeEl = document.getElementById('us-promo-code');
         if (copyBtn && codeEl) {
           copyBtn.addEventListener('click', function () {
             navigator.clipboard.writeText(codeEl.textContent.trim()).then(function () {
-              copyBtn.textContent = '✓ Copied! Code Auto-Applied';
+              copyBtn.textContent = '✓ Copied!';
             });
           });
         }

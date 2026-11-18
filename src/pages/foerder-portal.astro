@@ -1,80 +1,108 @@
 ---
-import '../styles/global.css';
-
-const title = 'Verifizierter Leser-Zugang: PV-Förderkontingente & Speicher-Sonderkonditionen (11/2026) — SOLARMETRIK';
+const title = 'SOLARMETRIK Vorteils-Portal: Geprüfte Solar- & Speicher-Deals (11/2026)';
 const description =
-  'Exklusives SOLARMETRIK Leser-Portal vor dem EEG-Stichtag 31.12.2026: Regionale Fachbetriebs-Vergleiche (0% MwSt.) und LFP-Speicher / Balkonkraftwerke mit Partner-Rabatt.';
+  'Exklusive Photovoltaik- und Heimspeicher-Sonderkonditionen mit 0 % MwSt. und bis zu 39 % Direktabzug vor dem EEG-Wechsel.';
 
 const deShowcaseProducts = [
   {
     id: 'de-enpal-komplettpaket',
-    badge: 'Testsieger Komplettpaket · 0 € Anzahlung',
-    category: 'Dach-Photovoltaik + LFP-Speicher + Smart Meter',
-    title: 'Schlüsselfertige 10 kWp PV-Anlage inkl. 10 kWh Speicher & Wärmepumpen-Option',
-    specs: 'Inkl. § 14a EnWG HEMS-Steuerung · 20 Jahre EEG-Bestandsschutz vor 31.12.2026 · 0 % MwSt.',
+    image: '/images/hero-solaranlage-deutschland-2026.webp',
+    badge: 'Testsieger Komplettpaket',
+    discountTag: 'Bis zu 3.200 € Vorteil',
+    category: 'Dach-PV + 10 kWh Speicher + Smart Meter',
+    title: '10 kWp Komplettanlage inkl. Speicher & Montage',
+    specs: [
+      '0 € Anzahlung (Kauf oder Miete möglich)',
+      'Inkl. § 14a EnWG Smart-Meter-Steuerung',
+      '20 Jahre EEG-Bestandsschutz vor 31.12.2026'
+    ],
     oldPrice: '22.400 €',
-    newPrice: 'ab 15.900 € (oder Miete ab 129 €/M.)',
-    discountTag: 'Bis zu 3.200 € Förder- & Aktionsvorteil',
-    ctaText: 'Kostenlosen Dach- & Förder-Check starten (2 Min.) →',
+    newPrice: 'ab 15.900 €',
+    subPrice: 'oder ab 129 € / Monat (0 % MwSt.)',
+    ctaText: 'Verfügbarkeit & Preis prüfen →',
     offerKey: 'de_cpl_primary_url',
     defaultUrl: 'https://www.enpal.de/?utm_source=solarmetrik&utm_medium=vip_portal',
-    isPrimaryCpl: true
+    featured: true
   },
   {
     id: 'de-aroundhome-3angebote',
-    badge: 'Regionaler Angebots-Vergleich · Alle PLZ',
-    category: '3 geprüfte Meisterbetriebe aus Ihrer Region',
-    title: 'Direktvergleich: 3 Festpreis-Angebote lokaler Solar-Fachbetriebe (0 % MwSt.)',
-    specs: 'Sparen Sie bis zu 34 % durch den direkten Vergleich regionaler Handwerksbetriebe in Ihrem PLZ-Gebiet.',
-    oldPrice: 'Ø 19.800 €',
-    newPrice: 'ab 13.450 € (inkl. Montage)',
-    discountTag: 'Bis zu 34 % günstiger durch 3er-Vergleich',
-    ctaText: '3 kostenlose Fachbetriebs-Angebote anfordern →',
+    image: '/images/photovoltaik-kosten-2026-solarmetrik.webp',
+    badge: 'Regionaler 3er-Vergleich',
+    discountTag: 'Bis zu 34 % sparen',
+    category: 'Meisterbetriebe aus Ihrer Region',
+    title: '3 Festpreis-Angebote lokaler Solar-Fachbetriebe',
+    specs: [
+      'Direktvergleich geprüfter regionaler Installateure',
+      'Komplettpreis inkl. Gerüst & Anmeldung',
+      '100 % kostenlos & unverbindlich in 2 Minuten'
+    ],
+    oldPrice: '19.800 €',
+    newPrice: 'ab 13.450 €',
+    subPrice: 'inkl. 0 % MwSt. nach § 12 Abs. 3 UStG',
+    ctaText: '3 kostenlose Angebote anfordern →',
     offerKey: 'de_cpl_secondary_url',
     defaultUrl: 'https://www.aroundhome.de/solaranlage/?utm_source=solarmetrik',
-    isPrimaryCpl: true
+    featured: true
   },
   {
     id: 'de-ecoflow-powerstream-ultra',
-    badge: 'HTW-Effizienz · Plug & Play Speicher',
-    category: '2000W Balkonkraftwerk + LFP-Heimspeicher',
-    title: 'EcoFlow STREAM Ultra / DELTA Pro 3 Komplettsystem (2 bis 12 kWh LFP)',
-    specs: 'DIN VDE V 0126-95 konform · 0 % MwSt. (§ 12 Abs. 3 UStG) · KI-Eigenverbrauchssteuerung ohne Elektriker',
+    image: '/images/stromspeicher-test-htw-berlin-2026.webp',
+    badge: 'Plug & Play Speicher',
+    discountTag: '−32 % Rabatt',
+    category: '2000W Balkonkraftwerk + LFP-Speicher',
+    title: 'EcoFlow STREAM Ultra / DELTA Pro 3 Komplettset',
+    specs: [
+      '2 bis 12 kWh LiFePO4-Speicher (6.000+ Zyklen)',
+      'Installation in 15 Min. ohne Elektriker',
+      '0 % MwSt. + Zusatzrabatt mit Code SOLAR26'
+    ],
     oldPrice: '2.499 €',
-    newPrice: '1.699 € (0 % MwSt.)',
-    discountTag: '−32 % Leser-Rabatt + 0 % MwSt.',
-    ctaText: 'Sonderpreis bei EcoFlow DE sichern →',
+    newPrice: '1.699 €',
+    subPrice: 'Versandkostenfrei · 0 % MwSt.',
+    ctaText: 'Zum EcoFlow Sonderpreis →',
     offerKey: 'de_ecoflow_url',
     defaultUrl: 'https://de.ecoflow.com/?utm_source=solarmetrik&code=SOLAR26',
-    isPrimaryCpl: false
+    featured: false
   },
   {
     id: 'de-kleineskraftwerk-xl-duo',
-    badge: 'Made in Germany Halterung · 2000Wp Bifazial',
-    category: 'Steckersolargerät mit 2,2 kWh Anker / Hoymiles Speicher',
-    title: 'Kleines Kraftwerk XL Quattro (2000W Bifazial + 2,2 kWh LFP-Speicher)',
-    specs: 'Statisch geprüfte Halterung · Bis zu 890 € Stromkosten-Ersparnis pro Jahr · Versandkostenfrei in DE',
+    image: '/images/balkonkraftwerk-2000w-speicher-vde-2026.webp',
+    badge: 'Made in Germany Halterung',
+    discountTag: '−39 % Paket-Deal',
+    category: '2000Wp Bifazial + 2,2 kWh Speicher',
+    title: 'Kleines Kraftwerk XL Quattro Komplettpaket',
+    specs: [
+      '4× 500W Bifaziale Full-Black Glas-Glas Module',
+      'Inkl. 2,2 kWh LFP-Speicher & Smart-App',
+      'Bis zu 890 € Stromkosten-Ersparnis pro Jahr'
+    ],
     oldPrice: '1.899 €',
-    newPrice: '1.149 € (0 % MwSt.)',
-    discountTag: '−39 % Komplettpaket-Rabatt',
-    ctaText: 'Zum 2000W Speicher-Angebot →',
+    newPrice: '1.149 €',
+    subPrice: 'Komplettset inkl. Halterung · 0 % MwSt.',
+    ctaText: 'Angebot ansehen →',
     offerKey: 'de_kleineskraftwerk_url',
     defaultUrl: 'https://kleineskraftwerk.de/?utm_source=solarmetrik',
-    isPrimaryCpl: false
+    featured: false
   },
   {
     id: 'de-bluetti-ep760-heimspeicher',
-    badge: 'Notstromfähig · 3-Phasen Hybrid-System',
-    category: 'Modularer Heimspeicher für Bestands- & Neuanlagen',
-    title: 'BLUETTI EP760 / AC500 Modularer LFP-Hausspeicher (7,6 kW / 9,9 kWh)',
-    specs: 'Kompatibel mit jeder bestehenden Dach-PV · 10 Jahre Herstellergarantie · 0 % MwSt. nach § 12 UStG',
+    image: '/images/photovoltaik-waermepumpe-14a-enwg-2026.webp',
+    badge: 'Notstrom-Hausspeicher',
+    discountTag: '−37 % Direktabzug',
+    category: 'Modularer 3-Phasen LFP-Heimspeicher',
+    title: 'BLUETTI EP760 / AC500 Hausspeicher (9,9 kWh)',
+    specs: [
+      'Kompatibel mit jeder bestehenden Dach-PV',
+      '10 Jahre Herstellergarantie · Notstrom in <20 ms',
+      'Steuerfrei mit 0 % MwSt. (§ 12 Abs. 3 UStG)'
+    ],
     oldPrice: '5.990 €',
-    newPrice: '3.790 € (0 % MwSt.)',
-    discountTag: '−37 % Direktabzug im Partner-Portal',
-    ctaText: 'Speicher-Sonderpreis bei BLUETTI DE prüfen →',
+    newPrice: '3.790 €',
+    subPrice: 'Inkl. Partner-Code SOLAR26',
+    ctaText: 'Bei BLUETTI DE prüfen →',
     offerKey: 'de_bluetti_url',
     defaultUrl: 'https://de.bluettipower.eu/?utm_source=solarmetrik&code=SOLAR26',
-    isPrimaryCpl: false
+    featured: false
   }
 ];
 ---
@@ -88,246 +116,528 @@ const deShowcaseProducts = [
     <meta name="description" content={description} />
     <meta name="robots" content="noindex, nofollow" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=Inter:wght@300;400;500;600&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
     />
     <style>
-      .vip-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
-        gap: 24px;
+      *, *::before, *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
       }
-      .vip-card {
+      body {
+        font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        background-color: #f4f7fb;
+        color: #0f172a;
+        line-height: 1.55;
+        -webkit-font-smoothing: antialiased;
+      }
+      a {
+        text-decoration: none;
+        color: inherit;
+      }
+      .promo-topbar {
+        background: #0f172a;
+        color: #ffffff;
+        font-size: 13px;
+        padding: 10px 20px;
+        text-align: center;
+        font-weight: 500;
+      }
+      .promo-topbar strong {
+        color: #38bdf8;
+      }
+      .promo-nav {
         background: #ffffff;
-        border: 1.5px solid var(--border-hairline);
-        border-radius: 12px;
-        padding: 28px;
+        border-bottom: 1px solid #e2e8f0;
+        padding: 14px 24px;
+        position: sticky;
+        top: 0;
+        z-index: 100;
+      }
+      .promo-nav__inner {
+        max-width: 1240px;
+        margin: 0 auto;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+      .promo-logo {
+        font-weight: 800;
+        font-size: 20px;
+        letter-spacing: -0.02em;
+        color: #0f172a;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+      .promo-logo__dot {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background: #0284c7;
+        display: inline-block;
+      }
+      .promo-status {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        background: #ecfdf5;
+        color: #047857;
+        font-size: 12.5px;
+        font-weight: 600;
+        padding: 6px 12px;
+        border-radius: 999px;
+        border: 1px solid #a7f3d0;
+      }
+      .promo-container {
+        max-width: 1240px;
+        margin: 0 auto;
+        padding: 0 24px;
+      }
+      .promo-hero {
+        padding: 44px 0 32px;
+        text-align: center;
+      }
+      .promo-pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        background: #e0f2fe;
+        color: #0369a1;
+        font-size: 12.5px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        padding: 6px 14px;
+        border-radius: 999px;
+        margin-bottom: 16px;
+      }
+      .promo-h1 {
+        font-size: clamp(28px, 4vw, 44px);
+        font-weight: 800;
+        letter-spacing: -0.025em;
+        line-height: 1.15;
+        color: #0f172a;
+        max-width: 860px;
+        margin: 0 auto 14px;
+      }
+      .promo-h1 span {
+        color: #0284c7;
+      }
+      .promo-lead {
+        font-size: 16.5px;
+        color: #475569;
+        max-width: 720px;
+        margin: 0 auto 28px;
+      }
+      .coupon-banner {
+        max-width: 760px;
+        margin: 0 auto 36px;
+        background: #ffffff;
+        border: 2px dashed #0284c7;
+        border-radius: 16px;
+        padding: 16px 24px;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        box-shadow: 0 10px 25px rgba(2, 132, 199, 0.06);
+      }
+      .coupon-banner__left {
+        text-align: left;
+      }
+      .coupon-banner__title {
+        font-size: 14px;
+        font-weight: 700;
+        color: #0f172a;
+      }
+      .coupon-banner__sub {
+        font-size: 12.5px;
+        color: #64748b;
+      }
+      .coupon-banner__right {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+      .coupon-code {
+        background: #f0f9ff;
+        color: #0369a1;
+        font-weight: 800;
+        font-size: 18px;
+        letter-spacing: 0.08em;
+        padding: 8px 16px;
+        border-radius: 10px;
+        border: 1px solid #bae6fd;
+      }
+      .coupon-btn {
+        background: #0284c7;
+        color: #ffffff;
+        border: none;
+        border-radius: 10px;
+        padding: 10px 18px;
+        font-size: 13.5px;
+        font-weight: 700;
+        cursor: pointer;
+        transition: background 0.15s ease;
+      }
+      .coupon-btn:hover {
+        background: #0369a1;
+      }
+      .trust-strip {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 14px;
+        margin-bottom: 36px;
+      }
+      .trust-item {
+        background: #ffffff;
+        border: 1px solid #e2e8f0;
+        border-radius: 14px;
+        padding: 16px 18px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+      .trust-icon {
+        width: 38px;
+        height: 38px;
+        border-radius: 10px;
+        background: #f0f9ff;
+        color: #0284c7;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 800;
+        font-size: 18px;
+        flex-shrink: 0;
+      }
+      .trust-text strong {
+        display: block;
+        font-size: 14px;
+        color: #0f172a;
+      }
+      .trust-text span {
+        font-size: 12px;
+        color: #64748b;
+      }
+      .cards-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 24px;
+        margin-bottom: 56px;
+      }
+      .deal-card {
+        background: #ffffff;
+        border-radius: 18px;
+        border: 1px solid #e2e8f0;
+        overflow: hidden;
         display: flex;
         flex-direction: column;
         justify-content: space-between;
-        transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+        box-shadow: 0 4px 12px rgba(15, 23, 42, 0.04);
       }
-      .vip-card:hover {
-        transform: translateY(-3px);
-        box-shadow: 0 16px 36px rgba(15, 76, 129, 0.08);
-        border-color: var(--accent-blue);
+      .deal-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 18px 36px rgba(15, 23, 42, 0.09);
       }
-      .vip-card--featured {
-        border: 2px solid var(--accent-blue);
-        background: linear-gradient(180deg, #f7faff 0%, #ffffff 35%);
+      .deal-card--featured {
+        border: 2px solid #0284c7;
       }
-      .vip-trust-bar {
-        display: grid;
-        grid-template-columns: repeat(4, 1fr);
-        gap: 16px;
+      .deal-card__media {
+        position: relative;
+        height: 200px;
+        overflow: hidden;
+        background: #e2e8f0;
+      }
+      .deal-card__media img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.35s ease;
+      }
+      .deal-card:hover .deal-card__media img {
+        transform: scale(1.04);
+      }
+      .deal-card__badges {
+        position: absolute;
+        top: 12px;
+        left: 12px;
+        right: 12px;
+        display: flex;
+        justify-content: space-between;
+        gap: 8px;
+      }
+      .badge-left {
+        background: rgba(15, 23, 42, 0.85);
+        backdrop-filter: blur(6px);
+        color: #ffffff;
+        font-size: 11.5px;
+        font-weight: 700;
+        padding: 5px 10px;
+        border-radius: 8px;
+      }
+      .badge-right {
+        background: #10b981;
+        color: #ffffff;
+        font-size: 11.5px;
+        font-weight: 800;
+        padding: 5px 10px;
+        border-radius: 8px;
+        box-shadow: 0 4px 10px rgba(16, 185, 129, 0.3);
+      }
+      .deal-card__body {
+        padding: 22px 22px 16px;
+      }
+      .deal-card__cat {
+        font-size: 11.5px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.04em;
+        color: #0284c7;
+        margin-bottom: 6px;
+      }
+      .deal-card__title {
+        font-size: 19px;
+        font-weight: 800;
+        color: #0f172a;
+        line-height: 1.3;
+        margin-bottom: 12px;
+      }
+      .deal-card__list {
+        list-style: none;
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+        margin-bottom: 16px;
+      }
+      .deal-card__list li {
+        font-size: 13.5px;
+        color: #475569;
+        display: flex;
+        align-items: flex-start;
+        gap: 8px;
+      }
+      .deal-card__list li::before {
+        content: '✓';
+        color: #10b981;
+        font-weight: 800;
+      }
+      .deal-card__footer {
+        padding: 0 22px 22px;
+      }
+      .price-box {
+        background: #f8fafc;
+        border: 1px solid #e2e8f0;
+        border-radius: 12px;
+        padding: 12px 14px;
+        margin-bottom: 14px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+      .price-old {
+        font-size: 13px;
+        color: #94a3b8;
+        text-decoration: line-through;
+        display: block;
+      }
+      .price-label {
+        font-size: 11.5px;
+        color: #64748b;
+      }
+      .price-new {
+        font-size: 22px;
+        font-weight: 800;
+        color: #0f172a;
+        display: block;
+        text-align: right;
+      }
+      .price-sub {
+        font-size: 11px;
+        color: #059669;
+        font-weight: 600;
+        display: block;
+        text-align: right;
+      }
+      .cta-button {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        background: #0284c7;
+        color: #ffffff;
+        font-weight: 700;
+        font-size: 14.5px;
+        padding: 14px 18px;
+        border-radius: 12px;
+        transition: background 0.15s ease, transform 0.1s ease;
+        box-shadow: 0 4px 12px rgba(2, 132, 199, 0.22);
+      }
+      .cta-button:hover {
+        background: #0369a1;
+      }
+      .promo-footer {
         background: #ffffff;
-        border: 1px solid var(--border-hairline);
-        border-radius: 10px;
-        padding: 18px 24px;
-        margin-bottom: 40px;
+        border-top: 1px solid #e2e8f0;
+        padding: 28px 24px;
+        font-size: 13px;
+        color: #64748b;
       }
-      @media (max-width: 860px) {
-        .vip-trust-bar {
-          grid-template-columns: 1fr 1fr;
+      @media (max-width: 1024px) {
+        .cards-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+        .trust-strip {
+          grid-template-columns: repeat(2, 1fr);
+        }
+      }
+      @media (max-width: 640px) {
+        .cards-grid {
+          grid-template-columns: 1fr;
+        }
+        .trust-strip {
+          grid-template-columns: 1fr;
         }
       }
     </style>
   </head>
-  <body style="background: var(--bg-soft);">
-    <header class="ax-header">
-      <div class="ax-header__utility">
-        <span>Verifizierter Leser-Zugang · EEG-Bestandsschutz Frist: 31.12.2026</span>
-        <a href="/rechner">Zum 360°-Renditerechner →</a>
-        <a href="/">Startseite (solarmetrik.de) →</a>
-      </div>
-      <div class="ax-header__main">
-        <a href="/" class="ax-logo">
-          SOLARMETRIK<span class="ax-logo__fin"></span>
+  <body>
+    <div class="promo-topbar">
+      ⚡ <strong>November 2026 Sonderkontingent:</strong> 0 % MwSt. (§ 12 Abs. 3 UStG) + bis zu 39 % Partner-Rabatt auf geprüfte Systeme
+    </div>
+
+    <header class="promo-nav">
+      <div class="promo-nav__inner">
+        <a href="/" class="promo-logo">
+          <span class="promo-logo__dot"></span>
+          SOLARMETRIK
         </a>
-        <div style="font-size: 13px; color: var(--accent-green); font-weight: 600;">
-          ● Regionales Förder- & Partner-Kontingent 11/2026 aktiv
+        <div class="promo-status">
+          ● Verifizierter Leser-Zugang aktiv
         </div>
       </div>
     </header>
 
-    <main>
-      <section class="ax-section" style="padding-top: 44px; padding-bottom: 64px;">
-        <div class="container">
-          <!-- PERSONALIZED HERO BANNER -->
-          <div
-            style="background: #ffffff; border: 1px solid var(--border-hairline); border-radius: 14px; padding: 36px 40px; margin-bottom: 28px; box-shadow: 0 10px 30px rgba(15, 76, 129, 0.04);"
-          >
-            <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 12px; margin-bottom: 14px;">
-              <span
-                style="display: inline-block; padding: 5px 12px; border-radius: 6px; background: var(--accent-blue-light); color: var(--accent-blue); font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em;"
-              >
-                Verifizierter Leser-Zugang · Update November 2026
-              </span>
-              <span id="de-user-badge" style="font-size: 13px; color: var(--text-secondary); font-weight: 500;">
-                Standort-Kontingent: Deutschland (0 % MwSt. nach § 12 Abs. 3 UStG)
-              </span>
-            </div>
+    <main class="promo-container">
+      <section class="promo-hero">
+        <div class="promo-pill">Geprüfte Partner-Konditionen · Stand November 2026</div>
+        <h1 class="promo-h1">
+          Exklusive <span>Solar- & Speicher-Deals</span> mit bis zu 39 % Preisvorteil
+        </h1>
+        <p class="promo-lead">
+          Vergleichen Sie schlüsselfertige Komplettanlagen regionaler Meisterbetriebe oder sichern Sie sich steckerfertige LFP-Heimspeicher mit <strong>0 % Mehrwertsteuer</strong> vor dem Jahreswechsel.
+        </p>
 
-            <h1 class="ax-h1" style="margin-bottom: 16px;" id="de-hero-title">
-              SOLARMETRIK FÖRDER- & PARTNER-PORTAL: BIS ZU 38 % VORTEIL VOR DER EEG-REFORM 2027
-            </h1>
+        <div class="coupon-banner">
+          <div class="coupon-banner__left">
+            <div class="coupon-banner__title">🎁 Direkter Partner-Vorteilscode (wird über die Buttons automatisch aktiviert)</div>
+            <div class="coupon-banner__sub">Gültig für EcoFlow, BLUETTI, Balkonkraftwerke & kostenlose Fachbetriebs-Vergleiche</div>
+          </div>
+          <div class="coupon-banner__right">
+            <span class="coupon-code" id="de-promo-code">SOLAR26</span>
+            <button type="button" class="coupon-btn" id="de-copy-btn">Code kopieren</button>
+          </div>
+        </div>
 
-            <p class="ax-sub" style="max-width: 920px; margin-bottom: 24px;">
-              Für Anlagen mit Inbetriebnahme bis zum <strong>31. Dezember 2026</strong> gilt noch der volle 20-jährige gesetzliche EEG-Bestandsschutz in Kombination mit <strong>0 % Mehrwertsteuer (§ 12 Abs. 3 UStG)</strong>. Über unser geschlossenes Leser-Portal erhalten Sie direkten Zugriff auf vorverhandelte Sonderkontingente geprüfter deutscher Fachbetriebe sowie auf HTW-geprüfte Heimspeicher und 2000W-Balkonkraftwerke.
-            </p>
-
-            <!-- INTERACTIVE PROMO CODE BAR -->
-            <div
-              style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px; background: var(--bg-soft); border: 1px dashed var(--accent-blue); border-radius: 10px; padding: 16px 22px;"
-            >
-              <div>
-                <div style="font-size: 12px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-muted); font-weight: 600;">
-                  Direkter Leser-Rabattcode für Speicher & Komplettpakete (automatisch hinterlegt):
-                </div>
-                <div style="font-size: 14px; color: var(--text-secondary); margin-top: 2px;">
-                  Bei Klick auf eine Partner-Karte wird der Sondertarif direkt aktiviert.
-                </div>
-              </div>
-              <div style="display: flex; align-items: center; gap: 12px;">
-                <code
-                  id="de-promo-code"
-                  style="font-family: var(--font-condensed); font-size: 24px; font-weight: 700; letter-spacing: 0.08em; background: #ffffff; padding: 6px 16px; border-radius: 6px; border: 1px solid var(--border-button); color: var(--accent-blue);"
-                >
-                  SOLAR26
-                </code>
-                <button
-                  type="button"
-                  id="de-copy-btn"
-                  class="ax-btn ax-btn--primary"
-                  style="padding: 10px 18px; font-size: 13.5px;"
-                >
-                  Code kopieren
-                </button>
-              </div>
+        <div class="trust-strip">
+          <div class="trust-item">
+            <div class="trust-icon">0%</div>
+            <div class="trust-text">
+              <strong>0 % Mehrwertsteuer</strong>
+              <span>Gesetzlich steuerfrei (§ 12 UStG)</span>
             </div>
           </div>
-
-          <!-- TRUST BAR -->
-          <div class="vip-trust-bar">
-            <div>
-              <div style="font-family: var(--font-condensed); font-size: 22px; font-weight: 700; color: var(--accent-blue);">0 % MwSt. Aktiv</div>
-              <div style="font-size: 12.5px; color: var(--text-secondary);">Steuerbefreiung nach § 12 Abs. 3 UStG auf PV & Speicher</div>
-            </div>
-            <div>
-              <div style="font-family: var(--font-condensed); font-size: 22px; font-weight: 700; color: var(--accent-green);">EEG-Bestandsschutz</div>
-              <div style="font-size: 12.5px; color: var(--text-secondary);">20 Jahre garantierte Vergütung bei Start bis 31.12.2026</div>
-            </div>
-            <div>
-              <div style="font-family: var(--font-condensed); font-size: 22px; font-weight: 700; color: var(--text-primary);">Geprüfte Anbieter</div>
-              <div style="font-size: 12.5px; color: var(--text-secondary);">VDE- & HTW-Effizienzklasse A Referenzsysteme</div>
-            </div>
-            <div>
-              <div style="font-family: var(--font-condensed); font-size: 22px; font-weight: 700; color: var(--accent-green);">100 % Unverbindlich</div>
-              <div style="font-size: 12.5px; color: var(--text-secondary);">Kostenlose Wirtschaftlichkeits- & Dachprüfung nach PLZ</div>
+          <div class="trust-item">
+            <div class="trust-icon">20J</div>
+            <div class="trust-text">
+              <strong>EEG-Bestandsschutz</strong>
+              <span>20 Jahre Vergütung vor 2027 sichern</span>
             </div>
           </div>
-
-          <!-- PRODUCT & OFFER SHOWCASE GRID -->
-          <div class="vip-grid">
-            {deShowcaseProducts.map((item) => (
-              <div class:list={['vip-card', { 'vip-card--featured': item.isPrimaryCpl }]}>
-                <div>
-                  <div style="display: flex; justify-content: space-between; align-items: center; gap: 8px; margin-bottom: 12px;">
-                    <span
-                      style="display: inline-block; padding: 4px 10px; border-radius: 5px; background: var(--accent-blue-light); color: var(--accent-blue); font-size: 11.5px; font-weight: 700; text-transform: uppercase;"
-                    >
-                      {item.badge}
-                    </span>
-                    <span
-                      style="display: inline-block; padding: 4px 10px; border-radius: 5px; background: var(--accent-green-light); color: var(--accent-green); font-size: 11.5px; font-weight: 700;"
-                    >
-                      {item.discountTag}
-                    </span>
-                  </div>
-
-                  <div style="font-size: 12.5px; color: var(--text-muted); font-weight: 600; text-transform: uppercase; margin-bottom: 6px;">
-                    {item.category}
-                  </div>
-                  <h2 style="font-family: var(--font-condensed); font-size: 25px; font-weight: 700; line-height: 1.15; margin-bottom: 12px; color: var(--text-primary);">
-                    {item.title}
-                  </h2>
-                  <p style="font-size: 14px; color: var(--text-secondary); line-height: 1.55; margin-bottom: 20px;">
-                    {item.specs}
-                  </p>
-                </div>
-
-                <div>
-                  <div style="padding: 14px 0; border-top: 1px solid var(--border-hairline); border-bottom: 1px solid var(--border-hairline); margin-bottom: 18px; display: flex; align-items: baseline; justify-content: space-between;">
-                    <div>
-                      <span style="font-size: 12px; color: var(--text-muted); display: block;">Regulärer Marktpreis:</span>
-                      <span style="font-size: 15px; color: var(--text-muted); text-decoration: line-through;">{item.oldPrice}</span>
-                    </div>
-                    <div style="text-align: right;">
-                      <span style="font-size: 12px; color: var(--accent-green); font-weight: 600; display: block;">Leser-Kondition (0% MwSt.):</span>
-                      <strong style="font-family: var(--font-condensed); font-size: 26px; color: var(--text-primary);">{item.newPrice}</strong>
-                    </div>
-                  </div>
-
-                  <a
-                    href={item.defaultUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    class="ax-btn ax-btn--primary js-offer-link"
-                    data-offer-id={item.id}
-                    data-offer-key={item.offerKey}
-                    style="width: 100%; justify-content: center; padding: 14px 20px; font-size: 14.5px; font-weight: 600;"
-                  >
-                    {item.ctaText}
-                  </a>
-                </div>
-              </div>
-            ))}
+          <div class="trust-item">
+            <div class="trust-icon">A+</div>
+            <div class="trust-text">
+              <strong>Geprüfte Effizienz</strong>
+              <span>LFP-Speicher mit 6.000+ Zyklen</span>
+            </div>
           </div>
-
-          <!-- 3 STEPS HOW TO CLAIM -->
-          <div
-            style="margin-top: 48px; background: #ffffff; border: 1px solid var(--border-hairline); border-radius: 12px; padding: 32px 36px;"
-          >
-            <h3 class="ax-h3" style="margin-bottom: 18px;">
-              SO SICHERN SIE SICH DIE LESER-KONDITIONEN & DEN EEG-BESTANDSSCHUTZ 2026 (3 SCHRITTE)
-            </h3>
-            <div class="ax-cards-3">
-              <div>
-                <strong style="color: var(--accent-blue); font-size: 15px; display: block; margin-bottom: 6px;">1. Angebot oder Paket wählen</strong>
-                <p style="font-size: 14px; color: var(--text-secondary);">
-                  Klicken Sie oben auf den gewünschten Dach-Angebotsvergleich oder das Speicher-Komplettpaket. Ihr SOLARMETRIK-Partnerstatus wird automatisch übergeben.
-                </p>
-              </div>
-              <div>
-                <strong style="color: var(--accent-blue); font-size: 15px; display: block; margin-bottom: 6px;">2. PLZ & Dachdaten kurz prüfen</strong>
-                <p style="font-size: 14px; color: var(--text-secondary);">
-                  Geben Sie bei Dachanlagen Ihre Postleitzahl an, um die regionale Verfügbarkeit und das 0-%-MwSt.-Festpreisangebot unverbindlich zu erhalten.
-                </p>
-              </div>
-              <div>
-                <strong style="color: var(--accent-blue); font-size: 15px; display: block; margin-bottom: 6px;">3. Bis zu 38 % sparen</strong>
-                <p style="font-size: 14px; color: var(--text-secondary);">
-                  Bei Hardware-Bestellungen (EcoFlow, BLUETTI, Balkonkraftwerke) nutzen Sie im Warenkorb zusätzlich den Code <strong>SOLAR26</strong>.
-                </p>
-              </div>
+          <div class="trust-item">
+            <div class="trust-icon">✓</div>
+            <div class="trust-text">
+              <strong>100 % Unverbindlich</strong>
+              <span>Kostenloser Festpreis-Vergleich</span>
             </div>
           </div>
         </div>
       </section>
+
+      <section class="cards-grid">
+        {deShowcaseProducts.map((item) => (
+          <article class:list={['deal-card', { 'deal-card--featured': item.featured }]}>
+            <div>
+              <div class="deal-card__media">
+                <img src={item.image} alt={item.title} loading="lazy" />
+                <div class="deal-card__badges">
+                  <span class="badge-left">{item.badge}</span>
+                  <span class="badge-right">{item.discountTag}</span>
+                </div>
+              </div>
+
+              <div class="deal-card__body">
+                <div class="deal-card__cat">{item.category}</div>
+                <h2 class="deal-card__title">{item.title}</h2>
+                <ul class="deal-card__list">
+                  {item.specs.map((s) => (
+                    <li>{s}</li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+
+            <div class="deal-card__footer">
+              <div class="price-box">
+                <div>
+                  <span class="price-label">Marktpreis / UVP</span>
+                  <span class="price-old">{item.oldPrice}</span>
+                </div>
+                <div>
+                  <span class="price-new">{item.newPrice}</span>
+                  <span class="price-sub">{item.subPrice}</span>
+                </div>
+              </div>
+
+              <a
+                href={item.defaultUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="cta-button js-offer-link"
+                data-offer-id={item.id}
+                data-offer-key={item.offerKey}
+              >
+                {item.ctaText}
+              </a>
+            </div>
+          </article>
+        ))}
+      </section>
     </main>
 
-    <footer class="ax-footer">
-      <div class="container">
-        <div style="display: flex; flex-wrap: wrap; justify-content: space-between; gap: 16px; font-size: 12.5px; color: var(--text-muted);">
-          <span>© 2026 SOLARMETRIK Deutschland (solarmetrik.de) · Verifiziertes Leser- & Förder-Portal</span>
-          <div style="display: flex; gap: 16px;">
-            <a href="/">Startseite</a>
-            <a href="/rechner">PV-Rechner</a>
-            <a href="/impressum">Impressum</a>
-            <a href="/datenschutz">Datenschutz</a>
-            <a href="/unsubscribe" id="footer-unsub-link">E-Mail Abmeldung (Unsubscribe)</a>
-          </div>
+    <footer class="promo-footer">
+      <div class="promo-container" style="display: flex; flex-wrap: wrap; justify-content: space-between; gap: 16px;">
+        <span>© 2026 SOLARMETRIK Deutschland (solarmetrik.de) · Partner- & Vorteilsportal</span>
+        <div style="display: flex; gap: 18px; flex-wrap: wrap;">
+          <a href="/">Startseite</a>
+          <a href="/rechner">PV-Rechner</a>
+          <a href="/impressum">Impressum</a>
+          <a href="/datenschutz">Datenschutz</a>
+          <a href="/unsubscribe" id="footer-unsub-link">E-Mail Abmeldung (Unsubscribe)</a>
         </div>
       </div>
     </footer>
@@ -336,37 +646,23 @@ const deShowcaseProducts = [
       (function () {
         const params = new URLSearchParams(window.location.search);
         const userEmail = (params.get('u') || params.get('email') || '').trim();
-        const userPlz = (params.get('plz') || params.get('addr') || '').trim();
-        const userName = (params.get('name') || '').trim();
-
-        const badgeEl = document.getElementById('de-user-badge');
-        const titleEl = document.getElementById('de-hero-title');
         const unsubLink = document.getElementById('footer-unsub-link');
 
-        if (userPlz && badgeEl) {
-          badgeEl.textContent = 'Regionales Kontingent geprüft für: ' + userPlz + ' (0 % MwSt. aktiv)';
-        }
-        if (userName && titleEl) {
-          titleEl.textContent = 'FÖRDER- & PARTNER-PORTAL FÜR ' + userName.toUpperCase() + ': BIS ZU 38 % VORTEIL VOR DER EEG-REFORM';
-        }
         if (userEmail && unsubLink) {
           unsubLink.href = '/unsubscribe?email=' + encodeURIComponent(userEmail);
         }
 
-        // 1. Log Visit to Cloudflare Tracker Worker
         fetch('https://track.solarmetrik.de/track', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
             type: 'visit',
-            email: userEmail || 'anonymous',
+            email: userEmail || 'direct_visitor',
             region: 'DE',
-            page: '/foerder-portal',
-            extra: userPlz
+            page: '/foerder-portal'
           })
         }).catch(function () {});
 
-        // 2. Load Dynamic Affiliate Links from Worker Config
         fetch('https://track.solarmetrik.de/offers')
           .then(function (r) { return r.json(); })
           .then(function (cfg) {
@@ -383,17 +679,15 @@ const deShowcaseProducts = [
           })
           .catch(function () {});
 
-        // 3. Track Clicks on Offer Cards
         document.querySelectorAll('.js-offer-link').forEach(function (link) {
           link.addEventListener('click', function () {
             const offerId = link.getAttribute('data-offer-id') || 'unknown';
             const payload = JSON.stringify({
               type: 'click',
-              email: userEmail || 'anonymous',
+              email: userEmail || 'direct_visitor',
               region: 'DE',
               offer: offerId,
-              page: '/foerder-portal',
-              extra: userPlz
+              page: '/foerder-portal'
             });
             if (navigator.sendBeacon) {
               navigator.sendBeacon('https://track.solarmetrik.de/track', payload);
@@ -408,13 +702,12 @@ const deShowcaseProducts = [
           });
         });
 
-        // 4. Copy Promo Code button
         const copyBtn = document.getElementById('de-copy-btn');
         const codeEl = document.getElementById('de-promo-code');
         if (copyBtn && codeEl) {
           copyBtn.addEventListener('click', function () {
             navigator.clipboard.writeText(codeEl.textContent.trim()).then(function () {
-              copyBtn.textContent = '✓ Kopiert! (Aktiviert)';
+              copyBtn.textContent = '✓ Kopiert!';
             });
           });
         }
