@@ -135,6 +135,14 @@
     {
       "source": "/developers",
       "destination": "/methodik"
+    },
+    {
+      "source": "/bericht",
+      "destination": "/foerder-portal"
+    },
+    {
+      "source": "/en/summary",
+      "destination": "/en/vip-audit"
     }
   ]
 }
