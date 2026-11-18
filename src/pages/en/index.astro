@@ -5,163 +5,286 @@ import SpeedInsights from '@vercel/speed-insights/astro';
 
 const siteUrl = 'https://solarmetrik.de';
 const canonicalUrl = `${siteUrl}/en`;
-const title = 'SOLARMETRIK International — US & EU Solar Yield, Battery Sizing & 30% Tax Credit Calculator (2026)';
+const title = 'SOLARMETRIK International — US & EU Solar Yield, Battery Sizing & Tax Credit Calculator (2026)';
 const description =
-  'Independent engineering portal & solar ROI calculator for US and European homeowners. Calculate 2026 NREL/PVGIS solar generation, LFP battery sizing, and 30% Federal Residential Clean Energy Credit (§ 25D ITC).';
+  'Independent engineering portal & solar ROI calculator for US and European homeowners. Calculate 2026 NREL & PVGIS solar generation, LFP battery sizing, US 30% Federal ITC (§ 25D), and EU 0% VAT / feed-in incentives.';
 
 const usStatesData = [
   {
-    code: 'CA',
-    name: 'California (NEM 3.0 / SGIP)',
-    cities: 'San Diego, Los Angeles, Sacramento, San Jose, Fresno',
+    code: 'US-CA',
+    region: 'US',
+    currency: '$',
+    name: 'California, USA (NEM 3.0 / SGIP)',
+    cities: 'San Diego, Los Angeles, Sacramento, San Jose',
     yieldKwhKw: 1680,
-    elecRateUsd: 0.34,
-    costPerWattUsd: 2.85,
-    itcPercent: 30,
-    stateIncentive: 'SGIP Battery Storage Rebate ($150–$1,000/kWh) + 30% Federal ITC (§ 25D)',
+    elecRate: 0.34,
+    costPerWatt: 2.85,
+    batCost: 8500,
+    subsidyPct: 30,
+    subsidyLabel: '30% Federal Tax Credit (IRS § 25D)',
+    stateIncentive: 'SGIP Battery Rebate ($150–$1,000/kWh) + 30% Federal ITC (§ 25D)',
     recommendedBatteryKwh: 13.5,
     smeScore: 96
   },
   {
-    code: 'FL',
-    name: 'Florida (Net Metering + Property Tax Exemption)',
+    code: 'US-FL',
+    region: 'US',
+    currency: '$',
+    name: 'Florida, USA (1:1 Net Metering)',
     cities: 'Orlando, Miami, Tampa, Gainesville, Jacksonville',
     yieldKwhKw: 1590,
-    elecRateUsd: 0.16,
-    costPerWattUsd: 2.58,
-    itcPercent: 30,
-    stateIncentive: '100% Solar Sales Tax & Property Tax Exemption + Full 1:1 Retail Net Metering + 30% ITC',
+    elecRate: 0.16,
+    costPerWatt: 2.58,
+    batCost: 8200,
+    subsidyPct: 30,
+    subsidyLabel: '30% Federal Tax Credit (IRS § 25D)',
+    stateIncentive: '100% Solar Sales & Property Tax Exemption + 1:1 Net Metering + 30% ITC',
     recommendedBatteryKwh: 10.0,
     smeScore: 93
   },
   {
-    code: 'AZ',
-    name: 'Arizona (APS / SRP Export Rate)',
+    code: 'US-AZ',
+    region: 'US',
+    currency: '$',
+    name: 'Arizona, USA (APS / SRP Export)',
     cities: 'Phoenix, Mesa, Tucson, Scottsdale, Chandler',
     yieldKwhKw: 1820,
-    elecRateUsd: 0.15,
-    costPerWattUsd: 2.48,
-    itcPercent: 30,
-    stateIncentive: '$1,000 Arizona State Solar Tax Credit (25%) + 100% Sales/Property Tax Exemption + 30% ITC',
+    elecRate: 0.15,
+    costPerWatt: 2.48,
+    batCost: 8000,
+    subsidyPct: 30,
+    subsidyLabel: '30% Federal ITC + $1,000 AZ Credit',
+    stateIncentive: '$1,000 Arizona State Solar Credit (25%) + Property Tax Exemption + 30% ITC',
     recommendedBatteryKwh: 10.0,
     smeScore: 95
   },
   {
-    code: 'TX',
-    name: 'Texas (ERCOT Solar Buyback & Backup)',
+    code: 'US-TX',
+    region: 'US',
+    currency: '$',
+    name: 'Texas, USA (ERCOT Solar Buyback)',
     cities: 'Austin, Houston, Dallas, San Antonio, Fort Worth',
     yieldKwhKw: 1610,
-    elecRateUsd: 0.16,
-    costPerWattUsd: 2.52,
-    itcPercent: 30,
-    stateIncentive: 'Austin Energy ($2,500 Rebate) / Oncor Solar & Battery Incentives + 100% Property Tax Exemption + 30% ITC',
+    elecRate: 0.16,
+    costPerWatt: 2.52,
+    batCost: 8200,
+    subsidyPct: 30,
+    subsidyLabel: '30% Federal Tax Credit (IRS § 25D)',
+    stateIncentive: 'Austin Energy ($2,500) / Oncor Battery Rebates + Property Tax Exemption + 30% ITC',
     recommendedBatteryKwh: 15.0,
     smeScore: 92
   },
   {
-    code: 'LA',
-    name: 'Louisiana (Whole-Home Hurricane Resilience & Net Billing)',
+    code: 'US-LA',
+    region: 'US',
+    currency: '$',
+    name: 'Louisiana, USA (Grid Resilience)',
     cities: 'New Orleans, Baton Rouge, Metairie, Lafayette',
     yieldKwhKw: 1520,
-    elecRateUsd: 0.14,
-    costPerWattUsd: 2.62,
-    itcPercent: 30,
-    stateIncentive: '30% Federal Residential Clean Energy Credit (§ 25D) on Rooftop PV + Whole-Home LFP Battery Backup',
+    elecRate: 0.14,
+    costPerWatt: 2.62,
+    batCost: 8400,
+    subsidyPct: 30,
+    subsidyLabel: '30% Federal Tax Credit (IRS § 25D)',
+    stateIncentive: '30% Federal Residential Clean Energy Credit (§ 25D) on PV + LFP Battery Backup',
     recommendedBatteryKwh: 15.0,
     smeScore: 89
   },
   {
-    code: 'NY',
-    name: 'New York (NY-Sun Megawatt Block + State Credit)',
+    code: 'US-NY',
+    region: 'US',
+    currency: '$',
+    name: 'New York, USA (NY-Sun Block)',
     cities: 'New York City, Long Island, Albany, Buffalo',
     yieldKwhKw: 1310,
-    elecRateUsd: 0.25,
-    costPerWattUsd: 2.95,
-    itcPercent: 30,
-    stateIncentive: '$5,000 NY State Income Tax Credit (25%) + NY-Sun Upfront Rebate + 30% Federal ITC',
+    elecRate: 0.25,
+    costPerWatt: 2.95,
+    batCost: 8800,
+    subsidyPct: 30,
+    subsidyLabel: '30% Federal ITC + $5,000 NY Credit',
+    stateIncentive: '$5,000 NY State Income Tax Credit (25%) + NY-Sun Rebate + 30% Federal ITC',
     recommendedBatteryKwh: 10.0,
     smeScore: 91
   },
   {
-    code: 'MA',
-    name: 'Massachusetts (SMART Program & Mass Save)',
+    code: 'US-MA',
+    region: 'US',
+    currency: '$',
+    name: 'Massachusetts, USA (SMART)',
     cities: 'Boston, Cambridge, Worcester, Springfield',
     yieldKwhKw: 1340,
-    elecRateUsd: 0.29,
-    costPerWattUsd: 2.98,
-    itcPercent: 30,
-    stateIncentive: '$1,000 State Credit + ConnectedSolutions Battery Payouts ($275/kW/yr) + 30% Federal ITC',
+    elecRate: 0.29,
+    costPerWatt: 2.98,
+    batCost: 8800,
+    subsidyPct: 30,
+    subsidyLabel: '30% Federal ITC + ConnectedSolutions',
+    stateIncentive: '$1,000 State Credit + ConnectedSolutions ($275/kW/yr) + 30% Federal ITC',
     recommendedBatteryKwh: 13.5,
     smeScore: 92
-  },
-  {
-    code: 'CO',
-    name: 'Colorado (Xcel Energy Solar*Rewards)',
-    cities: 'Denver, Colorado Springs, Boulder, Fort Collins',
-    yieldKwhKw: 1690,
-    elecRateUsd: 0.17,
-    costPerWattUsd: 2.68,
-    itcPercent: 30,
-    stateIncentive: 'Xcel Energy Battery Connect Rebate + 100% Sales/Property Tax Exemption + 30% Federal ITC',
-    recommendedBatteryKwh: 10.0,
-    smeScore: 91
   }
 ];
 
+const euCountriesData = [
+  {
+    code: 'EU-DE',
+    region: 'EU',
+    currency: '€',
+    name: 'Germany (EEG 2026 & 0% MwSt.)',
+    cities: 'Munich, Stuttgart, Frankfurt, Berlin, Hamburg',
+    yieldKwhKw: 1065,
+    elecRate: 0.34,
+    costPerWatt: 1.29,
+    batCost: 5700,
+    subsidyPct: 19,
+    subsidyLabel: '0% VAT (§ 12 UStG) + 20-Yr EEG Feed-In',
+    stateIncentive: '0% VAT on PV & Storage + 0% Income Tax (§ 3 EStG) + 7.70 ct/kWh EEG + § 14a EnWG Bonus',
+    recommendedBatteryKwh: 10.0,
+    smeScore: 97
+  },
+  {
+    code: 'EU-AT',
+    region: 'EU',
+    currency: '€',
+    name: 'Austria (EAG & 0% USt. Exemption)',
+    cities: 'Vienna, Graz, Linz, Salzburg, Innsbruck',
+    yieldKwhKw: 1120,
+    elecRate: 0.29,
+    costPerWatt: 1.38,
+    batCost: 5900,
+    subsidyPct: 20,
+    subsidyLabel: '0% VAT (20% Saving) + OeMAG Tariff',
+    stateIncentive: '0% VAT on Residential Systems ≤ 35 kWp + Regional State Battery Grants',
+    recommendedBatteryKwh: 10.0,
+    smeScore: 94
+  },
+  {
+    code: 'EU-NL',
+    region: 'EU',
+    currency: '€',
+    name: 'Netherlands (0% BTW & Dynamic Storage)',
+    cities: 'Amsterdam, Rotterdam, Utrecht, Eindhoven',
+    yieldKwhKw: 995,
+    elecRate: 0.32,
+    costPerWatt: 1.25,
+    batCost: 5500,
+    subsidyPct: 21,
+    subsidyLabel: '0% VAT (21% BTW Exemption)',
+    stateIncentive: '0% VAT on Solar Panels + Dynamic EPEX Spot Home Battery Arbitrage',
+    recommendedBatteryKwh: 10.0,
+    smeScore: 91
+  },
+  {
+    code: 'EU-ES',
+    region: 'EU',
+    currency: '€',
+    name: 'Spain (IRPF Deduction & IBI Discount)',
+    cities: 'Madrid, Barcelona, Valencia, Seville, Malaga',
+    yieldKwhKw: 1620,
+    elecRate: 0.24,
+    costPerWatt: 1.18,
+    batCost: 5200,
+    subsidyPct: 40,
+    subsidyLabel: '20%–40% IRPF Tax Deduction + 50% IBI',
+    stateIncentive: 'Up to 40% IRPF Personal Income Tax Deduction + 50% Municipal Property Tax (IBI) Reduction',
+    recommendedBatteryKwh: 10.0,
+    smeScore: 96
+  },
+  {
+    code: 'EU-IT',
+    region: 'EU',
+    currency: '€',
+    name: 'Italy (Bonus Casa 50% & Scambio / CER)',
+    cities: 'Milan, Rome, Turin, Bologna, Florence',
+    yieldKwhKw: 1440,
+    elecRate: 0.31,
+    costPerWatt: 1.35,
+    batCost: 5800,
+    subsidyPct: 36,
+    subsidyLabel: 'Tax Deduction + CER Renewable Bonus',
+    stateIncentive: '10-Year IRPEF Tax Deduction + Renewable Energy Community (CER) Feed-In Premium',
+    recommendedBatteryKwh: 10.0,
+    smeScore: 93
+  },
+  {
+    code: 'EU-UK',
+    region: 'EU',
+    currency: '£',
+    name: 'United Kingdom (0% VAT & SEG Export)',
+    cities: 'London, Manchester, Birmingham, Bristol, Leeds',
+    yieldKwhKw: 940,
+    elecRate: 0.26,
+    costPerWatt: 1.45,
+    batCost: 5400,
+    subsidyPct: 20,
+    subsidyLabel: '0% VAT on PV + Standalone Battery Storage',
+    stateIncentive: '0% VAT on Solar & Retrofitted Home Batteries + Smart Export Guarantee (15–24p/kWh)',
+    recommendedBatteryKwh: 10.0,
+    smeScore: 90
+  }
+];
+
+const allCalcMarkets = [...usStatesData, ...euCountriesData];
+
 const usCostTable = [
   {
-    size: '6 kW System',
+    size: '6 kW System (US)',
+    region: 'USA ($ USD)',
     panels: '14–15 Panels (~260 sq.ft.)',
-    grossUsd: '$15,600',
-    itcCredit: '-$4,680',
-    netUsd: '$10,920',
+    gross: '$15,600',
+    incentive: '-$4,680 (30% ITC)',
+    net: '$10,920',
     annualYield: '9,100 – 10,800 kWh',
-    savings25Yr: '$38,400+'
+    payback: '5.8 – 6.9 yrs'
   },
   {
-    size: '8 kW System',
-    panels: '19–20 Panels (~350 sq.ft.)',
-    grossUsd: '$20,400',
-    itcCredit: '-$6,120',
-    netUsd: '$14,280',
-    annualYield: '12,200 – 14,500 kWh',
-    savings25Yr: '$51,200+'
-  },
-  {
-    size: '10 kW (US Benchmark)',
+    size: '10 kW System (US Benchmark)',
+    region: 'USA ($ USD)',
     panels: '24–25 Panels (~440 sq.ft.)',
-    grossUsd: '$25,200',
-    itcCredit: '-$7,560',
-    netUsd: '$17,640',
+    gross: '$25,200',
+    incentive: '-$7,560 (30% ITC)',
+    net: '$17,640',
     annualYield: '15,200 – 18,200 kWh',
-    savings25Yr: '$64,800+'
+    payback: '5.4 – 6.6 yrs'
   },
   {
     size: '10 kW + 13.5 kWh LFP Battery',
-    panels: '24–25 Panels + Whole-Home Backup',
-    grossUsd: '$34,800',
-    itcCredit: '-$10,440',
-    netUsd: '$24,360',
-    annualYield: '15,200 – 18,200 kWh (92% Self-Powered)',
-    savings25Yr: '$76,500+'
+    region: 'USA ($ USD)',
+    panels: '24 Panels + Whole-Home Backup',
+    gross: '$34,300',
+    incentive: '-$10,290 (30% ITC)',
+    net: '$24,010',
+    annualYield: '15,900 kWh (92% Autarky)',
+    payback: '6.1 – 7.4 yrs'
   },
   {
-    size: '12 kW + 15 kWh LFP Battery',
-    panels: '28–30 Panels + EV & HVAC Backup',
-    grossUsd: '$39,900',
-    itcCredit: '-$11,970',
-    netUsd: '$27,930',
-    annualYield: '18,500 – 21,800 kWh',
-    savings25Yr: '$91,000+'
+    size: '8 kWp + 8 kWh LFP Storage',
+    region: 'Germany / EU (€ EUR)',
+    panels: '18–19 Modules (~35 m²)',
+    gross: '€18,920',
+    incentive: '-€3,020 (0% VAT)',
+    net: '€15,900',
+    annualYield: '7,800 – 9,600 kWh',
+    payback: '7.9 – 8.8 yrs'
   },
   {
-    size: '15 kW Estate + 20 kWh Storage',
-    panels: '36–38 Panels (~660 sq.ft.)',
-    grossUsd: '$48,500',
-    itcCredit: '-$14,550',
-    netUsd: '$33,950',
-    annualYield: '23,000 – 27,300 kWh',
-    savings25Yr: '$114,000+'
+    size: '10 kWp + 10 kWh LFP (EU Benchmark)',
+    region: 'Germany / EU (€ EUR)',
+    panels: '22–23 Modules (~44 m²)',
+    gross: '€22,130',
+    incentive: '-€3,530 (0% VAT)',
+    net: '€18,600',
+    annualYield: '9,800 – 14,500 kWh',
+    payback: '7.4 – 8.5 yrs'
+  },
+  {
+    size: '15 kWp + 15 kWh LFP (Heat Pump / EV)',
+    region: 'Germany / EU (€ EUR)',
+    panels: '34–35 Modules (~66 m²)',
+    gross: '€30,350',
+    incentive: '-€4,850 (0% VAT)',
+    net: '€25,500',
+    annualYield: '14,800 – 21,500 kWh',
+    payback: '6.9 – 8.1 yrs'
   }
 ];
 
@@ -183,7 +306,7 @@ const enSchema = [
   {
     '@context': 'https://schema.org',
     '@type': 'SoftwareApplication',
-    name: 'SOLARMETRIK US & EU Solar ROI & 30% Federal Tax Credit Calculator (2026)',
+    name: 'SOLARMETRIK US & EU Solar ROI, Battery Sizing & Tax Credit Calculator (2026)',
     applicationCategory: 'FinanceApplication',
     operatingSystem: 'Web',
     offers: {
@@ -192,7 +315,7 @@ const enSchema = [
       priceCurrency: 'USD'
     },
     description:
-      'Interactive solar payback, NREL irradiance, whole-home battery sizing, and 30% Federal Investment Tax Credit (§ 25D) calculator for US and European homeowners.'
+      'Interactive solar payback, NREL & PVGIS irradiance, whole-home battery sizing, US 30% Federal Investment Tax Credit (§ 25D), and European 0% VAT calculator.'
   }
 ];
 ---
@@ -233,14 +356,71 @@ const enSchema = [
     {enSchema.map((s) => (
       <script type="application/ld+json" set:html={JSON.stringify(s)} />
     ))}
+
+    <style>
+      .en-table-card {
+        background: #ffffff;
+        border: 1px solid var(--border-hairline);
+        border-radius: 10px;
+        overflow-x: auto;
+        box-shadow: 0 4px 18px rgba(15, 76, 129, 0.03);
+      }
+      .en-data-table {
+        width: 100%;
+        min-width: 780px;
+        border-collapse: collapse;
+        text-align: left;
+        font-size: 14px;
+      }
+      .en-data-table thead th {
+        background: #f6f7f9;
+        color: var(--text-primary);
+        font-weight: 600;
+        font-size: 12.5px;
+        text-transform: uppercase;
+        letter-spacing: 0.04em;
+        padding: 15px 18px;
+        border-bottom: 1.5px solid var(--text-primary);
+        white-space: nowrap;
+      }
+      .en-data-table tbody td {
+        padding: 15px 18px;
+        border-bottom: 1px solid var(--border-hairline);
+        color: var(--text-secondary);
+        vertical-align: middle;
+        line-height: 1.45;
+      }
+      .en-data-table tbody tr:last-child td {
+        border-bottom: none;
+      }
+      .en-data-table tbody tr:hover {
+        background: #fafbfc;
+      }
+      .en-score-pill {
+        display: inline-block;
+        padding: 4px 10px;
+        border-radius: 5px;
+        background: var(--accent-blue-light);
+        color: var(--accent-blue);
+        font-family: var(--font-condensed);
+        font-weight: 700;
+        font-size: 15px;
+      }
+      @media (max-width: 960px) {
+        .en-hero-grid {
+          grid-template-columns: 1fr !important;
+          gap: 32px !important;
+        }
+      }
+    </style>
   </head>
   <body>
     <!-- AXOPAR INTERNATIONAL HEADER -->
     <header class="ax-header" id="ax-site-header">
       <div class="ax-header__utility">
-        <span>Data Sources: NREL PVWatts® v8 · US DOE · PVGIS · DWD (Updated: 11/2026)</span>
-        <a href="#us-calculator">US 30% Tax Credit Calculator →</a>
-        <a href="#battery-comparison">Whole-Home Battery Benchmarks →</a>
+        <span>Data Sources: US NREL PVWatts® v8 · EU PVGIS · DWD (Updated: 11/2026)</span>
+        <a href="#us-calculator">US & EU Calculator →</a>
+        <a href="#state-atlas">US & EU Solar Atlas →</a>
         <a href="/">🇩🇪 Deutsche Version (DE) →</a>
       </div>
 
@@ -251,25 +431,25 @@ const enSchema = [
 
         <nav class="ax-nav ax-nav--desktop" aria-label="Main Navigation">
           <div class="ax-nav__item">
-            <a href="#us-calculator" class="ax-nav__link active">US Solar & ITC Calculator</a>
+            <a href="#us-calculator" class="ax-nav__link active">US & EU Solar Calculator</a>
           </div>
           <div class="ax-nav__item">
             <a href="#state-atlas" class="ax-nav__link">US State Atlas (NREL)</a>
           </div>
           <div class="ax-nav__item">
-            <a href="#cost-benchmarks" class="ax-nav__link">2026 Price Benchmarks</a>
+            <a href="#eu-atlas" class="ax-nav__link">EU Country Atlas (PVGIS)</a>
           </div>
           <div class="ax-nav__item">
-            <a href="#battery-comparison" class="ax-nav__link">LFP Storage & Backup</a>
+            <a href="#cost-benchmarks" class="ax-nav__link">2026 Price Matrix</a>
           </div>
           <div class="ax-nav__item">
-            <a href="/" class="ax-nav__link">DE / DACH Portal</a>
+            <a href="/" class="ax-nav__link">DE Portal</a>
           </div>
         </nav>
 
         <div class="ax-header__cta">
-          <a href="#us-calculator" class="ax-btn ax-btn--dark ax-btn--sm">
-            Calculate 30% Tax Credit →
+          <a href="#us-calculator" class="ax-btn ax-btn--primary" style="padding: 10px 18px; font-size: 13.5px;">
+            Launch Solar Calculator →
           </a>
         </div>
       </div>
@@ -279,36 +459,36 @@ const enSchema = [
       <!-- HERO SECTION -->
       <section class="ax-section" style="padding-top: 56px; padding-bottom: 56px; background: var(--bg-soft); border-bottom: 1px solid var(--border-hairline);">
         <div class="container">
-          <div style="display: grid; grid-template-columns: 1.25fr 0.95fr; gap: 48px; align-items: center;">
+          <div class="en-hero-grid" style="display: grid; grid-template-columns: 1.25fr 0.95fr; gap: 48px; align-items: center;">
             <div>
-              <span class="ax-eyebrow">SOLARMETRIK International · NREL PVWatts® & IRS § 25D Reference Data (11/2026)</span>
+              <span class="ax-eyebrow">SOLARMETRIK International · US NREL PVWatts® & European PVGIS Telemetry (11/2026)</span>
               <h1 class="ax-h1" style="margin-bottom: 20px;">
-                INDEPENDENT SOLAR ROI, BATTERY SIZING & 30% TAX CREDIT ENGINE FOR US & EU HOMEOWNERS
+                INDEPENDENT SOLAR ROI, BATTERY SIZING & TAX CREDIT ENGINE FOR US & EU HOMEOWNERS
               </h1>
               <p class="ax-sub" style="margin-bottom: 28px;">
-                Precision photovoltaic telemetry and 25-year financial modeling based on NREL National Solar Radiation Database (NSRDB) and European PVGIS records. Calculate your exact rooftop yield, whole-home LFP battery backup autonomy, and 30% Federal Residential Clean Energy Credit (§ 25D).
+                Precision photovoltaic telemetry and 25-year financial modeling based on US NREL National Solar Radiation Database (NSRDB) and European PVGIS / DWD records. Calculate your exact rooftop yield, whole-home LFP battery backup autonomy, <strong>US 30% Federal Tax Credit (IRS § 25D)</strong>, and <strong>European 0% VAT / Feed-In Incentives</strong>.
               </p>
               <div style="display: flex; flex-wrap: wrap; gap: 14px;">
-                <a href="#us-calculator" class="ax-btn ax-btn--dark">
-                  Launch US Solar & 30% ITC Calculator →
+                <a href="#us-calculator" class="ax-btn ax-btn--primary">
+                  Launch US & EU Solar Calculator →
                 </a>
-                <a href="#state-atlas" class="ax-btn ax-btn--outline-dark">
-                  View US State Solar Benchmarks
+                <a href="#state-atlas" class="ax-btn ax-btn--light">
+                  Compare US & EU Solar Benchmarks ↓
                 </a>
               </div>
 
               <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; margin-top: 36px; padding-top: 24px; border-top: 1px solid var(--border-hairline);">
                 <div>
-                  <div style="font-family: var(--font-condensed); font-size: 28px; font-weight: 700; color: var(--accent-blue);">30% UNCAPPED</div>
-                  <div style="font-size: 13px; color: var(--text-secondary);">Federal Tax Credit (IRS § 25D) for PV + Battery Storage ≥ 3 kWh</div>
+                  <div style="font-family: var(--font-condensed); font-size: 28px; font-weight: 700; color: var(--accent-blue);">30% US / 0% VAT EU</div>
+                  <div style="font-size: 13px; color: var(--text-secondary);">US IRS § 25D Tax Credit & EU 0% VAT Exemption (DE, AT, NL, UK)</div>
                 </div>
                 <div>
-                  <div style="font-family: var(--font-condensed); font-size: 28px; font-weight: 700; color: var(--accent-green);">5.4 – 7.8 YRS</div>
-                  <div style="font-size: 13px; color: var(--text-secondary);">Average US Residential Payback Window (CA, FL, AZ, TX, NY)</div>
+                  <div style="font-family: var(--font-condensed); font-size: 28px; font-weight: 700; color: var(--accent-green);">5.4 – 8.5 YRS</div>
+                  <div style="font-size: 13px; color: var(--text-secondary);">Verified Residential Turnkey Payback Window Across US & EU</div>
                 </div>
                 <div>
                   <div style="font-family: var(--font-condensed); font-size: 28px; font-weight: 700; color: var(--text-primary);">NREL + PVGIS</div>
-                  <div style="font-size: 13px; color: var(--text-secondary);">Verified TMY3 Satellite Irradiance & Utility Tariff Modeling</div>
+                  <div style="font-size: 13px; color: var(--text-secondary);">Satellite Irradiance & Time-of-Use Battery Storage Modeling</div>
                 </div>
               </div>
             </div>
@@ -324,138 +504,173 @@ const enSchema = [
         </div>
       </section>
 
-      <!-- INTERACTIVE US SOLAR & 30% ITC CALCULATOR -->
+      <!-- INTERACTIVE US & EU SOLAR CALCULATOR -->
       <section class="ax-section" id="us-calculator">
         <div class="container">
           <div style="max-width: 820px; margin-bottom: 36px;">
-            <span class="ax-eyebrow">Interactive Engineering Tool · IRS Form 5695 (§ 25D) & NREL PVWatts®</span>
-            <h2 class="ax-h2">US RESIDENTIAL SOLAR YIELD, BATTERY BACKUP & 30% TAX CREDIT CALCULATOR</h2>
+            <span class="ax-eyebrow">Interactive Engineering Tool · US NREL PVWatts® (IRS § 25D) & EU PVGIS (0% VAT / EEG)</span>
+            <h2 class="ax-h2">US & EUROPEAN RESIDENTIAL SOLAR YIELD, BATTERY BACKUP & INCENTIVE CALCULATOR</h2>
             <p class="ax-sub">
-              Select your state, monthly electric bill, and roof orientation to simulate your recommended system size (kW), Federal 30% Tax Credit deduction, and 25-year cumulative utility savings.
+              Switch between <strong>United States ($ USD)</strong> and <strong>Europe (€ EUR / £ GBP)</strong> markets below to simulate your recommended solar array size, LFP battery storage, tax credit/VAT exemption, and 25-year net return.
             </p>
           </div>
 
-          <div style="display: grid; grid-template-columns: 1.05fr 0.95fr; gap: 36px; align-items: start; background: var(--bg-soft); padding: 36px; border-radius: var(--radius-photo); border: 1px solid var(--border-hairline);">
+          <div class="calc-grid-light">
             <!-- Calculator Inputs -->
-            <div style="display: flex; flex-direction: column; gap: 22px;">
+            <div class="calc-card-light" style="display: flex; flex-direction: column; gap: 22px;">
+              <div>
+                <div style="font-weight: 600; font-size: 14px; margin-bottom: 8px;">
+                  1. Quick Region Filter
+                </div>
+                <div class="preset-row" style="margin-bottom: 0;">
+                  <button type="button" class="preset-chip active" id="btn-region-all">All Markets (US + EU)</button>
+                  <button type="button" class="preset-chip" id="btn-region-us">🇺🇸 United States ($)</button>
+                  <button type="button" class="preset-chip" id="btn-region-eu">🇪🇺 Europe (€ / £)</button>
+                </div>
+              </div>
+
               <div>
                 <label for="us-state-select" style="display: block; font-weight: 600; font-size: 14px; margin-bottom: 8px;">
-                  1. Select US State / Utility Region (NREL Irradiance Profile)
+                  2. Select US State or European Country (NREL / PVGIS Irradiance Profile)
                 </label>
                 <select
                   id="us-state-select"
-                  style="width: 100%; padding: 12px 14px; border-radius: 6px; border: 1px solid var(--border-button); background: #fff; font-size: 15px;"
+                  class="form-select"
                 >
-                  {usStatesData.map((s, idx) => (
-                    <option
-                      value={s.code}
-                      data-yield={s.yieldKwhKw}
-                      data-rate={s.elecRateUsd}
-                      data-cost={s.costPerWattUsd}
-                      data-incentive={s.stateIncentive}
-                      data-battery={s.recommendedBatteryKwh}
-                      selected={idx === 1}
-                    >
-                      {s.name} — {s.yieldKwhKw} kWh/kW/yr (${s.elecRateUsd.toFixed(2)}/kWh avg)
-                    </option>
-                  ))}
+                  <optgroup label="🇺🇸 United States Markets (NREL PVWatts® · 30% Federal ITC)" id="optgroup-us">
+                    {usStatesData.map((s, idx) => (
+                      <option
+                        value={s.code}
+                        data-region={s.region}
+                        data-currency={s.currency}
+                        data-yield={s.yieldKwhKw}
+                        data-rate={s.elecRate}
+                        data-cost={s.costPerWatt}
+                        data-batcost={s.batCost}
+                        data-subpct={s.subsidyPct}
+                        data-sublabel={s.subsidyLabel}
+                        data-incentive={s.stateIncentive}
+                        selected={idx === 1}
+                      >
+                        {s.name} — {s.yieldKwhKw} kWh/kW/yr ({s.currency}{s.elecRate.toFixed(2)}/kWh)
+                      </option>
+                    ))}
+                  </optgroup>
+                  <optgroup label="🇪🇺 European Markets (EU PVGIS / DWD · 0% VAT & Feed-In)" id="optgroup-eu">
+                    {euCountriesData.map((s) => (
+                      <option
+                        value={s.code}
+                        data-region={s.region}
+                        data-currency={s.currency}
+                        data-yield={s.yieldKwhKw}
+                        data-rate={s.elecRate}
+                        data-cost={s.costPerWatt}
+                        data-batcost={s.batCost}
+                        data-subpct={s.subsidyPct}
+                        data-sublabel={s.subsidyLabel}
+                        data-incentive={s.stateIncentive}
+                      >
+                        {s.name} — {s.yieldKwhKw} kWh/kWp/yr ({s.currency}{s.elecRate.toFixed(2)}/kWh)
+                      </option>
+                    ))}
+                  </optgroup>
                 </select>
               </div>
 
               <div>
-                <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
-                  <label for="us-bill-range" style="font-weight: 600; font-size: 14px;">
-                    2. Average Monthly Electric Bill ($ USD)
+                <div class="slider-header">
+                  <label for="us-bill-range" style="font-weight: 600;">
+                    3. Average Monthly Electric Bill
                   </label>
                   <strong id="us-bill-display" style="color: var(--accent-blue); font-size: 16px;">$240 / month</strong>
                 </div>
                 <input
                   type="range"
                   id="us-bill-range"
+                  class="slider-input"
                   min="90"
                   max="650"
                   step="10"
                   value="240"
-                  style="width: 100%; accent-color: var(--accent-blue);"
                 />
                 <div style="display: flex; justify-content: space-between; font-size: 12px; color: var(--text-muted); margin-top: 4px;">
-                  <span>$90/mo (Small Home)</span>
-                  <span>$250/mo (Average Family)</span>
-                  <span>$650/mo (Large Home + Pool/EV)</span>
+                  <span>90/mo (Compact Home)</span>
+                  <span>240/mo (Family Home)</span>
+                  <span>650/mo (Large Home + EV/Heat Pump)</span>
                 </div>
               </div>
 
               <div>
-                <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
-                  <label for="us-system-kw" style="font-weight: 600; font-size: 14px;">
-                    3. Target Solar Array Size (kW DC)
+                <div class="slider-header">
+                  <label for="us-system-kw" style="font-weight: 600;">
+                    4. Target Solar Array Size (kW / kWp)
                   </label>
                   <strong id="us-kw-display" style="color: var(--accent-blue); font-size: 16px;">10.0 kW (24 Panels)</strong>
                 </div>
                 <input
                   type="range"
                   id="us-system-kw"
+                  class="slider-input"
                   min="5"
                   max="20"
                   step="1"
                   value="10"
-                  style="width: 100%; accent-color: var(--accent-blue);"
                 />
               </div>
 
               <div>
                 <label style="display: flex; align-items: center; gap: 10px; font-weight: 600; font-size: 14px; cursor: pointer;">
                   <input type="checkbox" id="us-include-battery" checked style="width: 18px; height: 18px; accent-color: var(--accent-blue);" />
-                  <span>Include 13.5 kWh LFP Whole-Home Battery Backup (Qualifies for 30% Federal ITC)</span>
+                  <span>Include LFP Whole-Home Battery Storage (10–13.5 kWh Hybrid System)</span>
                 </label>
               </div>
 
-              <div style="padding: 16px; background: #ffffff; border-radius: 8px; border: 1px solid var(--border-hairline);">
-                <div style="font-size: 12px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-muted); font-weight: 600; margin-bottom: 4px;">
-                  Active Regional & Federal Incentives (11/2026):
+              <div class="clean-summary-box" style="margin: 0; padding: 16px 20px;">
+                <div style="font-size: 11.5px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--accent-blue); font-weight: 700; margin-bottom: 4px;">
+                  Active Regional & National Incentives (11/2026):
                 </div>
                 <div id="us-state-incentive-text" style="font-size: 14px; font-weight: 500; color: var(--text-primary);">
-                  100% Solar Sales Tax & Property Tax Exemption + Full 1:1 Retail Net Metering + 30% ITC
+                  100% Solar Sales & Property Tax Exemption + 1:1 Net Metering + 30% ITC
                 </div>
               </div>
             </div>
 
             <!-- Calculator Results Card -->
-            <div style="background: #ffffff; padding: 32px; border-radius: var(--radius-photo); border: 1px solid var(--border-hairline);">
-              <div style="font-size: 12px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent-blue); font-weight: 700; margin-bottom: 10px;">
+            <div class="calc-summary-light">
+              <div style="font-size: 12px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent-blue); font-weight: 700; margin-bottom: 12px;">
                 SOLARMETRIK Engineering Simulation Result
               </div>
 
               <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 18px; padding-bottom: 20px; border-bottom: 1px solid var(--border-hairline);">
                 <div>
-                  <div style="font-size: 13px; color: var(--text-secondary);">Estimated Turnkey Cost</div>
-                  <div id="res-gross-cost" style="font-family: var(--font-condensed); font-size: 28px; font-weight: 700;">$34,300</div>
+                  <div style="font-size: 13px; color: var(--text-secondary);">Gross System Value</div>
+                  <div id="res-gross-cost" style="font-family: var(--font-condensed); font-size: 30px; font-weight: 700;">$34,000</div>
                 </div>
                 <div>
-                  <div style="font-size: 13px; color: var(--accent-green); font-weight: 600;">30% Federal Tax Credit (§ 25D)</div>
-                  <div id="res-itc-credit" style="font-family: var(--font-condensed); font-size: 28px; font-weight: 700; color: var(--accent-green);">-$10,290</div>
+                  <div id="res-itc-label" style="font-size: 13px; color: var(--accent-green); font-weight: 600;">30% Federal Tax Credit (§ 25D)</div>
+                  <div id="res-itc-credit" style="font-family: var(--font-condensed); font-size: 30px; font-weight: 700; color: var(--accent-green);">-$10,200</div>
                 </div>
               </div>
 
               <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 18px; padding: 20px 0; border-bottom: 1px solid var(--border-hairline);">
                 <div>
-                  <div style="font-size: 13px; color: var(--text-secondary);">Net Investment After 30% ITC</div>
-                  <div id="res-net-cost" style="font-family: var(--font-condensed); font-size: 32px; font-weight: 700; color: var(--accent-blue);">$24,010</div>
+                  <div style="font-size: 13px; color: var(--text-secondary);">Net Turnkey Investment</div>
+                  <div id="res-net-cost" style="font-family: var(--font-condensed); font-size: 34px; font-weight: 700; color: var(--accent-blue);">$23,800</div>
                 </div>
                 <div>
-                  <div style="font-size: 13px; color: var(--text-secondary);">Annual Solar Production</div>
-                  <div id="res-annual-kwh" style="font-family: var(--font-condensed); font-size: 32px; font-weight: 700;">15,900 kWh/yr</div>
+                  <div style="font-size: 13px; color: var(--text-secondary);">Annual Solar Generation</div>
+                  <div id="res-annual-kwh" style="font-family: var(--font-condensed); font-size: 34px; font-weight: 700;">15,900 kWh/yr</div>
                 </div>
               </div>
 
               <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 18px; padding-top: 20px;">
                 <div>
                   <div style="font-size: 13px; color: var(--text-secondary);">Estimated Year-1 Bill Savings</div>
-                  <div id="res-yr1-savings" style="font-family: var(--font-condensed); font-size: 26px; font-weight: 700; color: var(--accent-green);">$2,544 / yr</div>
+                  <div id="res-yr1-savings" style="font-family: var(--font-condensed); font-size: 28px; font-weight: 700; color: var(--accent-green);">$2,544 / yr</div>
                 </div>
                 <div>
-                  <div style="font-size: 13px; color: var(--text-secondary);">25-Year Cumulative Net Return</div>
-                  <div id="res-25yr-savings" style="font-family: var(--font-condensed); font-size: 26px; font-weight: 700; color: var(--accent-green);">+$68,400</div>
+                  <div style="font-size: 13px; color: var(--text-secondary);">25-Year Cumulative Net Profit</div>
+                  <div id="res-25yr-savings" style="font-family: var(--font-condensed); font-size: 28px; font-weight: 700; color: var(--accent-green);">+$68,400</div>
                 </div>
               </div>
             </div>
@@ -463,40 +678,40 @@ const enSchema = [
         </div>
       </section>
 
-      <!-- US STATE SOLAR ATLAS TABLE -->
-      <section class="ax-section" id="state-atlas" style="background: var(--bg-soft);">
+      <!-- 1. US STATE SOLAR ATLAS TABLE -->
+      <section class="ax-section ax-section--soft" id="state-atlas">
         <div class="container">
-          <div style="max-width: 820px; margin-bottom: 32px;">
-            <span class="ax-eyebrow">NREL NSRDB Telemetry · State-by-State Solar & Storage Comparison</span>
+          <div class="ax-section__head">
+            <span class="ax-eyebrow">🇺🇸 North America · NREL NSRDB Telemetry & IRS § 25D Reference</span>
             <h2 class="ax-h2">2026 US SOLAR ATLAS: TOP RESIDENTIAL STATES BY SOLAR YIELD & REBATES</h2>
             <p class="ax-sub">
               Comparison of specific photovoltaic yield (kWh per kW installed), average retail utility rates, and state-level tax exemptions across primary US residential solar markets.
             </p>
           </div>
 
-          <div class="ax-table-wrap">
-            <table class="ax-table">
+          <div class="en-table-card">
+            <table class="en-data-table">
               <thead>
                 <tr>
-                  <th>State / Utility Market</th>
-                  <th>Major Metro Areas Covered</th>
-                  <th>Specific Yield (NREL)</th>
-                  <th>Avg Utility Rate</th>
+                  <th>US State / Utility Market</th>
+                  <th>Major Metro Areas</th>
+                  <th>Specific Yield</th>
+                  <th>Avg Tariff</th>
                   <th>Recommended Storage</th>
                   <th>State & Federal Incentives (2026)</th>
-                  <th>SME-2026 Score</th>
+                  <th>SME Score</th>
                 </tr>
               </thead>
               <tbody>
                 {usStatesData.map((s) => (
                   <tr>
-                    <td><strong>{s.name}</strong></td>
+                    <td><strong style="color: var(--text-primary);">{s.name}</strong></td>
                     <td>{s.cities}</td>
-                    <td><strong>{s.yieldKwhKw} kWh/kW</strong></td>
-                    <td>${s.elecRateUsd.toFixed(2)}/kWh</td>
+                    <td><strong style="color: var(--accent-blue);">{s.yieldKwhKw} kWh/kW</strong></td>
+                    <td><strong style="color: var(--text-primary);">${s.elecRate.toFixed(2)}/kWh</strong></td>
                     <td>{s.recommendedBatteryKwh} kWh LFP</td>
                     <td>{s.stateIncentive}</td>
-                    <td><span class="ax-badge ax-badge--blue">{s.smeScore}/100</span></td>
+                    <td><span class="en-score-pill">{s.smeScore}/100</span></td>
                   </tr>
                 ))}
               </tbody>
@@ -505,40 +720,84 @@ const enSchema = [
         </div>
       </section>
 
-      <!-- 2026 SYSTEM COST & 30% ITC BENCHMARK TABLE -->
-      <section class="ax-section" id="cost-benchmarks">
+      <!-- 2. EUROPEAN SOLAR ATLAS TABLE (EU & UK) -->
+      <section class="ax-section" id="eu-atlas">
         <div class="container">
-          <div style="max-width: 820px; margin-bottom: 32px;">
-            <span class="ax-eyebrow">2026 Turnkey Pricing Matrix · IRS Form 5695 (§ 25D)</span>
-            <h2 class="ax-h2">SOLAR SYSTEM COST & 30% TAX CREDIT BENCHMARKS (6 KW TO 15 KW)</h2>
+          <div class="ax-section__head">
+            <span class="ax-eyebrow">🇪🇺 Europe & UK · EU PVGIS / DWD Irradiance & 0% VAT Directives</span>
+            <h2 class="ax-h2">2026 EUROPEAN SOLAR ATLAS: YIELD, 0% VAT & FEED-IN TARIFFS BY COUNTRY</h2>
             <p class="ax-sub">
-              National median turnkey installation costs before and after the 30% Federal Residential Clean Energy Credit, including standalone rooftop arrays and whole-home LFP battery backup bundles.
+              European photovoltaic performance benchmarks based on EU Joint Research Centre (PVGIS) and DWD radiation series, including 0% VAT exemptions and national feed-in frameworks.
             </p>
           </div>
 
-          <div class="ax-table-wrap">
-            <table class="ax-table">
+          <div class="en-table-card">
+            <table class="en-data-table">
+              <thead>
+                <tr>
+                  <th>European Country</th>
+                  <th>Major Cities Covered</th>
+                  <th>Specific Yield</th>
+                  <th>Avg Household Tariff</th>
+                  <th>Recommended Storage</th>
+                  <th>National VAT & Feed-In Incentives (2026)</th>
+                  <th>SME Score</th>
+                </tr>
+              </thead>
+              <tbody>
+                {euCountriesData.map((s) => (
+                  <tr>
+                    <td><strong style="color: var(--text-primary);">{s.name}</strong></td>
+                    <td>{s.cities}</td>
+                    <td><strong style="color: var(--accent-blue);">{s.yieldKwhKw} kWh/kWp</strong></td>
+                    <td><strong style="color: var(--text-primary);">{s.currency}{s.elecRate.toFixed(2)}/kWh</strong></td>
+                    <td>{s.recommendedBatteryKwh} kWh LFP</td>
+                    <td>{s.stateIncentive}</td>
+                    <td><span class="en-score-pill">{s.smeScore}/100</span></td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- 3. 2026 US & EU SYSTEM COST BENCHMARK TABLE -->
+      <section class="ax-section ax-section--soft" id="cost-benchmarks">
+        <div class="container">
+          <div class="ax-section__head">
+            <span class="ax-eyebrow">2026 Turnkey Pricing Matrix · US ($ USD) & European (€ EUR) Benchmarks</span>
+            <h2 class="ax-h2">US & EU SOLAR SYSTEM COST & TAX INCENTIVE BENCHMARKS (6 KW TO 15 KW)</h2>
+            <p class="ax-sub">
+              Side-by-side comparison of median turnkey installation costs before and after the US 30% Federal Residential Clean Energy Credit (§ 25D) and European 0% VAT statutory exemptions.
+            </p>
+          </div>
+
+          <div class="en-table-card">
+            <table class="en-data-table">
               <thead>
                 <tr>
                   <th>System Configuration</th>
+                  <th>Market Region</th>
                   <th>Roof Footprint</th>
-                  <th>Gross Cost (Before ITC)</th>
-                  <th>30% Federal Tax Credit</th>
-                  <th>Net Cost After ITC</th>
+                  <th>Gross Value</th>
+                  <th>Tax Credit / VAT Saving</th>
+                  <th>Net Turnkey Cost</th>
                   <th>Annual Generation</th>
-                  <th>Est. 25-Year Savings</th>
+                  <th>Est. Payback</th>
                 </tr>
               </thead>
               <tbody>
                 {usCostTable.map((r) => (
                   <tr>
-                    <td><strong>{r.size}</strong></td>
+                    <td><strong style="color: var(--text-primary);">{r.size}</strong></td>
+                    <td><strong style="color: var(--accent-blue);">{r.region}</strong></td>
                     <td>{r.panels}</td>
-                    <td>{r.grossUsd}</td>
-                    <td style="color: var(--accent-green); font-weight: 600;">{r.itcCredit}</td>
-                    <td><strong>{r.netUsd}</strong></td>
+                    <td>{r.gross}</td>
+                    <td style="color: var(--accent-green); font-weight: 600;">{r.incentive}</td>
+                    <td><strong style="color: var(--text-primary);">{r.net}</strong></td>
                     <td>{r.annualYield}</td>
-                    <td style="color: var(--accent-green); font-weight: 600;">{r.savings25Yr}</td>
+                    <td style="color: var(--accent-green); font-weight: 600;">{r.payback}</td>
                   </tr>
                 ))}
               </tbody>
@@ -548,59 +807,65 @@ const enSchema = [
       </section>
 
       <!-- WHOLE-HOME BATTERY & MODULAR SOLAR GENERATOR COMPARISON -->
-      <section class="ax-section" id="battery-comparison" style="background: var(--bg-soft);">
+      <section class="ax-section" id="battery-comparison">
         <div class="container">
-          <div style="max-width: 820px; margin-bottom: 32px;">
+          <div class="ax-section__head">
             <span class="ax-eyebrow">Home Energy Storage & Off-Grid Resilience · LFP Chemistry Benchmarks</span>
-            <h2 class="ax-h2">WHOLE-HOME BATTERY BACKUP & SOLAR GENERATOR ARCHITECTURE (2026)</h2>
+            <h2 class="ax-h2">WHOLE-HOME BATTERY BACKUP & SOLAR GENERATOR ARCHITECTURE (US & EU 2026)</h2>
             <p class="ax-sub">
-              Under updated utility Time-of-Use (TOU) tariffs (such as California NEM 3.0) and severe weather grid outages in Florida, Texas, and Louisiana, pairing rooftop or modular solar panels with LiFePO4 (LFP) storage maximizes self-consumption and backup security.
+              Under US Time-of-Use (TOU) utility tariffs (California NEM 3.0), severe weather grid outages (Florida, Texas, Louisiana), and European dynamic spot-market pricing (§ 14a EnWG / § 51 EEG), pairing solar with LiFePO4 (LFP) storage maximizes self-consumption and backup security.
             </p>
           </div>
 
-          <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;">
-            <div style="background: #fff; padding: 28px; border-radius: var(--radius-photo); border: 1px solid var(--border-hairline);">
-              <span class="ax-badge ax-badge--blue" style="margin-bottom: 12px; display: inline-block;">Category 1 · Hardwired Hybrid Storage</span>
-              <h3 style="font-family: var(--font-condensed); font-size: 24px; margin-bottom: 10px;">
+          <div class="ax-cards-3">
+            <div class="kpi-card">
+              <div style="font-size: 11.5px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--accent-blue); font-weight: 700; margin-bottom: 8px;">
+                Category 1 · Hardwired Hybrid Storage
+              </div>
+              <h3 class="ax-h3">
                 ROOFTOP PV + 10–15 KWH LFP WALL BATTERY
               </h3>
               <p style="font-size: 14.5px; color: var(--text-secondary); margin-bottom: 16px;">
-                Ideal for single-family homeowners seeking automated daily peak-shaving, net-billing export optimization, and seamless 200A whole-home transfer switch backup.
+                Ideal for US & EU single-family homeowners seeking automated daily peak-shaving, dynamic tariff optimization, and seamless whole-home transfer switch backup.
               </p>
               <ul style="font-size: 14px; display: flex; flex-direction: column; gap: 8px; color: var(--text-primary);">
                 <li>✓ <strong>Cycle Life:</strong> 6,000–8,000 cycles (15-year warranty)</li>
-                <li>✓ <strong>Tax Credit:</strong> Full 30% IRS § 25D credit eligible</li>
-                <li>✓ <strong>Round-Trip Efficiency:</strong> 94.5% – 96.2% (DC-coupled)</li>
+                <li>✓ <strong>Tax Incentive:</strong> 30% US ITC / 0% EU VAT eligible</li>
+                <li>✓ <strong>Round-Trip Efficiency:</strong> 94.5% – 96.2% (HTW Class A)</li>
               </ul>
             </div>
 
-            <div style="background: #fff; padding: 28px; border-radius: var(--radius-photo); border: 1px solid var(--border-hairline);">
-              <span class="ax-badge ax-badge--blue" style="margin-bottom: 12px; display: inline-block;">Category 2 · Modular Whole-Home Backup</span>
-              <h3 style="font-family: var(--font-condensed); font-size: 24px; margin-bottom: 10px;">
-                EXPANDABLE SOLAR GENERATORS (3.6 – 30 KWH)
+            <div class="kpi-card">
+              <div style="font-size: 11.5px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--accent-blue); font-weight: 700; margin-bottom: 8px;">
+                Category 2 · Modular Whole-Home & Balcony Storage
+              </div>
+              <h3 class="ax-h3">
+                SOLAR GENERATORS & PLUG-IN SYSTEMS (2 – 30 KWH)
               </h3>
               <p style="font-size: 14.5px; color: var(--text-secondary); margin-bottom: 16px;">
-                Plug-and-play high-voltage LFP ecosystems (EcoFlow DELTA Pro Ultra, BLUETTI EP900/AC500, Jackery HomePower) with Smart Home Panel integration and 120V/240V split-phase output.
+                Plug-and-play LFP ecosystems (EcoFlow DELTA Pro Ultra / PowerStream, BLUETTI, Jackery) for US 240V split-phase home backup and European 800W/2000W plug-in solar systems.
               </p>
               <ul style="font-size: 14px; display: flex; flex-direction: column; gap: 8px; color: var(--text-primary);">
                 <li>✓ <strong>No Permit Delays:</strong> Rapid setup with transfer switch</li>
                 <li>✓ <strong>Solar Input:</strong> Up to 5,600W–16,800W high-PV input</li>
-                <li>✓ <strong>Tax Credit:</strong> Systems ≥ 3 kWh qualify for 30% ITC</li>
+                <li>✓ <strong>Incentives:</strong> US ≥ 3 kWh 30% ITC & EU 0% VAT</li>
               </ul>
             </div>
 
-            <div style="background: #fff; padding: 28px; border-radius: var(--radius-photo); border: 1px solid var(--border-hairline);">
-              <span class="ax-badge ax-badge--blue" style="margin-bottom: 12px; display: inline-block;">Category 3 · DIY & Off-Grid Kits</span>
-              <h3 style="font-family: var(--font-condensed); font-size: 24px; margin-bottom: 10px;">
+            <div class="kpi-card">
+              <div style="font-size: 11.5px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--accent-blue); font-weight: 700; margin-bottom: 8px;">
+                Category 3 · DIY & Off-Grid Kits
+              </div>
+              <h3 class="ax-h3">
                 BIFACIAL N-TYPE PALLETS & 48V RACK BATTERIES
               </h3>
               <p style="font-size: 14.5px; color: var(--text-secondary); margin-bottom: 16px;">
-                Direct-to-homeowner Tier-1 solar panel pallets (400W–550W N-Type TOPCon), hybrid split-phase inverters, and 48V server-rack LiFePO4 banks for rural properties, workshops, and estates.
+                Direct-to-homeowner Tier-1 solar panel pallets (420W–550W N-Type TOPCon), hybrid inverters, and 48V server-rack LiFePO4 banks for rural properties, workshops, and estates.
               </p>
               <ul style="font-size: 14px; display: flex; flex-direction: column; gap: 8px; color: var(--text-primary);">
                 <li>✓ <strong>Hardware Cost:</strong> ~50% lower per watt vs. turnkey</li>
                 <li>✓ <strong>Scalability:</strong> Parallel up to 60+ kWh storage</li>
-                <li>✓ <strong>Documentation:</strong> Full UL9540 / NEC 2023 compliance</li>
+                <li>✓ <strong>Standards:</strong> Full UL9540 (US) & VDE-AR-N 4105 (EU)</li>
               </ul>
             </div>
           </div>
@@ -633,63 +898,119 @@ const enSchema = [
         const kwRange = document.getElementById('us-system-kw');
         const batCheck = document.getElementById('us-include-battery');
 
+        const btnAll = document.getElementById('btn-region-all');
+        const btnUs = document.getElementById('btn-region-us');
+        const btnEu = document.getElementById('btn-region-eu');
+        const optgroupUs = document.getElementById('optgroup-us');
+        const optgroupEu = document.getElementById('optgroup-eu');
+
         const billDisp = document.getElementById('us-bill-display');
         const kwDisp = document.getElementById('us-kw-display');
         const incText = document.getElementById('us-state-incentive-text');
 
         const resGross = document.getElementById('res-gross-cost');
+        const resItcLabel = document.getElementById('res-itc-label');
         const resItc = document.getElementById('res-itc-credit');
         const resNet = document.getElementById('res-net-cost');
         const resKwh = document.getElementById('res-annual-kwh');
         const resYr1 = document.getElementById('res-yr1-savings');
         const res25Yr = document.getElementById('res-25yr-savings');
 
-        function fmtUsd(n) {
-          return '$' + Math.round(n).toLocaleString('en-US');
+        function fmtCur(n, cur) {
+          return cur + Math.round(n).toLocaleString('en-US');
         }
+
+        function setRegionFilter(mode) {
+          [btnAll, btnUs, btnEu].forEach(function (b) {
+            if (b) b.classList.remove('active');
+          });
+          if (mode === 'US' && btnUs) {
+            btnUs.classList.add('active');
+            if (optgroupUs) optgroupUs.disabled = false;
+            if (optgroupEu) optgroupEu.disabled = true;
+            if (stateSel.options[stateSel.selectedIndex].getAttribute('data-region') !== 'US') {
+              stateSel.value = 'US-FL';
+            }
+          } else if (mode === 'EU' && btnEu) {
+            btnEu.classList.add('active');
+            if (optgroupUs) optgroupUs.disabled = true;
+            if (optgroupEu) optgroupEu.disabled = false;
+            if (stateSel.options[stateSel.selectedIndex].getAttribute('data-region') !== 'EU') {
+              stateSel.value = 'EU-DE';
+            }
+          } else if (btnAll) {
+            btnAll.classList.add('active');
+            if (optgroupUs) optgroupUs.disabled = false;
+            if (optgroupEu) optgroupEu.disabled = false;
+          }
+          recalc();
+        }
+
+        if (btnAll) btnAll.addEventListener('click', function () { setRegionFilter('ALL'); });
+        if (btnUs) btnUs.addEventListener('click', function () { setRegionFilter('US'); });
+        if (btnEu) btnEu.addEventListener('click', function () { setRegionFilter('EU'); });
 
         function recalc() {
           if (!stateSel || !billRange || !kwRange || !batCheck) return;
           const opt = stateSel.options[stateSel.selectedIndex];
+          const cur = opt.getAttribute('data-currency') || '$';
+          const region = opt.getAttribute('data-region') || 'US';
           const yieldPerKw = parseFloat(opt.getAttribute('data-yield') || '1590');
           const rate = parseFloat(opt.getAttribute('data-rate') || '0.16');
           const costPerWatt = parseFloat(opt.getAttribute('data-cost') || '2.58');
+          const batCostBase = parseFloat(opt.getAttribute('data-batcost') || '8200');
+          const subPct = parseFloat(opt.getAttribute('data-subpct') || '30');
+          const subLabel = opt.getAttribute('data-sublabel') || '30% Federal Tax Credit (§ 25D)';
           const incentive = opt.getAttribute('data-incentive') || '';
 
           const bill = parseFloat(billRange.value || '240');
           const kw = parseFloat(kwRange.value || '10');
           const hasBat = batCheck.checked;
 
-          const panels = Math.round((kw * 1000) / 415);
-          billDisp.textContent = '$' + bill + ' / month';
-          kwDisp.textContent = kw.toFixed(1) + ' kW (' + panels + ' Panels)';
+          const panels = Math.round((kw * 1000) / 425);
+          billDisp.textContent = cur + bill + ' / month';
+          kwDisp.textContent = kw.toFixed(1) + (region === 'EU' ? ' kWp (' : ' kW (') + panels + ' Panels)';
           incText.textContent = incentive;
+          if (resItcLabel) resItcLabel.textContent = subLabel;
 
-          const pvCost = kw * 1000 * costPerWatt;
-          const batCost = hasBat ? 8500 : 0;
-          const gross = pvCost + batCost;
-          const itc = gross * 0.30;
-          const net = gross - itc;
+          let gross = 0;
+          let savingAmt = 0;
+          let net = 0;
+
+          if (region === 'US') {
+            const pvCost = kw * 1000 * costPerWatt;
+            const batCost = hasBat ? batCostBase : 0;
+            gross = pvCost + batCost;
+            savingAmt = gross * (subPct / 100);
+            net = gross - savingAmt;
+          } else {
+            // In EU, costPerWatt is already net 0% VAT turnkey; gross includes the waived VAT/tax benefit
+            const pvNet = kw * 1000 * costPerWatt;
+            const batNet = hasBat ? batCostBase : 0;
+            net = pvNet + batNet;
+            savingAmt = net * (subPct / 100);
+            gross = net + savingAmt;
+          }
 
           const annualKwh = Math.round(kw * yieldPerKw);
-          const selfUseRatio = hasBat ? 0.92 : 0.72;
-          const maxBillAnnual = bill * 12;
-          const rawSavings = annualKwh * rate * selfUseRatio;
-          const yr1Savings = Math.min(maxBillAnnual * 0.96, rawSavings);
+          const selfUseRatio = hasBat ? 0.84 : 0.62;
+          const feedInPrice = region === 'EU' ? 0.08 : 0.05;
+          const selfSaved = Math.min(bill * 12 * 0.94, annualKwh * selfUseRatio * rate);
+          const exportRev = annualKwh * (1 - selfUseRatio) * feedInPrice;
+          const yr1Savings = selfSaved + exportRev;
 
-          // 25-year cumulative with 3.2% annual utility inflation minus net cost
           let total25 = 0;
           for (let y = 0; y < 25; y++) {
-            total25 += yr1Savings * Math.pow(1.032, y) * Math.pow(0.995, y);
+            total25 += yr1Savings * Math.pow(1.03, y) * Math.pow(0.995, y);
           }
-          const netProfit25 = Math.max(12000, total25 - net);
+          const netProfit25 = Math.max(9500, total25 - net);
 
-          resGross.textContent = fmtUsd(gross);
-          resItc.textContent = '-' + fmtUsd(itc);
-          resNet.textContent = fmtUsd(net);
+          resGross.textContent = fmtCur(gross, cur);
+          resItc.textContent = '-' + fmtCur(savingAmt, cur);
+          resNet.textContent = fmtCur(net, cur);
           resKwh.textContent = annualKwh.toLocaleString('en-US') + ' kWh/yr';
-          resYr1.textContent = fmtUsd(yr1Savings) + ' / yr';
-          res25Yr.textContent = '+' + fmtUsd(netProfit25);
+          resYr1.textContent = fmtCur(yr1Savings, cur) + ' / yr';
+          res25Yr.textContent = '+' + fmtCur(netProfit25, cur);
         }
 
         [stateSel, billRange, kwRange, batCheck].forEach(function (el) {
