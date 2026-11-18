@@ -1,0 +1,135 @@
+---
+import '../styles/global.css';
+
+const title = 'Abmeldung & E-Mail-Einstellungen (Unsubscribe) — SOLARMETRIK';
+const description = 'Abmeldung von regionalen Photovoltaik- und Förder-Updates von SOLARMETRIK (solarmetrik.de).';
+---
+
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="robots" content="noindex, nofollow" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=Inter:wght@300;400;500;600&display=swap"
+    />
+  </head>
+  <body style="background: var(--bg-soft); min-height: 100vh; display: flex; flex-direction: column;">
+    <header class="ax-header">
+      <div class="ax-header__main">
+        <a href="/" class="ax-logo">
+          SOLARMETRIK<span class="ax-logo__fin"></span>
+        </a>
+        <div style="display: flex; gap: 14px; font-size: 13.5px;">
+          <a href="/" style="color: var(--text-secondary);">🇩🇪 Startseite (DE)</a>
+          <a href="/en" style="color: var(--text-secondary);">🇺🇸 International (EN)</a>
+        </div>
+      </div>
+    </header>
+
+    <main style="flex: 1; display: flex; align-items: center; justify-content: center; padding: 48px 20px;">
+      <div
+        style="max-width: 580px; width: 100%; background: #ffffff; border: 1px solid var(--border-hairline); border-radius: 12px; padding: 40px 36px; box-shadow: 0 12px 32px rgba(15, 76, 129, 0.05);"
+      >
+        <div
+          style="display: inline-flex; align-items: center; gap: 8px; padding: 5px 12px; border-radius: 6px; background: var(--accent-green-light); color: var(--accent-green); font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 18px;"
+        >
+          ✓ 1-Click Unsubscribe Confirmed · Abmeldung bestätigt
+        </div>
+
+        <h1 class="ax-h2" style="margin-bottom: 12px;" id="unsub-heading">
+          YOU HAVE BEEN UNSUBSCRIBED / SIE WURDEN ERFOLGREICH ABGEMELDET
+        </h1>
+
+        <p style="font-size: 15px; color: var(--text-secondary); line-height: 1.65; margin-bottom: 20px;" id="unsub-text-en">
+          Your email address (<strong id="unsub-email-display" style="color: var(--text-primary);">...</strong>) has been permanently removed from our regional solar yield & incentive notification list. You will no longer receive updates from us.
+        </p>
+
+        <p style="font-size: 14.5px; color: var(--text-secondary); line-height: 1.65; padding-top: 16px; border-top: 1px solid var(--border-hairline); margin-bottom: 24px;" id="unsub-text-de">
+          <strong>Deutsch:</strong> Ihre E-Mail-Adresse wurde dauerhaft aus unserem Verteiler für regionale Photovoltaik- und Förder-Updates entfernt. Sie erhalten keine weiteren Benachrichtigungen von SOLARMETRIK.
+        </p>
+
+        <!-- Manual fallback input if opened without ?email= parameter -->
+        <form id="manual-unsub-form" style="display: none; margin-bottom: 24px;">
+          <label for="manual-email-input" style="display: block; font-size: 13.5px; font-weight: 600; margin-bottom: 8px;">
+            Enter your email address to unsubscribe / E-Mail-Adresse zur Abmeldung eingeben:
+          </label>
+          <div style="display: flex; gap: 10px;">
+            <input
+              type="email"
+              id="manual-email-input"
+              required
+              placeholder="name@example.com"
+              class="form-input"
+              style="flex: 1;"
+            />
+            <button type="submit" class="ax-btn ax-btn--primary" style="padding: 10px 20px;">
+              Unsubscribe
+            </button>
+          </div>
+        </form>
+
+        <div id="unsub-status-msg" style="font-size: 13px; color: var(--accent-green); font-weight: 600; margin-bottom: 20px;"></div>
+
+        <div style="display: flex; flex-wrap: wrap; gap: 12px;">
+          <a href="/" class="ax-btn ax-btn--light" style="padding: 10px 18px; font-size: 13.5px;">
+            ← Zurück zu SOLARMETRIK (DE)
+          </a>
+          <a href="/en" class="ax-btn ax-btn--light" style="padding: 10px 18px; font-size: 13.5px;">
+            ← Back to SOLARMETRIK (EN)
+          </a>
+        </div>
+      </div>
+    </main>
+
+    <script is:inline>
+      (function () {
+        const params = new URLSearchParams(window.location.search);
+        const rawEmail = (params.get('email') || params.get('u') || '').trim();
+        const emailDisp = document.getElementById('unsub-email-display');
+        const manualForm = document.getElementById('manual-unsub-form');
+        const manualInput = document.getElementById('manual-email-input');
+        const statusMsg = document.getElementById('unsub-status-msg');
+
+        function sendUnsub(email) {
+          if (!email || !email.includes('@')) return;
+          if (emailDisp) emailDisp.textContent = email;
+          fetch('https://track.solarmetrik.de/unsubscribe?email=' + encodeURIComponent(email), {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email: email, reason: '1-click-link' })
+          })
+            .then(function () {
+              if (statusMsg) {
+                statusMsg.textContent = '✓ Database synchronized: ' + email + ' excluded from all future dispatches.';
+              }
+            })
+            .catch(function () {});
+        }
+
+        if (rawEmail && rawEmail.includes('@')) {
+          sendUnsub(rawEmail);
+        } else {
+          if (emailDisp) emailDisp.textContent = 'your email';
+          if (manualForm) manualForm.style.display = 'block';
+        }
+
+        if (manualForm) {
+          manualForm.addEventListener('submit', function (e) {
+            e.preventDefault();
+            const val = manualInput ? manualInput.value.trim() : '';
+            if (val && val.includes('@')) {
+              sendUnsub(val);
+              manualForm.style.display = 'none';
+            }
+          });
+        }
+      })();
+    </script>
+  </body>
+</html>
